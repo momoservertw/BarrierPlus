@@ -1,0 +1,39 @@
+name: BarrierPlus
+main: tw.momocraft.barrierplus.BarrierPlus
+author: Momocraft
+api-version: 1.14
+version: 1.0-SNAPSHOT
+description: Get custom items on join.
+softdepend: [Vault, Residence]
+
+commands:
+  barrierplus:
+    description: Displays main command menu.
+    permission: barrierplus.use
+    usage: |
+      /barrierplus
+
+permissions:
+  barrierplus.*:
+    description: Allows use of all commands and feature.
+    default: op
+  barrierplus.all:
+    description: Allows use of all commands and feature.
+    default: op
+    children:
+      barrierplus.use: true
+      barrierplus.barrier.see: true
+      barrierplus.barrier.place: true
+      barrierplus.barrier.destory: true
+  barrierplus.use:
+    description: Allows use of basic commands.
+    default: true
+  barrierplus.barrier.see:
+    description: Allows see barriers.
+    default: op
+  barrierplus.barrier.place:
+    description: Allows place barriers.
+    default: op
+  barrierplus.barrier.destroy:
+    description: Allows destroy barriers.
+    default: op

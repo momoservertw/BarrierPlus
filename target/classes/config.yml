@@ -1,0 +1,19 @@
+# --{ =-=-=-=-=-=-=-=-=-= BarrierPlus's Configuration Settings, by Momocraft =-=-=-=-=-=-=-=-=-= }--
+config-Version: 1
+Metrics-Logging: true
+Log-Coloration: true
+
+# The menu item for some events.
+Menu-Item-Type: PLAYER_HEAD
+# To identify the menu. You need to replace "&" to "§" here.
+Menu-Item-Name: '§e§lMy §6§lMenu'
+
+# Show near barriers.
+Barrier-Show-Distance: 10
+
+Message:
+  Prefix: '&7[&dBarrierPlus&7]&r '
+  No-Perm-destroy: '&cYou dont have &6destroy &cpermission<s> here.'
+  No-Perm-Barrier-Place: '&cYou dont have permission to place a barrier.'
+  Commands:
+    noPermission: '&cYou do not have permission to use that command!'
