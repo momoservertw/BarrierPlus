@@ -4,8 +4,9 @@ Metrics-Logging: true
 Log-Coloration: true
 
 # The menu item for some events.
-Menu-Item-Type: PLAYER_HEAD
+Menu-Item-Type: 'PLAYER_HEAD'
 # To identify the menu. You need to replace "&" to "§" here.
+#If you don't have a menu in your server, you can set '' to use a vanilla item.
 Menu-Item-Name: '§e§lMy §6§lMenu'
 
 # Show near barriers.
