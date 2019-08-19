@@ -75,7 +75,6 @@ public class ConfigHandler {
 			}
 		}
 		getConfig("config.yml").options().copyDefaults(false);
-		ServerHandler.sendConsoleMessage("ConfigHandler-79-getConfig");
 	}
 
 	private static void sendUtilityDepends() {
