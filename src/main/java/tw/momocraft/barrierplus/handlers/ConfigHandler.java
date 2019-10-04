@@ -61,7 +61,7 @@ public class ConfigHandler {
 	public static void configFile() {
 		getConfigData("config.yml");
 		File File = new File(BarrierPlus.getInstance().getDataFolder(), "config.yml");
-		if (File.exists() && getConfig("config.yml").getInt("config-Version") != 1) {
+		if (File.exists() && getConfig("config.yml").getInt("config-Version") != 2) {
 			if (BarrierPlus.getInstance().getResource("config.yml") != null) {
 				String newGen = "config" + Utils.getRandom(1, 50000) + ".yml";
 				File newFile = new File(BarrierPlus.getInstance().getDataFolder(), newGen);

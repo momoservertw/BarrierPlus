@@ -5,19 +5,35 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.barrierplus.handlers.PermissionsHandler;
+import tw.momocraft.barrierplus.handlers.ServerHandler;
 import tw.momocraft.barrierplus.utils.Language;
+
+import java.util.List;
 
 public class BlockPlace implements Listener {
 
+    private static boolean enablePlaceEvent = ConfigHandler.getConfig("config.yml").getBoolean("Place-Event");
+    private static List<String> placeBlockList = ConfigHandler.getConfig("config.yml").getStringList("Place-Block-List");
+
     @EventHandler
     public void onPlaceBlock(BlockPlaceEvent e) {
-        Player player = e.getPlayer();
+        if (enablePlaceEvent == true) {
+            Player player = e.getPlayer();
+            Material placeBlock = e.getBlockPlaced().getBlockData().getMaterial();
+            String placeBlockString = placeBlock.toString();
+            ServerHandler.sendConsoleMessage(placeBlockList.toString());
+            ServerHandler.sendConsoleMessage(placeBlockString);
 
-        if (e.getBlock().getType() == Material.BARRIER) {
-            //放置屏障的權限 | Check permission.
-            if (!PermissionsHandler.hasPermission(player, "barrierplus.barrier.place")) {
-                Language.sendLangMessage("Message.No-Perm-Barrier-Place", player);
+            if (placeBlockList.contains(placeBlockString)) {
+                ServerHandler.sendConsoleMessage("if contains placeBlockString");
+                //Check placing permissions.
+                if (PermissionsHandler.hasPermission(player, "barrierplus.place." + placeBlockString.toLowerCase()) ||
+                PermissionsHandler.hasPermission(player, "barrierplus.place.*")) {
+                    return;
+                }
+                Language.sendLangMessage("Message.No-Perm-Place", player);
                 e.setCancelled(true);
             }
         }

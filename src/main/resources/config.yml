@@ -1,20 +1,37 @@
 # --{ =-=-=-=-=-=-=-=-=-= BarrierPlus's Configuration Settings, by Momocraft =-=-=-=-=-=-=-=-=-= }--
-config-Version: 1
+config-Version: 2
 Metrics-Logging: true
 Log-Coloration: true
 
-# The menu item for some events.
+# The menu item for some events like showing barriers or destroying it.
+# Item type can find here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
 Menu-Item-Type: 'PLAYER_HEAD'
-# To identify the menu. You need to replace "&" to "§" here.
 #If you don't have a menu in your server, you can set '' to use a vanilla item.
-Menu-Item-Name: '§e§lMy §6§lMenu'
+Menu-Item-Name: '&e&lMy &6&lMenu'
 
 # Show near barriers.
+# Permission: barrierplus.see.barrier or barrierplus.see.*
 Barrier-Show-Distance: 10
+
+# To enable placing permission feature.
+Place-Event: true
+# These blocks will need permission to place.
+# Permission: barrierplus.place.MATERIAL or barrierplus.place.*
+Place-Block-List:
+  - BARRIER
+  - BEDROCK
+
+# To enable destroying block feature.
+Destroy-Event: true
+# These blocks can destroy by menu.
+# Permission: barrierplus.destroy.MATERIAL or barrierplus.destroy.*
+Destroy-Block-List:
+  - BARRIER
+  - BEDROCK
 
 Message:
   Prefix: '&7[&dBarrierPlus&7]&r '
-  No-Perm-destroy: '&cYou dont have &6destroy &cpermission<s> here.'
-  No-Perm-Barrier-Place: '&cYou dont have permission to place a barrier.'
+  No-Perm-destroy: '&cYou dont have &6build &cpermission<s> here.'
+  No-Perm-Place: '&cYou dont have permission to place that block.'
   Commands:
     noPermission: '&cYou do not have permission to use that command!'
