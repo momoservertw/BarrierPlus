@@ -16,7 +16,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.barrierplus.handlers.PermissionsHandler;
-import tw.momocraft.barrierplus.handlers.ServerHandler;
 import tw.momocraft.barrierplus.utils.Language;
 
 import java.util.HashSet;
@@ -52,7 +51,6 @@ public class BlockClick implements Listener {
                             }
                         }
                     } else {
-                        ServerHandler.sendConsoleMessage(String.valueOf(enableDestroyEvent));
                         if (enableDestroyEvent == true) {
                             if (destroyBlockList.contains(clickBlockString)) {
                                 //Residence - Enable.
@@ -70,7 +68,6 @@ public class BlockClick implements Listener {
                                             }
                                         }
                                     }
-                                    ServerHandler.sendConsoleMessage("up if has permission");
                                     if (PermissionsHandler.hasPermission(player, "barrierplus.destroy." + clickBlockString.toLowerCase()) ||
                                             PermissionsHandler.hasPermission(player, "barrierplus.destroy.*")) {
                                         //Destroy the block.

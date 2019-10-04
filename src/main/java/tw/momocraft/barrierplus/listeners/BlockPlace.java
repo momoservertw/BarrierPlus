@@ -7,7 +7,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.barrierplus.handlers.PermissionsHandler;
-import tw.momocraft.barrierplus.handlers.ServerHandler;
 import tw.momocraft.barrierplus.utils.Language;
 
 import java.util.List;
@@ -23,11 +22,8 @@ public class BlockPlace implements Listener {
             Player player = e.getPlayer();
             Material placeBlock = e.getBlockPlaced().getBlockData().getMaterial();
             String placeBlockString = placeBlock.toString();
-            ServerHandler.sendConsoleMessage(placeBlockList.toString());
-            ServerHandler.sendConsoleMessage(placeBlockString);
 
             if (placeBlockList.contains(placeBlockString)) {
-                ServerHandler.sendConsoleMessage("if contains placeBlockString");
                 //Check placing permissions.
                 if (PermissionsHandler.hasPermission(player, "barrierplus.place." + placeBlockString.toLowerCase()) ||
                 PermissionsHandler.hasPermission(player, "barrierplus.place.*")) {
