@@ -1,4 +1,6 @@
 # BarrierPlus
+A plugin for Minecraft server.
+
 **Spigot page: https://www.spigotmc.org/resources/barrierplus.70510/**
 
 *Do you want to use barriers in survival mode?*
