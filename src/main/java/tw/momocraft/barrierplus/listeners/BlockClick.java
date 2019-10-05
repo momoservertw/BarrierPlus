@@ -4,37 +4,46 @@ import com.bekvon.bukkit.residence.Residence;
 import com.bekvon.bukkit.residence.containers.Flags;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 import com.bekvon.bukkit.residence.protection.ResidencePermissions;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
+import org.bukkit.*;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import tw.momocraft.barrierplus.BarrierPlus;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.barrierplus.handlers.PermissionsHandler;
 import tw.momocraft.barrierplus.utils.Language;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class BlockClick implements Listener {
 
-    private static int range = ConfigHandler.getConfig("config.yml").getInt("Barrier-Show-Distance");
-    private static String menuItemType = ConfigHandler.getConfig("config.yml").getString("Menu-Item-Type");
-    private static String menuItemName = ConfigHandler.getConfig("config.yml").getString("Menu-Item-Name").replace("&", "§");
-    private static boolean enableDestroyEvent = ConfigHandler.getConfig("config.yml").getBoolean("Destroy-Event");
-    private static List<String> destroyBlockList = ConfigHandler.getConfig("config.yml").getStringList("Destroy-Block-List");
+    private static String menuItemType = ConfigHandler.getConfig("config.yml").getString("Menu.Item-Type");
+    private static String menuItemName = ConfigHandler.getConfig("config.yml").getString("Menu.Item-Name").replace("&", "§");
+    private static boolean enableSeeEvent = ConfigHandler.getConfig("config.yml").getBoolean("See.Enable");
+    private static int range = ConfigHandler.getConfig("config.yml").getInt("See.Distance");
+    private static ConfigurationSection seeBlockList = ConfigHandler.getConfig("config.yml").getConfigurationSection("See.Block-List");
+    private static boolean enableDestroyEvent = ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Enable");
+    private static ConfigurationSection destroyBlockList = ConfigHandler.getConfig("config.yml").getConfigurationSection("Destroy.Block-List");
+
+    private static Integer cooldownSeconds = ConfigHandler.getConfig("config.yml").getInt("See.Cooldown");
+    private static Map< String, Long > playersOnCooldown = new HashMap< String, Long >();
 
     @EventHandler
     public void onclickBlock(PlayerInteractEvent e) {
         Player player = e.getPlayer();
+        //Ignore creative players.
+         if (player.getGameMode() != GameMode.SURVIVAL) {
+             return;
+         }
+
+        Material itemOnHand = player.getInventory().getItemInMainHand().getType();
+        String itemOnHandString = player.getInventory().getItemInMainHand().getType().toString();
         //Holding a menu item.
-        if (player.getInventory().getItemInMainHand().getType() == Material.getMaterial(menuItemType)) {
+        if (itemOnHand == Material.getMaterial(menuItemType)) {
             if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(menuItemName) || menuItemName.equals("")) {
                 //Left click a block.
                 if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
@@ -43,16 +52,26 @@ public class BlockClick implements Listener {
                     Location clickBlockLoc = e.getClickedBlock().getLocation();
                     //Check if player is sneaking.
                     if (player.isSneaking() == false) {
-                        //The block's material which player click.
-                        if (clickBlock == Material.BARRIER) {
-                            if (PermissionsHandler.hasPermission(player, "barrierplus.see.barrier") ||
-                            PermissionsHandler.hasPermission(player, "barrierplus.see.*")) {
-                                checkBarrier(player);
+                        //Display near barriers and structure_void.
+                        if (enableSeeEvent == true) {
+                            /*
+                            if (onCooldown(e.getPlayer())) {
+                                Language.sendLangMessage("Message.Cooldown", player);
+                                return;
+                            }
+
+                             */
+                            if (seeBlockList.getKeys(false).contains(clickBlockString)) {
+                                String seeBlockType = clickBlockString;
+                                if (PermissionsHandler.hasPermission(player, "barrierplus.see." + seeBlockType.toLowerCase()) ||
+                                        PermissionsHandler.hasPermission(player, "barrierplus.see.*")) {
+                                    checkBarrier(player, seeBlockType);
+                                }
                             }
                         }
                     } else {
                         if (enableDestroyEvent == true) {
-                            if (destroyBlockList.contains(clickBlockString)) {
+                            if (destroyBlockList.getKeys(false).contains(clickBlockString)) {
                                 //Residence - Enable.
                                 if (ConfigHandler.getDepends().ResidenceEnabled() == true) {
                                     ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(clickBlockLoc);
@@ -82,34 +101,67 @@ public class BlockClick implements Listener {
                 }
             }
         }
-        //Item's material on hand: BARRIER
-        else if (player.getInventory().getItemInMainHand().getType() == Material.BARRIER) {
-            //Left-click "AIR".
-            if (e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.LEFT_CLICK_AIR) {
-                //Display near barriers.
-                if (PermissionsHandler.hasPermission(player, "barrierplus.see.barrier") ||
-                        PermissionsHandler.hasPermission(player, "barrierplus.see.*")) {
-                    checkBarrier(player);
+        //Item's material on hand: BARRIER, STRUCTURE_VOID
+        else if (enableSeeEvent == true) {
+            /*
+            if (onCooldown(e.getPlayer())) {
+                Language.sendLangMessage("Message.Cooldown", player);
+                return;
+            }
+
+             */
+            if (seeBlockList.getKeys(false).contains(itemOnHandString)) {
+                String seeBlockType = itemOnHandString;
+                //Left-click "AIR".
+                if (e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.LEFT_CLICK_AIR) {
+                    //Display near barriers and structure_void.
+                    if (PermissionsHandler.hasPermission(player, "barrierplus.see." + seeBlockType.toLowerCase()) ||
+                            PermissionsHandler.hasPermission(player, "barrierplus.see.*")) {
+                        checkBarrier(player, seeBlockType);
+                    }
                 }
             }
         }
     }
 
-    //Display near barriers.
-    private static void checkBarrier(Player player) {
+    //Display near barriers and structure_void.
+    public static void checkBarrier(Player player, String seeBlockType) {
         if (player.getGameMode() == GameMode.SURVIVAL) {
             Set<Location> locations = new HashSet();
             for (int x = -range; x <= range; x++) {
                 for (int y = -range; y <= range; y++) {
                     for (int z = -range; z <= range; z++) {
-                        Location l = player.getLocation().getBlock().getLocation().clone().add(x, y, z);
-                        if (l.getBlock().getType() == Material.BARRIER) {
-                            locations.add(l.add(0.5D, 0.5D, 0.5D));
+                        Location loc = player.getLocation().getBlock().getLocation().clone().add(x, y, z);
+                        if (loc.getBlock().getType() == Material.getMaterial(seeBlockType)) {
+                            locations.add(loc.add(0.5D, 0.5D, 0.5D));
                         }
                     }
                 }
             }
-            locations.stream().forEach((l) -> player.spawnParticle(Particle.BARRIER, l, 1));
+            String particleType = ConfigHandler.getConfig("config.yml").getString("See.Block-List." + seeBlockType + ".Particle");
+            int particleAmount = ConfigHandler.getConfig("config.yml").getInt("See.Block-List." + seeBlockType + ".Amount");
+            long particleTimes = ConfigHandler.getConfig("config.yml").getLong("See.Block-List." + seeBlockType + ".Times");
+            particleTimes *= 20;
+            long particleDelay = ConfigHandler.getConfig("config.yml").getLong("See.Block-List." + seeBlockType + ".Delay-Tick");
+
+            Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(BarrierPlus.getInstance(), new Runnable() {
+                public void run() {
+                    locations.stream().forEach((loc) -> player.spawnParticle(Particle.valueOf(particleType), loc, particleAmount, 0, 0, 0, 0));
+                }
+            }, particleDelay, particleTimes);
         }
     }
+/*
+    private static boolean onCooldown(Player player) {
+        int cdMillis = cooldownSeconds * 1000;
+        long playersCooldownList = 0L;
+        if (playersOnCooldown.containsKey(player.getWorld().getName() + "." + player.getName())) {
+            playersCooldownList = playersOnCooldown.get(player.getWorld().getName() + "." + player.getName());
+        }
+
+        if (System.currentTimeMillis() - playersCooldownList >= cdMillis) { return false; }
+        return true;
+    }
+
+ */
 }

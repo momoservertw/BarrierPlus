@@ -13,11 +13,12 @@ import java.util.List;
 
 public class BlockPlace implements Listener {
 
-    private static boolean enablePlaceEvent = ConfigHandler.getConfig("config.yml").getBoolean("Place-Event");
-    private static List<String> placeBlockList = ConfigHandler.getConfig("config.yml").getStringList("Place-Block-List");
+    private static boolean enablePlaceEvent = ConfigHandler.getConfig("config.yml").getBoolean("Place.Enable");
+    private static List<String> placeBlockList = ConfigHandler.getConfig("config.yml").getStringList("Place.Block-List");
 
     @EventHandler
     public void onPlaceBlock(BlockPlaceEvent e) {
+
         if (enablePlaceEvent == true) {
             Player player = e.getPlayer();
             Material placeBlock = e.getBlockPlaced().getBlockData().getMaterial();

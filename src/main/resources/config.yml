@@ -5,33 +5,59 @@ Log-Coloration: true
 
 # The menu item for some events like showing barriers or destroying it.
 # Item type can find here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
-Menu-Item-Type: 'PLAYER_HEAD'
-#If you don't have a menu in your server, you can set '' to use a vanilla item.
-Menu-Item-Name: '&e&lMy &6&lMenu'
+# If you don't have a menu in your server, you can set Item-Name to '' to use a vanilla item.
+Menu:
+  Item-Type: 'PLAYER_HEAD'
+  Item-Name: '&e&lMy &6&lMenu'
 
-# Show near barriers.
-# Permission: barrierplus.see.barrier or barrierplus.see.*
-Barrier-Show-Distance: 10
+See:
+  Enable: true
+  Distance: 10
+  Cooldown: 3
+  Cooldown-Message: true
+  # You can add any type of blocks and custom display particle.
+  # Particle type can find here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Particle.html
+  # Permission: barrierplus.see.MATERIAL or barrierplus.see.*
+  Block-List:
+    BARRIER:
+      Particle: BARRIER
+      Amount: 1
+      Times: 1
+      Delay-Tick: 20
+    STRUCTURE_VOID:
+      Particle: CRIT_MAGIC
+      Amount: 1
+      Times: 3
+      Delay-Tick: 20
 
-# To enable placing permission feature.
-Place-Event: true
 # These blocks will need permission to place.
 # Permission: barrierplus.place.MATERIAL or barrierplus.place.*
-Place-Block-List:
-  - BARRIER
-  - BEDROCK
+Place:
+  Enable: true
+  Place-Block-List:
+    - BARRIER
+    - BEDROCK
 
-# To enable destroying block feature.
-Destroy-Event: true
-# These blocks can destroy by menu.
-# Permission: barrierplus.destroy.MATERIAL or barrierplus.destroy.*
-Destroy-Block-List:
-  - BARRIER
-  - BEDROCK
+Destroy:
+  Enable: true
+  # Ignore other gamemode like creative mode.
+  Only-Survive-Modee: true
+  # These blocks can destroy by menu.
+  # You can cancel vanilla break event and only allow player to use menu to break blocks.
+  # Permission: barrierplus.destroy.MATERIAL or barrierplus.destroy.*
+  Block-List:
+    BARRIER:
+      Vanilla-Break: false
+    BEDROCK:
+      Vanilla-Break: false
+    STRUCTURE_VOID:
+      Vanilla-Break: false
 
 Message:
   Prefix: '&7[&dBarrierPlus&7]&r '
   No-Perm-destroy: '&cYou dont have &6build &cpermission<s> here.'
   No-Perm-Place: '&cYou dont have permission to place that block.'
+  Break-Help: '&cHolding menu and "left-click + shift" to break this block.'
+  Cooldown: '&cPlease try it again later.'
   Commands:
     noPermission: '&cYou do not have permission to use that command!'

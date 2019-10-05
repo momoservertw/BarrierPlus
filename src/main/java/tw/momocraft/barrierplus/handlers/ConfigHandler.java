@@ -4,6 +4,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import tw.momocraft.barrierplus.Commands;
 import tw.momocraft.barrierplus.BarrierPlus;
+import tw.momocraft.barrierplus.listeners.BlockBreak;
 import tw.momocraft.barrierplus.listeners.BlockClick;
 import tw.momocraft.barrierplus.listeners.BlockPlace;
 import tw.momocraft.barrierplus.utils.*;
@@ -25,6 +26,7 @@ public class ConfigHandler {
 		BarrierPlus.getInstance().getCommand("barrierplus").setExecutor(new Commands());
 		BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockClick(), BarrierPlus.getInstance());
 		BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockPlace(), BarrierPlus.getInstance());
+		BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockBreak(), BarrierPlus.getInstance());
 	}
 
 	public static FileConfiguration getConfig(String path) {
