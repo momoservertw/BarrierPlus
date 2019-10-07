@@ -35,17 +35,25 @@ permissions:
     default: op
     children:
       barrierplus.see.barrier: true
+      barrierplus.see.structure_void: true
   barrierplus.see.barrier:
     description: Allows to see barriers.
+    default: op
+  barrierplus.see.structure_void:
+    description: Allows to see structure_void.
     default: op
   barrierplus.place.*:
     description: Allows place all blocks in config.
     default: op
     children:
       barrierplus.place.barrier: true
+      barrierplus.place.structure_void: true
       barrierplus.place.bedrock: true
   barrierplus.place.barrier:
     description: Allows to place barriers.
+    default: op
+  barrierplus.place.structure_void:
+    description: Allows to place structure_void.
     default: op
   barrierplus.place.bedrock:
     description: Allows to place bedrocks.
@@ -55,9 +63,13 @@ permissions:
     default: op
     children:
       barrierplus.destroy.barrier: true
+      barrierplus.destroy.structure_void: true
       barrierplus.destroy.bedrock: true
   barrierplus.destroy.barrier:
     description: Allows to destroy barriers.
+    default: op
+  barrierplus.destroy.structure_void:
+    description: Allows to destroy structure_void.
     default: op
   barrierplus.destroy.bedrock:
     description: Allows to destroy bedrocks.

@@ -81,7 +81,7 @@
             <groupId>me.Residence</groupId>
             <artifactId>Residence</artifactId>
             <scope>system</scope>
-            <systemPath>${pom.basedir}/src/main/java/tw/momocraft/barrierplus/extra/Residence4.8.7.2.jar</systemPath>
+            <systemPath>${pom.basedir}/src/main/java/tw/momocraft/barrierplus/extra/Residence4.8.7.4.jar</systemPath>
             <version>LATEST</version>
         </dependency>
     </dependencies>

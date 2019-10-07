@@ -18,7 +18,6 @@ public class BlockPlace implements Listener {
 
     @EventHandler
     public void onPlaceBlock(BlockPlaceEvent e) {
-
         if (enablePlaceEvent == true) {
             Player player = e.getPlayer();
             Material placeBlock = e.getBlockPlaced().getBlockData().getMaterial();

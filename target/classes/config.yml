@@ -1,5 +1,5 @@
 # --{ =-=-=-=-=-=-=-=-=-= BarrierPlus's Configuration Settings, by Momocraft =-=-=-=-=-=-=-=-=-= }--
-config-Version: 2
+config-Version: 3
 Metrics-Logging: true
 Log-Coloration: true
 
@@ -10,54 +10,58 @@ Menu:
   Item-Type: 'PLAYER_HEAD'
   Item-Name: '&e&lMy &6&lMenu'
 
+# You can add any type of blocks and custom display particle.
+# Particle type can find here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Particle.html
+# Permission: barrierplus.see.MATERIAL or barrierplus.see.*
 See:
   Enable: true
   Distance: 10
   Cooldown: 3
-  Cooldown-Message: true
-  # You can add any type of blocks and custom display particle.
-  # Particle type can find here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Particle.html
-  # Permission: barrierplus.see.MATERIAL or barrierplus.see.*
+  Cooldown-Message: false
   Block-List:
     BARRIER:
       Particle: BARRIER
       Amount: 1
+      # The times particle will display.
       Times: 1
-      Delay-Tick: 20
+      # The interval between particle show again.
+      Interval-Tick: 10
     STRUCTURE_VOID:
+      Creative-Mode: true
       Particle: CRIT_MAGIC
-      Amount: 1
-      Times: 3
-      Delay-Tick: 20
+      Amount: 2
+      Times: 10
+      Interval-Tick: 10
 
 # These blocks will need permission to place.
 # Permission: barrierplus.place.MATERIAL or barrierplus.place.*
 Place:
   Enable: true
-  Place-Block-List:
+  Block-List:
     - BARRIER
+    - STRUCTURE_VOID
     - BEDROCK
 
+# These blocks can destroy by menu.
+# You can cancel vanilla break event and only allows player to use menu to break blocks.
+# Permission: barrierplus.destroy.MATERIAL or barrierplus.destroy.*
 Destroy:
   Enable: true
-  # Ignore other gamemode like creative mode.
-  Only-Survive-Modee: true
-  # These blocks can destroy by menu.
-  # You can cancel vanilla break event and only allow player to use menu to break blocks.
-  # Permission: barrierplus.destroy.MATERIAL or barrierplus.destroy.*
+  # Send a help message to player if they try to break the block which disable vanilla break.
+  Break-Help-Message: true
   Block-List:
     BARRIER:
       Vanilla-Break: false
-    BEDROCK:
-      Vanilla-Break: false
     STRUCTURE_VOID:
+      Vanilla-Break: false
+    BEDROCK:
       Vanilla-Break: false
 
 Message:
   Prefix: '&7[&dBarrierPlus&7]&r '
-  No-Perm-destroy: '&cYou dont have &6build &cpermission<s> here.'
+  No-Perm-Destroy: '&cYou dont have &6build &cpermission<s> here.'
   No-Perm-Place: '&cYou dont have permission to place that block.'
-  Break-Help: '&cHolding menu and "left-click + shift" to break this block.'
-  Cooldown: '&cPlease try it again later.'
+  Break-Help: '&fHolding menu and "left-click + shift" to break this block.'
+  Cooldown: '&fPlease try it again later.'
   Commands:
     noPermission: '&cYou do not have permission to use that command!'
