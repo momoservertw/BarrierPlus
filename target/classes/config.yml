@@ -16,6 +16,7 @@ Menu:
 See:
   Enable: true
   Distance: 10
+  # You can set 0 (second) to disable cooldown feature.
   Cooldown: 3
   Cooldown-Message: false
   Block-List:

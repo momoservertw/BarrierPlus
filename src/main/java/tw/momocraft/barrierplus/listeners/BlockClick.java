@@ -152,6 +152,9 @@ public class BlockClick implements Listener {
     }
 
     private static boolean onCooldown(Player player) {
+        if (cooldownSeconds == 0) {
+            return false;
+        }
         int cdMillis = cooldownSeconds * 1000;
         long playersCooldownList = 0L;
         if (playersOnCooldown.containsKey(player.getWorld().getName() + "." + player.getName())) {
