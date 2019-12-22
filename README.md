@@ -1,6 +1,6 @@
 # BarrierPlus
 *A plugin for Minecraft server.*  
-Control blocks place and destroy conditions, and display nearly invisible blocks like barrier.
+Control blocks place and destroy conditions, and display nearly invisible blocks like barriers.
 
 
 **Features**
