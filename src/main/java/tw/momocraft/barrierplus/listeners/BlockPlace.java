@@ -1,6 +1,5 @@
 package tw.momocraft.barrierplus.listeners;
 
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,27 +8,23 @@ import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.barrierplus.handlers.PermissionsHandler;
 import tw.momocraft.barrierplus.utils.Language;
 
-import java.util.List;
-
 public class BlockPlace implements Listener {
-
-    private static boolean enablePlaceEvent = ConfigHandler.getConfig("config.yml").getBoolean("Place.Enable");
-    private static List<String> placeBlockList = ConfigHandler.getConfig("config.yml").getStringList("Place.Block-List");
 
     @EventHandler
     public void onPlaceBlock(BlockPlaceEvent e) {
-        if (enablePlaceEvent == true) {
+        if (ConfigHandler.getConfig("config.yml").getBoolean("Place.Enable")) {
             Player player = e.getPlayer();
-            Material placeBlock = e.getBlockPlaced().getBlockData().getMaterial();
-            String placeBlockString = placeBlock.toString();
+            String block = e.getBlockPlaced().getBlockData().getMaterial().name();
 
-            if (placeBlockList.contains(placeBlockString)) {
+            if (ConfigHandler.getConfig("config.yml").getStringList("Place.List").contains(block)) {
                 //Check placing permissions.
-                if (PermissionsHandler.hasPermission(player, "barrierplus.place." + placeBlockString.toLowerCase()) ||
+                if (PermissionsHandler.hasPermission(player, "barrierplus.place." + block.toLowerCase()) ||
                 PermissionsHandler.hasPermission(player, "barrierplus.place.*")) {
+                    Language.debugMessage("Place", block, "permission", "bypass");
                     return;
                 }
-                Language.sendLangMessage("Message.No-Perm-Place", player);
+                Language.sendLangMessage("Message.BarrierPlus.noPermPlace", player);
+                Language.debugMessage("Place", block, "permission", "cancel");
                 e.setCancelled(true);
             }
         }

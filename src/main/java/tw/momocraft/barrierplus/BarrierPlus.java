@@ -10,7 +10,7 @@ public class BarrierPlus extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        ConfigHandler.generateData(getFile());
+        ConfigHandler.generateData();
         ConfigHandler.registerEvents();
         ServerHandler.sendConsoleMessage("&fhas been Enabled.");
     }

@@ -1,6 +1,5 @@
 package tw.momocraft.barrierplus.listeners;
 
-import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,35 +11,34 @@ import tw.momocraft.barrierplus.utils.Language;
 
 public class BlockBreak implements Listener {
 
-    private boolean enableDestroyEvent = ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Enable");
-    private static ConfigurationSection destroyBlockList = ConfigHandler.getConfig("config.yml").getConfigurationSection("Destroy.Block-List");
-
     @EventHandler
     public void onBreakBlock(BlockBreakEvent e) {
-
-        if (enableDestroyEvent == true) {
+        if (ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Enable")) {
             Player player = e.getPlayer();
-            Material breakBlock = e.getBlock().getBlockData().getMaterial();
-            String breakBlockString = breakBlock.toString();
+            String block = e.getBlock().getBlockData().getMaterial().name();
             //Check destroy block list.
-            if (destroyBlockList.getKeys(false).contains(breakBlockString)) {
-                String destroyBlockType = breakBlockString;
-                //Cancel vanilla break event.
-                if (!ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Block-List." + destroyBlockType + ".Vanilla-Break")) {
-                    if (ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Break-Help-Message")) {
-                    Language.sendLangMessage("Message.Break-Help", player);
+            ConfigurationSection blockList = ConfigHandler.getConfig("config.yml").getConfigurationSection("Destroy.List");
+            if (blockList != null) {
+                if (blockList.getKeys(false).contains(block)) {
+                    //Cancel vanilla break event.
+                    if (!ConfigHandler.getConfig("config.yml").getBoolean("Destroy.List." + block + ".Vanilla-Break")) {
+                        if (ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Menu-Break.Help-Message")) {
+                            Language.sendLangMessage("Message.BarrierPlus.breakHelp", player);
+                        }
+                        Language.debugMessage("Destroy", block , "Vanilla-Break", "cancel");
+                        e.setCancelled(true);
+                        return;
                     }
+                    //Check destroy permission.
+                    if (PermissionsHandler.hasPermission(player, "barrierplus.destroy." + block.toLowerCase()) ||
+                            PermissionsHandler.hasPermission(player, "barrierplus.destroy.*")) {
+                        Language.debugMessage("Destroy", block , "permission", "return");
+                        return;
+                    }
+                    Language.sendLangMessage("Message.BarrierPlus.noPermDestroy", player);
+                    Language.debugMessage("Destroy", block , "permission", "cancel");
                     e.setCancelled(true);
-                    return;
                 }
-                //Check destroy permission.
-                if (PermissionsHandler.hasPermission(player, "barrierplus.destroy." + destroyBlockType.toLowerCase()) ||
-                        PermissionsHandler.hasPermission(player, "barrierplus.destroy.*")) {
-                    return;
-                }
-                Language.sendLangMessage("Message.No-Perm-Destroy", player);
-                e.setCancelled(true);
-                return;
             }
         }
     }

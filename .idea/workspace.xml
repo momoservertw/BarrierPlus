@@ -1,9 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/src/main/resources/config.yml" line="112" mnemonic="5" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="fc4733f9-7cff-43d0-8cc5-8b92d4beb3e4" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/PlayerHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockDropItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockExplode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/EntityExplode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/PlayerPointsAPI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/BarrierPlus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/BarrierPlus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/Commands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/extra/Residence4.8.7.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/extra/VaultAPI.jar" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/extra/VaultAPI.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/ConfigHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/ConfigHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/ServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/ServerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockBreak.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockBreak.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockClick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockClick.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockPlace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockPlace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/DependAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/DependAPI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/Language.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/Language.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/VaultAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/VaultAPI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BarrierPlus-1.0.5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/BarrierPlus.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/BarrierPlus.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/Commands.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/Commands.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/handlers/ConfigHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/handlers/ConfigHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/handlers/ServerHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/handlers/ServerHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/listeners/BlockBreak.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/listeners/BlockBreak.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/listeners/BlockClick$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/listeners/BlockClick$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/listeners/BlockClick.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/listeners/BlockClick.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/listeners/BlockPlace.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/listeners/BlockPlace.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/utils/DependAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/utils/DependAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/utils/Language$Lang.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/utils/Language$Lang.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/utils/Language.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/utils/Language.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/utils/VaultAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/utils/VaultAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -19,42 +59,31 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
-              <caret line="18" column="21" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/plugin.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="427">
-              <caret line="37" column="22" lean-forward="true" selection-start-line="37" selection-start-column="22" selection-end-line="37" selection-end-column="36" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockClick.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2964">
-              <caret line="156" column="9" lean-forward="true" selection-start-line="156" selection-start-column="9" selection-end-line="156" selection-end-column="9" />
+            <state relative-caret-position="-551">
+              <caret line="64" column="93" selection-start-line="64" selection-start-column="93" selection-end-line="64" selection-end-column="93" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2141#2157#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockPlace.java">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="30" column="17" lean-forward="true" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
+            <state relative-caret-position="152">
+              <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockDropItem.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="190">
+              <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -65,8 +94,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockBreak.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="24" column="39" lean-forward="true" selection-start-line="24" selection-start-column="39" selection-end-line="24" selection-end-column="39" />
+            <state relative-caret-position="268">
+              <caret line="32" column="42" selection-start-line="32" selection-start-column="42" selection-end-line="32" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -75,10 +104,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/config.yml">
+        <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockExplode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="639">
-              <caret line="38" column="6" lean-forward="true" selection-start-line="38" selection-start-column="6" selection-end-line="38" selection-end-column="6" />
+            <state relative-caret-position="1425">
+              <caret line="75" column="21" selection-start-line="75" selection-start-column="21" selection-end-line="75" selection-end-column="21" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -86,8 +118,53 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/ConfigHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="65" column="82" selection-start-line="65" selection-start-column="82" selection-end-line="65" selection-end-column="82" />
+            <state relative-caret-position="-93">
+              <caret line="66" column="82" selection-start-line="66" selection-start-column="82" selection-end-line="66" selection-end-column="82" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/plugin.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="76">
+              <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/PermissionsHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="152">
+              <caret line="8" column="188" selection-start-line="8" selection-start-column="150" selection-end-line="8" selection-end-column="188" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/ServerHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-112">
+              <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/PlayerHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1499">
+              <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -106,46 +183,68 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getConfigData</find>
-      <find>Barrier-Show</find>
-      <find>Barrier-Destroy-Perm</find>
-      <find>getDepend</find>
-      <find>.getString</find>
-      <find>getConfig</find>
-      <find>blockclick</find>
-      <find>build</find>
-      <find>79</find>
-      <find>ClickBlock</find>
-      <find>MenuItemName</find>
-      <find>MenuItemType</find>
-      <find>RANGE</find>
-      <find>BuildPermType</find>
-      <find>§</find>
-      <find>static</find>
-      <find>destroyBlockList</find>
-      <find>destroyBlockList</find>
-      <find>conta</find>
-      <find>cool</find>
-      <find>only</find>
-      <find>gamemode</find>
-      <find>Message.Break-Help</find>
-      <find>creative</find>
-      <find>creat</find>
-      <find>No-Perm-Destroy</find>
+      <find>Destroy.Block-List</find>
+      <find>See.Block-List</find>
+      <find>Place.Block-List</find>
+      <find>block</find>
+      <find>Menu-Break</find>
+      <find>Vanilla-Drop</find>
       <find>Vanilla-Break</find>
-      <find>Break-Help-Message</find>
-      <find>destory</find>
-      <find>cancel</find>
+      <find>Drop-Item</find>
+      <find>Help-Message</find>
+      <find>nickplus</find>
+      <find>successBuyItem</find>
+      <find>itemMaxStackSize</find>
+      <find>if (amount == 0) {</find>
+      <find>buy</find>
+      <find>targetNotFound</find>
+      <find>(getInventoryFull(player, item, amount, itemMaxStackSize, itemSlots, itemRemain))</find>
+      <find>(getInventoryFull(argsPlayer, item, itemMaxStackSize, itemSlots, itemRemain))</find>
+      <find>getInventoryFull(argsPlayer, item, amount, itemMaxStackSize, itemSlots, itemRemain)</find>
+      <find>priceTy</find>
+      <find>points</find>
+      <find>int itemSlots = amount / itemMaxStackSize;</find>
+      <find>giveItem(player, item, itemMaxStackSize, itemSlots, itemRemain)</find>
+      <find>econ</find>
+      <find>ItemJoin</find>
+      <find>setupEconomy()</find>
+      <find>ServerHandler.sendConsoleMessage(&quot;&amp;cVault can not find the economy plugin.&quot;);</find>
+      <find>itemSlots</find>
+      <find>itemRemain</find>
+      <find>Explode-Break</find>
+      <find>bypass</find>
     </findStrings>
     <replaceStrings>
       <replace>hasPermission</replace>
-      <replace>BarrierPlus</replace>
-      <replace>barrierplus</replace>
-      <replace>clickBlock</replace>
       <replace>menuItemName</replace>
       <replace>menuItemType</replace>
       <replace>range</replace>
+      <replace>No-Perm-Destroy</replace>
+      <replace>BarrierPlus.No-Perm-Destroy</replace>
+      <replace>BarrierPlus.No-Perm-Place</replace>
+      <replace>BarrierPlus.Break-Help</replace>
+      <replace>cooldown</replace>
+      <replace>noPermDestroy</replace>
+      <replace>breakHelp</replace>
+      <replace>prefix</replace>
+      <replace>Config-Version</replace>
+      <replace>clickBlock</replace>
+      <replace>itemOnHand</replace>
+      <replace>Destroy.List</replace>
+      <replace>See.List</replace>
+      <replace>Place.List</replace>
       <replace />
+      <replace>barrierplus</replace>
+      <replace>buySuccess</replace>
+      <replace>give</replace>
+      <replace>(getInventoryFull(player, item, itemMaxStackSize, itemSlots, itemRemain))</replace>
+      <replace>getInventoryFull(argsPlayer, item, itemMaxStackSize, itemSlots, itemRemain)</replace>
+      <replace>int itemSlots = (int) Math.ceil(amount / itemMaxStackSize);</replace>
+      <replace>giveItem(player, item, amoub, itemSlots, itemRemain)</replace>
+      <replace>BarrierPlus</replace>
+      <replace>Language.dispatchMessage(sender, &quot;&amp;cCan not find Vault or Economy plugin.&quot;, true);</replace>
+      <replace>itemStacks</replace>
+      <replace>itemRemain</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -154,26 +253,33 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/DependAPI.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/VaultAPI.java" />
         <option value="$PROJECT_DIR$/plugin.yml" />
         <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/Metrics.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/ServerHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/YAMLGenerator.java" />
         <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/Legacy.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/Commands.java" />
         <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/PermissionsHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/BarrierPlus.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/Language.java" />
         <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/Utils.java" />
         <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockDestroy.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/Shop.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/PlayerPoints.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/BarrierPlus.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/ServerHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/ConfigHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/Points.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/Language.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/DependAPI.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/VaultAPI.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/Commands.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/PlayerHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockExplode.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockDropItem.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/EntityExplode.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockPlace.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockClick.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockBreak.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/config.yml" />
         <option value="$PROJECT_DIR$/src/main/resources/plugin.yml" />
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/ConfigHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockPlace.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockBreak.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockClick.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/config.yml" />
       </list>
     </option>
   </component>
@@ -189,14 +295,20 @@
           <item name="BarrierPlus" type="9519ce18:MavenProjectsStructure$ProjectNode" />
           <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
         </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="BarrierPlus" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Dependencies" type="f4be9f2a:MavenProjectsStructure$DependenciesNode" />
+        </path>
       </expand>
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="1272" />
-    <option name="width" value="1298" />
-    <option name="height" value="1391" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="15" />
+    <option name="y" value="15" />
+    <option name="width" value="1920" />
+    <option name="height" value="1020" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -295,7 +407,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ItemJoin-master" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ServerPlus" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -307,6 +419,8 @@
       <recent name="C:\Users\sayuri\IdeaProjects\BarrierPlus\src\main\java\tw\momocraft\barrierplus" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="tw.momocraft.barrierplus.handlers" />
+      <recent name="tw.momocraft.barrierplus.listeners" />
       <recent name="tw.momocraft.barrierplus.utils" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -339,10 +453,9 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="848" y="0" width="865" height="927" extended-state="0" />
-    <editor active="true" />
+    <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.31846344" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15453999" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -350,26 +463,26 @@
       <window_info id="UI Designer" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4993804" visible="true" weight="0.13962264" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49969932" weight="0.32876712" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49849668" visible="true" weight="0.22540474" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5006196" side_tool="true" visible="true" weight="0.13962264" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5015033" side_tool="true" weight="0.28019926" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.249549" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Maven" order="4" visible="true" weight="0.13011153" />
+      <window_info anchor="right" id="Maven" order="4" visible="true" weight="0.0998196" />
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="right" id="Capture Analysis" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
     </layout>
     <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2254961" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15453999" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -377,20 +490,20 @@
       <window_info id="UI Designer" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2739726" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49969932" weight="0.32876712" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49849668" visible="true" weight="0.22540474" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5015033" side_tool="true" weight="0.28019926" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.249549" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Maven" order="4" visible="true" weight="0.20805773" />
+      <window_info active="true" anchor="right" id="Maven" order="4" visible="true" weight="0.0998196" />
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="right" id="Capture Analysis" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
@@ -404,7 +517,6 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/CoordinateConversions.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/PlayerDeath.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/ChunkDeleteEvent.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/PlayerHandler.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/tuple/Pair.java" />
     <entry file="file://$PROJECT_DIR$/src/main/resources/lang.yml" />
     <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/YAMLGenerator.java" />
@@ -413,16 +525,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/Metrics.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/Legacy.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/VaultAPI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="589">
-          <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="36" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -430,50 +532,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/Commands.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="16" column="16" lean-forward="true" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/extra/Residence4.8.7.2.jar!/com/bekvon/bukkit/residence/protection/ResidencePermissions.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="686">
-          <caret line="66" column="43" selection-start-line="66" selection-start-column="43" selection-end-line="66" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/Language.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="436">
-          <caret line="28" column="42" lean-forward="true" selection-start-line="28" selection-start-column="42" selection-end-line="28" selection-end-column="51" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/BarrierPlus.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="25" column="1" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/extra/Residence4.8.7.2.jar!/com/bekvon/bukkit/residence/containers/Flags.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="182" column="24" selection-start-line="182" selection-start-column="24" selection-end-line="182" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/extra/Residence4.8.7.2.jar!/com/bekvon/bukkit/residence/protection/ResidencePermissions.class" />
+    <entry file="jar://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/extra/Residence4.8.7.2.jar!/com/bekvon/bukkit/residence/containers/Flags.class" />
     <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/Utils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
@@ -484,10 +544,168 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/extra/Residence4.8.7.4.jar!/com/bekvon/bukkit/residence/Residence.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="147" column="37" lean-forward="true" selection-start-line="147" selection-start-column="37" selection-end-line="147" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/Shop.java" />
+    <entry file="jar://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/extra/PlayerPoints.jar!/org/black_ixx/playerpoints/PlayerPointsAPI.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="317">
+          <caret line="52" column="37" selection-start-line="52" selection-start-column="37" selection-end-line="52" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/BarrierPlus.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/spigotmc/spigot-api/1.15.1-R0.1-SNAPSHOT/spigot-api-1.15.1-R0.1-20191219.015649-5.jar!/org/bukkit/configuration/ConfigurationSection.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="21" column="16" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/PlayerPointsAPI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="28" column="61" lean-forward="true" selection-start-line="28" selection-start-column="61" selection-end-line="28" selection-end-column="61" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#488#489#0" expanded="true" />
+            <element signature="e#549#550#0" expanded="true" />
+            <element signature="e#1069#1070#0" expanded="true" />
+            <element signature="e#1097#1098#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/spigotmc/spigot-api/1.15.1-R0.1-SNAPSHOT/spigot-api-1.15.1-R0.1-20191219.015649-5.jar!/org/bukkit/OfflinePlayer.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/extra/VaultAPI.jar!/net/milkbowl/vault/economy/Economy.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="47" column="27" selection-start-line="47" selection-start-column="27" selection-end-line="47" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/extra/VaultAPI.jar!/net/milkbowl/vault/economy/EconomyResponse.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/DependAPI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/VaultAPI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="14" column="23" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#568#569#0" expanded="true" />
+            <element signature="e#1511#1512#0" expanded="true" />
+            <element signature="e#1543#1544#0" expanded="true" />
+            <element signature="e#1873#1874#0" expanded="true" />
+            <element signature="e#1924#1925#0" expanded="true" />
+            <element signature="e#1905#1906#0" expanded="true" />
+            <element signature="e#1957#1958#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/Commands.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="23" column="156" lean-forward="true" selection-start-line="23" selection-start-column="156" selection-end-line="24" selection-end-column="94" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/Language.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="111" column="23" selection-start-line="111" selection-start-column="23" selection-end-line="111" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/EntityExplode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="123">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockPlace.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1577">
+          <caret line="83" column="16" lean-forward="true" selection-end-line="123" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/ConfigHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-93">
+          <caret line="66" column="82" selection-start-line="66" selection-start-column="82" selection-end-line="66" selection-end-column="82" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/PermissionsHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
-          <caret line="8" column="146" selection-start-line="8" selection-start-column="129" selection-end-line="8" selection-end-column="146" />
+          <caret line="8" column="188" selection-start-line="8" selection-start-column="150" selection-end-line="8" selection-end-column="188" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/PlayerHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1499">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -496,50 +714,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/ServerHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="21" column="4" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="4" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/DependAPI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="5" column="20" lean-forward="true" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/ConfigHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="65" column="82" selection-start-line="65" selection-start-column="82" selection-end-line="65" selection-end-column="82" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
-          <caret line="18" column="21" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/extra/Residence4.8.7.4.jar!/com/bekvon/bukkit/residence/Residence.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="147" column="37" lean-forward="true" selection-start-line="147" selection-start-column="37" selection-end-line="147" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockPlace.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="30" column="17" lean-forward="true" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
+        <state relative-caret-position="-112">
+          <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -548,8 +724,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockBreak.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="24" column="39" lean-forward="true" selection-start-line="24" selection-start-column="39" selection-end-line="24" selection-end-column="39" />
+        <state relative-caret-position="268">
+          <caret line="32" column="42" selection-start-line="32" selection-start-column="42" selection-end-line="32" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -558,26 +734,45 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockClick.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2964">
-          <caret line="156" column="9" lean-forward="true" selection-start-line="156" selection-start-column="9" selection-end-line="156" selection-end-column="9" />
+        <state relative-caret-position="-551">
+          <caret line="64" column="93" selection-start-line="64" selection-start-column="93" selection-end-line="64" selection-end-column="93" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2141#2157#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/config.yml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockDropItem.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="639">
-          <caret line="38" column="6" lean-forward="true" selection-start-line="38" selection-start-column="6" selection-end-line="38" selection-end-column="6" />
+        <state relative-caret-position="190">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockExplode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1425">
+          <caret line="75" column="21" selection-start-line="75" selection-start-column="21" selection-end-line="75" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/plugin.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="37" column="22" lean-forward="true" selection-start-line="37" selection-start-column="22" selection-end-line="37" selection-end-column="36" />
+        <state relative-caret-position="76">
+          <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
         </state>
       </provider>
     </entry>

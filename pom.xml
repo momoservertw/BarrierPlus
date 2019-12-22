@@ -6,7 +6,7 @@
 
     <groupId>momocraft.tw</groupId>
     <artifactId>BarrierPlus</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.7</version>
     <build>
         <plugins>
             <plugin>
@@ -29,36 +29,11 @@
     </repositories>
 
     <dependencies>
-        <!--Apache API-->
-        <dependency>
-            <artifactId>commons-io</artifactId>
-            <groupId>commons-io</groupId>
-            <scope>compile</scope>
-            <version>2.5</version>
-        </dependency>
-        <!--Google API-->
-        <dependency>
-            <groupId>com.googlecode.json-simple</groupId>
-            <artifactId>json-simple</artifactId>
-            <version>1.1.1</version>
-        </dependency>
-        <!--Google API-->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>18.0</version>
-        </dependency>
-        <!--Apache Logging API-->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.3</version>
-        </dependency>
         <!--Spigot API-->
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>LATEST</version>
+            <version>1.15.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!--CraftBukkit API-->
@@ -74,15 +49,23 @@
             <artifactId>Vault</artifactId>
             <scope>system</scope>
             <systemPath>${pom.basedir}/src/main/java/tw/momocraft/barrierplus/extra/VaultAPI.jar</systemPath>
-            <version>LATEST</version>
+            <version>LEGACY</version>
         </dependency>
         <!--Residence API-->
         <dependency>
             <groupId>me.Residence</groupId>
             <artifactId>Residence</artifactId>
             <scope>system</scope>
-            <systemPath>${pom.basedir}/src/main/java/tw/momocraft/barrierplus/extra/Residence4.8.7.4.jar</systemPath>
-            <version>LATEST</version>
+            <systemPath>${pom.basedir}/src/main/java/tw/momocraft/barrierplus/extra/Residence4.8.8.2.jar</systemPath>
+            <version>LEGACY</version>
+        </dependency>
+        <!--PlayerPoints API-->
+        <dependency>
+            <groupId>org.black_ixx</groupId>
+            <artifactId>PlayerPoints</artifactId>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/src/main/java/tw/momocraft/barrierplus/extra/PlayerPoints.jar</systemPath>
+            <version>LEGACY</version>
         </dependency>
     </dependencies>
 

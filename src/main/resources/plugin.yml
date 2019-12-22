@@ -1,10 +1,10 @@
 name: BarrierPlus
 main: tw.momocraft.barrierplus.BarrierPlus
 author: Momocraft
-api-version: 1.14
-version: 1.0.5
-description: Adding creative blocks in your server.
-softdepend: [Vault, Residence]
+api-version: 1.15
+version: 1.0.7
+description: Control blocks place and destroy conditions, and display near invisible.blocks like barrier.
+softdepend: [Vault, Residence, PlayerPoints]
 
 commands:
   barrierplus:
@@ -12,6 +12,21 @@ commands:
     permission: barrierplus.use
     usage: |
       /barrierplus
+  barrierplus reload:
+    description: Reloads all configuration files and caches any new data.
+    permission: barrierplus.reload
+    usage: |
+      /barrierplus reload
+  barrierplus buy:
+    description: To buy some creative blocks.
+    permission: barrierplus.command.buy
+    usage: |
+      /barrierplus buy
+  barrierplus give:
+    description: To give some creative blocks.
+    permission: barrierplus.command.give
+    usage: |
+      /barrierplus give
 
 permissions:
   barrierplus.*:
@@ -24,12 +39,39 @@ permissions:
     default: op
     children:
       barrierplus.use: true
+      barrierplus.command.*: true
       barrierplus.see.*: true
       barrierplus.place.*: true
       barrierplus.destroy.*: true
+      barrierplus.buy.*: true
+      barrierplus.give.*: true
   barrierplus.use:
     description: Allows use of basic commands.
     default: true
+  barrierplus.command.*:
+    description: Allows use all commands.
+    default: op
+    children:
+      barrierplus.command.reload: true
+      barrierplus.command.buy: true
+      barrierplus.command.buy.other: true
+      barrierplus.command.give: true
+      barrierplus.command.give.other: true
+  barrierplus.command.reload:
+    description: Allows use of command /barrierplus reload.
+    default: op
+  barrierplus.command.buy:
+    description: Allows to use command /barrierplus buy.
+    default: op
+  barrierplus.command.buy.other:
+    description: Allows to use command /barrierplus buy for other player.
+    default: op
+  barrierplus.command.give:
+    description: Allows to use command /barrierplus give.
+    default: op
+  barrierplus.command.give.other:
+    description: Allows to use command /barrierplus give for other player.
+    default: op
   barrierplus.see.*:
     description: Allows to see near blocks.
     default: op
@@ -73,4 +115,36 @@ permissions:
     default: op
   barrierplus.destroy.bedrock:
     description: Allows to destroy bedrocks.
+    default: op
+  barrierplus.buy.*:
+    description: Allows to buy all blocks.
+    default: op
+    children:
+      barrierplus.buy.barrier: true
+      barrierplus.buy.structure_void: true
+      barrierplus.buy.bedrock: true
+  barrierplus.buy.barrier:
+    description: Allows to buy barriers.
+    default: op
+  barrierplus.buy.structure_void:
+    description: Allows to buy structure_voids.
+    default: op
+  barrierplus.buy.bedrock:
+    description: Allows to buy bedrocks.
+    default: op
+  barrierplus.give.*:
+    description: Allows to give all blocks.
+    default: op
+    children:
+      barrierplus.give.barrier: true
+      barrierplus.give.structure_void: true
+      barrierplus.give.bedrock: true
+  barrierplus.give.barrier:
+    description: Allows to give barriers.
+    default: op
+  barrierplus.give.structure_void:
+    description: Allows to give structure_voids.
+    default: op
+  barrierplus.give.bedrock:
+    description: Allows to give bedrocks.
     default: op

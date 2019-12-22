@@ -13,6 +13,13 @@ public class ServerHandler {
 		BarrierPlus.getInstance().getServer().getConsoleSender().sendMessage(message);
 	}
 
+	public static void sendDebugMessage(String message) {
+		String prefix = "&7[&dBarrierPlus_Debug&7] ";
+		message = prefix + message;
+		message = ChatColor.translateAlternateColorCodes('&', message).toString();
+		BarrierPlus.getInstance().getServer().getConsoleSender().sendMessage(message);
+	}
+
 	public static void sendErrorMessage(String message) {
 		String prefix = "&7[&cBarrierPlus_ERROR&7]&c ";
 		message = prefix + message;

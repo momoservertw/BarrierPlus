@@ -8,7 +8,32 @@ import tw.momocraft.barrierplus.handlers.ServerHandler;
 
 public class Language {
 	private static Lang langType = Lang.ENGLISH;
-	
+
+	public static void dispatchMessage(CommandSender sender, String langMessage, boolean hasPrefix) {
+		if (hasPrefix) {
+			Player player = null;
+			if (sender instanceof Player) {
+				player = (Player) sender;
+			}
+			langMessage = Utils.translateLayout(langMessage, player);
+			String prefix = Utils.translateLayout(ConfigHandler.getConfig(langType.nodeLocation()).getString("Message.prefix"), player);
+			if (prefix == null) {
+				prefix = "";
+			} else {
+				prefix += "";
+			}
+			langMessage = prefix + langMessage;
+			sender.sendMessage(Utils.stripLogColors(sender, langMessage));
+		} else {
+			Player player = null;
+			if (sender instanceof Player) {
+				player = (Player) sender;
+			}
+			langMessage = Utils.translateLayout(langMessage, player);
+			sender.sendMessage(Utils.stripLogColors(sender, langMessage));
+		}
+	}
+
 	public static void dispatchMessage(CommandSender sender, String langMessage) {
 		Player player = null; if (sender instanceof Player) { player = (Player) sender; }
 		langMessage = Utils.translateLayout(langMessage, player);
@@ -18,8 +43,9 @@ public class Language {
 	public static void sendLangMessage(String nodeLocation, CommandSender sender, String...placeHolder) {
 		Player player = null; if (sender instanceof Player) { player = (Player) sender; }
 		String langMessage = ConfigHandler.getConfig(langType.nodeLocation()).getString(nodeLocation);
-		String prefix = Utils.translateLayout(ConfigHandler.getConfig(langType.nodeLocation()).getString("Message.Prefix"), player); if (prefix == null) { prefix = ""; } else { prefix += ""; }
+		String prefix = Utils.translateLayout(ConfigHandler.getConfig(langType.nodeLocation()).getString("Message.prefix"), player); if (prefix == null) { prefix = ""; } else { prefix += ""; }
 		if (langMessage != null && !langMessage.isEmpty()) {
+			langMessage = translateLangHolders(langMessage, initializeRows(placeHolder));
 			langMessage = Utils.translateLayout(langMessage, player);
 			String[] langLines = langMessage.split(" /n ");
 			for (String langLine : langLines) {
@@ -31,6 +57,41 @@ public class Language {
 		}
 	}
 
+	private static String[] initializeRows(String...placeHolder) {
+		if (placeHolder == null || placeHolder.length != newString().length) {
+			String[] langHolder = Language.newString();
+			for (int i = 0; i < langHolder.length; i++) {
+				langHolder[i] = "null";
+			}
+			return langHolder;
+		} else {
+			String[] langHolder = placeHolder;
+			for (int i = 0; i < langHolder.length; i++) {
+				if (langHolder[i] == null) {
+					langHolder[i] = "null";
+				}
+			}
+			return langHolder;
+		}
+	}
+
+	private static String translateLangHolders(String langMessage, String...langHolder) {
+		return langMessage
+				.replace("%command%", langHolder[0])
+				.replace("%player%", langHolder[1])
+				.replace("%targetplayer%", langHolder[2])
+				.replace("%pricetype%", langHolder[3])
+				.replace("%price%", langHolder[4])
+				.replace("%balance%", langHolder[5])
+				.replace("%amount%", langHolder[6])
+				.replace("%item%", langHolder[7]);
+	}
+
+	public static String[] newString() {
+		return new String[14];
+	}
+
+
 	private enum Lang {
 		DEFAULT("config.yml", 0), ENGLISH("config.yml", 1);
 		private Lang(final String nodeLocation, final int i) { this.nodeLocation = nodeLocation; }
@@ -40,5 +101,43 @@ public class Language {
 
 	private static boolean isConsoleMessage(String nodeLocation) {
 		return false;
+	}
+
+	public static void debugMessage(String feature, String depiction) {
+		if (ConfigHandler.getDebugging()) {
+			ServerHandler.sendDebugMessage("&8" + feature + " - &f" + depiction);
+		}
+	}
+
+	public static void debugMessage(String feature, String target, String check, String action, String detail) {
+		if (ConfigHandler.getDebugging()) {
+			if (action.equals("return")) {
+				ServerHandler.sendDebugMessage("&8" + feature + " - &f" + target + "&8 : &7" + check + "&8, " + "&a" + action + "&8, " + detail);
+			} else if (action.equals("cancel")) {
+				ServerHandler.sendDebugMessage("&8" + feature + " - &f" + target + "&8 : &7" + check + "&8, " + "&c" + action + "&8, " + detail);
+			} else if (action.equals("continue")) {
+				ServerHandler.sendDebugMessage("&8" + feature + " - &f" + target + "&8 : &7" + check + "&8, " + "&e" + action + "&8, " + detail);
+			} else if (action.equals("bypass")) {
+				ServerHandler.sendDebugMessage("&8" + feature + " - &f" + target + "&8 : &7" + check + "&8, " + "&e" + action + "&8, " + detail);
+			} else if (action.equals("remove")) {
+				ServerHandler.sendDebugMessage("&8" + feature + " - &f" + target + "&8 : &7" + check + "&8, " + "&c" + action + "&8, " + detail);
+			}
+		}
+	}
+
+	public static void debugMessage(String feature, String target, String check, String action) {
+		if (ConfigHandler.getDebugging()) {
+			if (action.equals("return")) {
+				ServerHandler.sendDebugMessage("&8" + feature + " - &f" + target + "&8 : &7" + check + "&8, " + "&a" + action);
+			} else if (action.equals("cancel")) {
+				ServerHandler.sendDebugMessage("&8" + feature + " - &f" + target + "&8 : &7" + check + "&8, " + "&c" + action);
+			} else if (action.equals("continue")) {
+				ServerHandler.sendDebugMessage("&8" + feature + " - &f" + target + "&8 : &7" + check + "&8, " + "&e" + action);
+			} else if (action.equals("bypass")) {
+				ServerHandler.sendDebugMessage("&8" + feature + " - &f" + target + "&8 : &7" + check + "&8, " + "&e" + action);
+			} else if (action.equals("remove")) {
+				ServerHandler.sendDebugMessage("&8" + feature + " - &f" + target + "&8 : &7" + check + "&8, " + "&c" + action);
+			}
+		}
 	}
 }
