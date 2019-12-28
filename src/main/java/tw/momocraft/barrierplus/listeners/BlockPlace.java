@@ -6,6 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.barrierplus.handlers.PermissionsHandler;
+import tw.momocraft.barrierplus.handlers.ServerHandler;
 import tw.momocraft.barrierplus.utils.Language;
 
 public class BlockPlace implements Listener {
@@ -20,11 +21,11 @@ public class BlockPlace implements Listener {
                 //Check placing permissions.
                 if (PermissionsHandler.hasPermission(player, "barrierplus.place." + block.toLowerCase()) ||
                 PermissionsHandler.hasPermission(player, "barrierplus.place.*")) {
-                    Language.debugMessage("Place", block, "permission", "bypass");
+                    ServerHandler.debugMessage("(BlockPlace) Place", block, "permission", "bypass");
                     return;
                 }
                 Language.sendLangMessage("Message.BarrierPlus.noPermPlace", player);
-                Language.debugMessage("Place", block, "permission", "cancel");
+                ServerHandler.debugMessage("(BlockPlace) Place", block, "permission", "cancel");
                 e.setCancelled(true);
             }
         }

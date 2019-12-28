@@ -20,14 +20,14 @@ public class Commands implements CommandExecutor {
 
     public boolean onCommand(final CommandSender sender, Command c, String l, String[] args) {
         if (args.length == 0) {
-            if (PermissionsHandler.hasPermission(sender, "barrierplus.admin")) {
+            if (PermissionsHandler.hasPermission(sender, "barrierplus.use")) {
                 Language.dispatchMessage(sender, "&d&lBarrierPlus &e&lv" + BarrierPlus.getInstance().getDescription().getVersion() + "&8 - &fby Momocraft");
                 Language.dispatchMessage(sender, "&a/barrierplus help &8- &7This help menu.");
             } else {
                 Language.sendLangMessage("Message.noPermission", sender);
             }
         } else if (args.length == 1 && args[0].equalsIgnoreCase("help")) {
-            if (PermissionsHandler.hasPermission(sender, "barrierplus.admin")) {
+            if (PermissionsHandler.hasPermission(sender, "barrierplus.use")) {
                 Language.dispatchMessage(sender, "");
                 Language.dispatchMessage(sender, "&8▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩ &d&lBarrierPlus &8▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩");
                 Language.dispatchMessage(sender, "&d&lBarrierPlus &e&lv" + BarrierPlus.getInstance().getDescription().getVersion() + "&8 - &fby Momocraft");
@@ -41,7 +41,7 @@ public class Commands implements CommandExecutor {
             }
             return true;
         } else if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
-            if (PermissionsHandler.hasPermission(sender, "barrierplus.admin")) {
+            if (PermissionsHandler.hasPermission(sender, "barrierplus.command.reload")) {
                 // working: close purge.Auto-Clean schedule
                 ConfigHandler.generateData();
                 Language.sendLangMessage("Message.configReload", sender);

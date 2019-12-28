@@ -46,7 +46,7 @@ Buy:
 # Particle type: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Particle.html
 # Permission: barrierplus.see.MATERIAL or barrierplus.see.*
 See:
-  Enable: true
+  Enable: false
   Distance: 10
   # You can set cooldown to 0 (tick) to disable this feature.
   Cooldown: 60
@@ -67,7 +67,7 @@ See:
 # These blocks will need permission to place.
 # Permission: barrierplus.place.MATERIAL or barrierplus.place.*
 Place:
-  Enable: true
+  Enable: false
   List:
     - BARRIER
     - STRUCTURE_VOID
@@ -76,7 +76,7 @@ Place:
 # These blocks can destroy by menu.
 # Permission: barrierplus.destroy.MATERIAL or barrierplus.destroy.*
 Destroy:
-  Enable: true
+  Enable: false
   # Send a help message to player if they try to break the block which disable vanilla break.
   Menu-Break:
     Help-Message: true

@@ -8,6 +8,8 @@ import tw.momocraft.barrierplus.listeners.*;
 import tw.momocraft.barrierplus.utils.*;
 
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ConfigHandler {
 
@@ -66,14 +68,23 @@ public class ConfigHandler {
 		File File = new File(BarrierPlus.getInstance().getDataFolder(), "config.yml");
 		if (File.exists() && getConfig("config.yml").getInt("Config-Version") != 4) {
 			if (BarrierPlus.getInstance().getResource("config.yml") != null) {
-				String newGen = "config" + Utils.getRandom(1, 50000) + ".yml";
+				LocalDateTime currentDate = LocalDateTime.now();
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss");
+				String currentTime = currentDate.format(formatter);
+				String newGen = "config " + currentTime + ".yml";
 				File newFile = new File(BarrierPlus.getInstance().getDataFolder(), newGen);
 				if (!newFile.exists()) {
 					File.renameTo(newFile);
 					File configFile = new File(BarrierPlus.getInstance().getDataFolder(), "config.yml");
 					configFile.delete();
 					getConfigData("config.yml");
-					ServerHandler.sendConsoleMessage("&aYour config.yml is out of date and new options are available, generating a new one!");
+					ServerHandler.sendConsoleMessage("&e*            *            *");
+					ServerHandler.sendConsoleMessage("&e *            *            *");
+					ServerHandler.sendConsoleMessage("&e  *            *            *");
+					ServerHandler.sendConsoleMessage("&cYour config.yml is out of date and new options are available, generating a new one!");
+					ServerHandler.sendConsoleMessage("&e    *            *            *");
+					ServerHandler.sendConsoleMessage("&e     *            *            *");
+					ServerHandler.sendConsoleMessage("&e      *            *            *");
 				}
 			}
 		}

@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.barrierplus.handlers.PermissionsHandler;
+import tw.momocraft.barrierplus.handlers.ServerHandler;
 import tw.momocraft.barrierplus.utils.Language;
 
 public class BlockBreak implements Listener {
@@ -25,18 +26,18 @@ public class BlockBreak implements Listener {
                         if (ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Menu-Break.Help-Message")) {
                             Language.sendLangMessage("Message.BarrierPlus.breakHelp", player);
                         }
-                        Language.debugMessage("Destroy", block , "Vanilla-Break", "cancel");
+                        ServerHandler.debugMessage("(BlockBreak) Destroy", block , "Vanilla-Break", "cancel");
                         e.setCancelled(true);
                         return;
                     }
                     //Check destroy permission.
                     if (PermissionsHandler.hasPermission(player, "barrierplus.destroy." + block.toLowerCase()) ||
                             PermissionsHandler.hasPermission(player, "barrierplus.destroy.*")) {
-                        Language.debugMessage("Destroy", block , "permission", "return");
+                        ServerHandler.debugMessage("(BlockBreak) Destroy", block , "permission", "return");
                         return;
                     }
                     Language.sendLangMessage("Message.BarrierPlus.noPermDestroy", player);
-                    Language.debugMessage("Destroy", block , "permission", "cancel");
+                    ServerHandler.debugMessage("(BlockBreak) Destroy", block , "permission", "cancel");
                     e.setCancelled(true);
                 }
             }

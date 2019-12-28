@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockExplodeEvent;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
+import tw.momocraft.barrierplus.handlers.ServerHandler;
 import tw.momocraft.barrierplus.utils.Language;
 
 import java.util.*;
@@ -31,10 +32,10 @@ public class BlockExplode implements Listener {
                     block = i.next();
                     blockType = block.getType();
                     if (blockList.contains(blockType)) {
-                        Language.debugMessage("Destroy-Explode", blockType.name(), "Explode-Break = false or null", "remove");
+                        ServerHandler.debugMessage("(BlockExplode) Destroy-Explode", blockType.name(), "Explode-Break = false or null", "remove");
                         i.remove();
                     } else if (blockDropList.contains(blockType)) {
-                        Language.debugMessage("Destroy-Explode-Drop", blockType.name(), "Explode-Drop = false or null", "remove", "replace to air");
+                        ServerHandler.debugMessage("(BlockExplode) Destroy-Explode-Drop", blockType.name(), "Explode-Drop = false or null", "remove", "replace to air");
                         block.setType(Material.AIR);
                     }
                 }

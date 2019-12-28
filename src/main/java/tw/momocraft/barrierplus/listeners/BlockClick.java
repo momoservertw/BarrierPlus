@@ -15,6 +15,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import tw.momocraft.barrierplus.BarrierPlus;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.barrierplus.handlers.PermissionsHandler;
+import tw.momocraft.barrierplus.handlers.ServerHandler;
 import tw.momocraft.barrierplus.utils.Language;
 
 import java.util.*;
@@ -47,7 +48,7 @@ public class BlockClick implements Listener {
                                     if (ConfigHandler.getConfig("config.yml").getBoolean("See.Cooldown-Message")) {
                                         Language.sendLangMessage("Message.cooldown", player);
                                     }
-                                    Language.debugMessage("See", "show particle", "cooldown = true", "return");
+                                    ServerHandler.debugMessage("(BlockClick) See", "show particle", "cooldown = true", "return");
                                     return;
                                 }
                                 if (PermissionsHandler.hasPermission(player, "barrierplus.see." + block.toLowerCase()) ||
@@ -55,7 +56,7 @@ public class BlockClick implements Listener {
                                     addCooldownShow(player);
                                     checkBlock(player, block);
                                 }
-                                Language.debugMessage("See", itemOnHand, "final", "return");
+                                ServerHandler.debugMessage("(BlockClick) See", itemOnHand, "final", "return");
                             }
                         }
                     } else {
@@ -68,7 +69,7 @@ public class BlockClick implements Listener {
                                         if (ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Menu-Break.Cooldown-Message")) {
                                             Language.sendLangMessage("Message.cooldown", player);
                                         }
-                                        Language.debugMessage("Destroy", "Menu-Break", "cooldown = true", "return");
+                                        ServerHandler.debugMessage("(BlockClick) Destroy", "Menu-Break", "cooldown = true", "return");
                                         return;
                                     }
                                     //Residence - Enable.
@@ -82,7 +83,7 @@ public class BlockClick implements Listener {
                                             if (!hasPermBuild) {
                                                 if (!PermissionsHandler.hasPermission(player, "residence.bypass.build") && !player.isOp()) {
                                                     Language.sendLangMessage("Message.BarrierPlus.noPermDestroy", player);
-                                                    Language.debugMessage("Destroy-Menu", block, "residence permission = false", "return");
+                                                    ServerHandler.debugMessage("(BlockClick) Destroy-Menu", block, "residence permission = false", "return");
                                                     return;
                                                 }
                                             }
@@ -96,14 +97,14 @@ public class BlockClick implements Listener {
                                             String drop = ConfigHandler.getConfig("config.yml").getString("Destroy.List." + block + ".Menu-Drop");
                                             if (drop == null || drop.equals("true")) {
                                                 player.getWorld().dropItem(blockLocation, new ItemStack(Material.getMaterial(block)));
-                                                Language.debugMessage("Destroy", block, "Menu-Drop = true", "return");
+                                                ServerHandler.debugMessage("(BlockClick) Destroy", block, "Menu-Drop = true", "return");
                                                 return;
                                             }
-                                            Language.debugMessage("Destroy", block, "Menu-Drop = false", "return");
+                                            ServerHandler.debugMessage("(BlockClick) Destroy", block, "Menu-Drop = false", "return");
                                         }
                                     }
                                 }
-                                Language.debugMessage("Destroy", block, "final", "return");
+                                ServerHandler.debugMessage("(BlockClick) Destroy", block, "final", "return");
                             }
                         }
                     }
@@ -118,7 +119,7 @@ public class BlockClick implements Listener {
                         if (ConfigHandler.getConfig("config.yml").getBoolean("See.Cooldown-Message")) {
                             Language.sendLangMessage("Message.cooldown", player);
                         }
-                        Language.debugMessage("See", itemOnHand, "cooldown = true", "return");
+                        ServerHandler.debugMessage("(BlockClick) See", itemOnHand, "cooldown = true", "return");
                         return;
                     }
                     //Display near barriers and structure_void.
@@ -127,7 +128,7 @@ public class BlockClick implements Listener {
                         addCooldownShow(player);
                         checkBlock(player, itemOnHand);
                     }
-                    Language.debugMessage("See", itemOnHand, "final", "return");
+                    ServerHandler.debugMessage("(BlockClick) See", itemOnHand, "final", "return");
                 }
             }
         }
@@ -138,7 +139,7 @@ public class BlockClick implements Listener {
         String enableCreature = ConfigHandler.getConfig("config.yml").getString("See." + seeBlockType + ".Creative-Mode");
         if (enableCreature != null && enableCreature.equals("false")) {
             if (player.getGameMode().equals(GameMode.CREATIVE)) {
-                Language.debugMessage("See", seeBlockType, "Creative-Mode = false", "return");
+                ServerHandler.debugMessage("(BlockClick) See", seeBlockType, "Creative-Mode = false", "return");
                 return;
             }
         }
@@ -166,12 +167,12 @@ public class BlockClick implements Listener {
             @Override
             public void run() {
                 if (i > particleTimes) {
-                    Language.debugMessage("See", seeBlockType, "Show particle", "cancel");
+                    ServerHandler.debugMessage("(BlockClick) See", seeBlockType, "Show particle", "cancel");
                     cancel();
                 } else {
                     ++i;
                     locations.forEach((loc) -> player.spawnParticle(Particle.valueOf(particleType), loc, particleAmount, 0, 0, 0, 0));
-                    Language.debugMessage("See", seeBlockType, "Show particle", "continue");
+                    ServerHandler.debugMessage("(BlockClick) See", seeBlockType, "Show particle", "continue");
                 }
             }
         }.runTaskTimer(BarrierPlus.getInstance(), 0, particleInterval);

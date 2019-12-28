@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDropItemEvent;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
+import tw.momocraft.barrierplus.handlers.ServerHandler;
 import tw.momocraft.barrierplus.utils.Language;
 
 import java.util.*;
@@ -30,7 +31,7 @@ public class BlockDropItem implements Listener {
                     item = i.next();
                     itemType = item.getItemStack().getType();
                     if (dropList.contains(itemType)) {
-                        Language.debugMessage("Destroy", itemType.name(), "Vanilla-Drop = false or null", "remove");
+                        ServerHandler.debugMessage("(BlockDropItem) Destroy", itemType.name(), "Vanilla-Drop = false or null", "remove");
                         i.remove();
                     }
                 }

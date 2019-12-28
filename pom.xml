@@ -6,7 +6,7 @@
 
     <groupId>momocraft.tw</groupId>
     <artifactId>BarrierPlus</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
     <build>
         <plugins>
             <plugin>
@@ -25,6 +25,11 @@
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+        <!--PlaceholderAPI Repo-->
+        <repository>
+            <id>placeholderapi</id>
+            <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
     </repositories>
 
@@ -66,6 +71,13 @@
             <scope>system</scope>
             <systemPath>${pom.basedir}/src/main/java/tw/momocraft/barrierplus/extra/PlayerPoints.jar</systemPath>
             <version>LEGACY</version>
+        </dependency>
+        <!--PlaceholderAPI API-->
+        <dependency>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>LATEST</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
