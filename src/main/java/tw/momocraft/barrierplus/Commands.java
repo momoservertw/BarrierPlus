@@ -21,37 +21,70 @@ public class Commands implements CommandExecutor {
     public boolean onCommand(final CommandSender sender, Command c, String l, String[] args) {
         if (args.length == 0) {
             if (PermissionsHandler.hasPermission(sender, "barrierplus.use")) {
-                Language.dispatchMessage(sender, "&d&lBarrierPlus &e&lv" + BarrierPlus.getInstance().getDescription().getVersion() + "&8 - &fby Momocraft");
-                Language.dispatchMessage(sender, "&a/barrierplus help &8- &7This help menu.");
+                Language.sendLangMessage("Message.BarrierPlus.Commands.title", sender, false);
+                if (PermissionsHandler.hasPermission(sender, "barrierplus.command.version")) {
+                    Language.dispatchMessage(sender, "&d&lBarrierPlus &e&lv" + BarrierPlus.getInstance().getDescription().getVersion() + "&8 - &fby Momocraft");
+                }
+                Language.sendLangMessage("Message.BarrierPlus.Commands.help", sender, false);
             } else {
                 Language.sendLangMessage("Message.noPermission", sender);
             }
         } else if (args.length == 1 && args[0].equalsIgnoreCase("help")) {
             if (PermissionsHandler.hasPermission(sender, "barrierplus.use")) {
                 Language.dispatchMessage(sender, "");
-                Language.dispatchMessage(sender, "&8▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩ &d&lBarrierPlus &8▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩");
-                Language.dispatchMessage(sender, "&d&lBarrierPlus &e&lv" + BarrierPlus.getInstance().getDescription().getVersion() + "&8 - &fby Momocraft");
-                Language.dispatchMessage(sender, "&a/barrierplus help &8- &7This help menu.");
-                Language.dispatchMessage(sender, "&a/barrierplus reload &8- &7Reloads config file.");
-                Language.dispatchMessage(sender, "&a/barrierplus buy <item> [player] &8- &7Buy a block.");
-                Language.dispatchMessage(sender, "&a/barrierplus give <item> [amount] [player] &8- &7Give a block.");
+                Language.sendLangMessage("Message.BarrierPlus.Commands.title", sender, false);
+                if (PermissionsHandler.hasPermission(sender, "barrierplus.command.version")) {
+                    Language.dispatchMessage(sender, "&d&lBarrierPlus &e&lv" + BarrierPlus.getInstance().getDescription().getVersion() + "&8 - &fby Momocraft");
+                }
+                Language.sendLangMessage("Message.BarrierPlus.Commands.help", sender, false);
+                if (PermissionsHandler.hasPermission(sender, "barrierplus.command.reload")) {
+                    Language.sendLangMessage("Message.BarrierPlus.Commands.reload", sender, false);
+                }
+                if (PermissionsHandler.hasPermission(sender, "barrierplus.command.buy")) {
+                    Language.sendLangMessage("Message.BarrierPlus.Commands.buy", sender, false);
+                }
+                if (PermissionsHandler.hasPermission(sender, "barrierplus.command.buy.other")) {
+                    Language.sendLangMessage("Message.BarrierPlus.Commands.buyOther", sender, false);
+                }
+                if (PermissionsHandler.hasPermission(sender, "barrierplus.command.give")) {
+                    Language.sendLangMessage("Message.BarrierPlus.Commands.give", sender, false);
+                }
+                if (PermissionsHandler.hasPermission(sender, "barrierplus.command.give.other")) {
+                    Language.sendLangMessage("Message.BarrierPlus.Commands.giveOther", sender, false);
+                }
                 Language.dispatchMessage(sender, "");
             } else {
                 Language.sendLangMessage("Message.noPermission", sender);
             }
             return true;
-        } else if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
+        } else if (args[0].equalsIgnoreCase("reload")) {
             if (PermissionsHandler.hasPermission(sender, "barrierplus.command.reload")) {
-                // working: close purge.Auto-Clean schedule
                 ConfigHandler.generateData();
                 Language.sendLangMessage("Message.configReload", sender);
             } else {
                 Language.sendLangMessage("Message.noPermission", sender);
             }
             return true;
+        } else if (args[0].equalsIgnoreCase("version")) {
+            if (PermissionsHandler.hasPermission(sender, "barrierplus.command.version")) {
+                Language.dispatchMessage(sender, "&d&lBarrierPlus &e&lv" + BarrierPlus.getInstance().getDescription().getVersion() + "&8 - &fby Momocraft");
+                ConfigHandler.getUpdater().checkUpdates(sender, false);
+            } else {
+                Language.sendLangMessage("Message.noPermission", sender);
+            }
+            return true;
+        } else if (args.length == 1 && args[0].equalsIgnoreCase("buy")) {
+            if (PermissionsHandler.hasPermission(sender, "barrierplus.command.buy.other")) {
+                Language.sendLangMessage("Message.BarrierPlus.Commands.buyOther", sender, false);
+            } else if (PermissionsHandler.hasPermission(sender, "barrierplus.command.buy")) {
+                Language.sendLangMessage("Message.BarrierPlus.Commands.buy", sender, false);
+            } else {
+                Language.sendLangMessage("Message.noPermission", sender);
+            }
+            return true;
         } else if (args.length == 2 && args[0].equalsIgnoreCase("buy")) {
             if (PermissionsHandler.hasPermission(sender, "barrierplus.command.buy")) {
-                if (ConfigHandler.getDepends().getVault().getEconomy() == null) {
+                if (ConfigHandler.getDepends().getVault().getEconomy() == null && !ConfigHandler.getDepends().PlayerPointsEnabled()) {
                     Language.dispatchMessage(sender, "&cCan not find Vault or Economy plugin.", true);
                     return true;
                 }
@@ -99,6 +132,8 @@ public class Commands implements CommandExecutor {
                                 placeHolders[5] = String.valueOf(PlayerHandler.getTypeBalance(player, priceType));
                                 Language.sendLangMessage("Message.BarrierPlus.buyNotEnoughMoney", player, placeHolders);
                                 return true;
+                            } else {
+                                Language.sendLangMessage("Message.BarrierPlus.buyNoPerm", sender);
                             }
                         }
                     }
@@ -113,7 +148,7 @@ public class Commands implements CommandExecutor {
             return true;
         } else if (args.length == 3 && args[0].equalsIgnoreCase("buy")) {
             if (PermissionsHandler.hasPermission(sender, "barrierplus.command.buy.other")) {
-                if (ConfigHandler.getDepends().getVault().getEconomy() == null) {
+                if (ConfigHandler.getDepends().getVault().getEconomy() == null && !ConfigHandler.getDepends().PlayerPointsEnabled()) {
                     Language.dispatchMessage(sender, "&cCan not find Vault or Economy plugin.", true);
                     return true;
                 }
@@ -152,7 +187,7 @@ public class Commands implements CommandExecutor {
                                     placeHolders[3] = priceType;
                                     placeHolders[4] = String.valueOf(price);
                                     placeHolders[5] = String.valueOf(balance);
-                                    Language.sendLangMessage("Message.BarrierPlus.buySuccess", sender, placeHolders);
+                                    Language.sendLangMessage("Message.BarrierPlus.buySuccess", player, placeHolders);
                                     placeHolders[2] = player.getName();
                                     Language.sendLangMessage("Message.BarrierPlus.buyTargetSuccess", sender, placeHolders);
                                     return true;
@@ -168,13 +203,24 @@ public class Commands implements CommandExecutor {
                             placeHolders[5] = String.valueOf(PlayerHandler.getTypeBalance(player, priceType));
                             Language.sendLangMessage("Message.BarrierPlus.buyNotEnoughMoney", player, placeHolders);
                             placeHolders[2] = player.getName();
-                            Language.sendLangMessage("Message.BarrierPlus.buyTargetNotEnoughMoney", player, placeHolders);
+                            Language.sendLangMessage("Message.BarrierPlus.buyTargetNotEnoughMoney", sender, placeHolders);
                             return true;
+                        } else {
+                            Language.sendLangMessage("Message.BarrierPlus.buyNoPerm", sender);
                         }
                     }
                 }
                 Language.sendLangMessage("Message.BarrierPlus.noShopItem", sender);
                 return true;
+            } else {
+                Language.sendLangMessage("Message.noPermission", sender);
+            }
+            return true;
+        } else if (args.length == 1 && args[0].equalsIgnoreCase("give")) {
+            if (PermissionsHandler.hasPermission(sender, "barrierplus.command.give.other")) {
+                Language.sendLangMessage("Message.BarrierPlus.Commands.give", sender, false);
+            } else if (PermissionsHandler.hasPermission(sender, "barrierplus.command.give")) {
+                Language.sendLangMessage("Message.BarrierPlus.Commands.giveOther", sender, false);
             } else {
                 Language.sendLangMessage("Message.noPermission", sender);
             }
@@ -205,6 +251,8 @@ public class Commands implements CommandExecutor {
                                 }
                                 Language.sendLangMessage("Message.BarrierPlus.inventoryFull", sender);
                                 return true;
+                            } else {
+                                Language.sendLangMessage("Message.BarrierPlus.giveNoPerm", sender);
                             }
                         }
                     }
@@ -240,6 +288,8 @@ public class Commands implements CommandExecutor {
                                 }
                                 Language.sendLangMessage("Message.BarrierPlus.inventoryFull", sender);
                                 return true;
+                            } else {
+                                Language.sendLangMessage("Message.BarrierPlus.giveNoPerm", sender);
                             }
                         }
                     }
@@ -288,6 +338,8 @@ public class Commands implements CommandExecutor {
                             placeHolders[2] = player.getName();
                             Language.sendLangMessage("Message.BarrierPlus.targetInventoryFull", sender, placeHolders);
                             return true;
+                        } else {
+                            Language.sendLangMessage("Message.BarrierPlus.giveNoPerm", sender);
                         }
                     }
                 }
@@ -330,6 +382,8 @@ public class Commands implements CommandExecutor {
                             placeHolders[2] = player.getName();
                             Language.sendLangMessage("Message.BarrierPlus.targetInventoryFull", sender, placeHolders);
                             return true;
+                        } else {
+                            Language.sendLangMessage("Message.BarrierPlus.giveNoPerm", sender);
                         }
                     }
                 }

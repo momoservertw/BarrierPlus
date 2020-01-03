@@ -15,15 +15,18 @@ public class ConfigHandler {
 
 	private static YamlConfiguration configYAML;
 	private static DependAPI depends;
+	private static UpdateHandler updater;
 
 	public static void generateData() {
 		configFile();
 		setDepends(new DependAPI());
 		sendUtilityDepends();
+		setUpdater(new UpdateHandler());
 	}
 
 	public static void registerEvents() {
 		BarrierPlus.getInstance().getCommand("barrierplus").setExecutor(new Commands());
+		BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new PlayerJoin(), BarrierPlus.getInstance());
 		BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockClick(), BarrierPlus.getInstance());
 		BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockPlace(), BarrierPlus.getInstance());
 		BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockBreak(), BarrierPlus.getInstance());
@@ -40,7 +43,7 @@ public class ConfigHandler {
 		return getPath(path, file, false);
 	}
 
-	public static FileConfiguration getConfigData(String path) {
+	private static FileConfiguration getConfigData(String path) {
 		File file = new File(BarrierPlus.getInstance().getDataFolder(), path);
 		if (!(file).exists()) {
 			try {
@@ -53,7 +56,7 @@ public class ConfigHandler {
 		return getPath(path, file, true);
 	}
 
-	public static YamlConfiguration getPath(String path, File file, boolean saveData) {
+	private static YamlConfiguration getPath(String path, File file, boolean saveData) {
 		if (path.contains("config.yml")) {
 			if (saveData) {
 				configYAML = YamlConfiguration.loadConfiguration(file);
@@ -63,10 +66,10 @@ public class ConfigHandler {
 		return null;
 	}
 
-	public static void configFile() {
+	private static void configFile() {
 		getConfigData("config.yml");
 		File File = new File(BarrierPlus.getInstance().getDataFolder(), "config.yml");
-		if (File.exists() && getConfig("config.yml").getInt("Config-Version") != 4) {
+		if (File.exists() && getConfig("config.yml").getInt("Config-Version") != 5) {
 			if (BarrierPlus.getInstance().getResource("config.yml") != null) {
 				LocalDateTime currentDate = LocalDateTime.now();
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss");
@@ -81,7 +84,7 @@ public class ConfigHandler {
 					ServerHandler.sendConsoleMessage("&e*            *            *");
 					ServerHandler.sendConsoleMessage("&e *            *            *");
 					ServerHandler.sendConsoleMessage("&e  *            *            *");
-					ServerHandler.sendConsoleMessage("&cYour config.yml is out of date and new options are available, generating a new one!");
+					ServerHandler.sendConsoleMessage("&cYour config.yml is out of date, generating a new one!");
 					ServerHandler.sendConsoleMessage("&e    *            *            *");
 					ServerHandler.sendConsoleMessage("&e     *            *            *");
 					ServerHandler.sendConsoleMessage("&e      *            *            *");
@@ -92,10 +95,10 @@ public class ConfigHandler {
 	}
 
 	private static void sendUtilityDepends() {
-		ServerHandler.sendConsoleMessage("&fUtilizing [ &e"
+		ServerHandler.sendConsoleMessage("&fHooked [ &e"
 				+ (getDepends().getVault().vaultEnabled() ? "Vault, " : "")
-				+ (getDepends().ResidenceEnabled() ? "Residence " : "")
-				+ (getDepends().PlayerPointsEnabled() ? "PlayerPoints " : "")
+				+ (getDepends().ResidenceEnabled() ? "Residence, " : "")
+				+ (getDepends().PlayerPointsEnabled() ? "PlayerPoints, " : "")
 				+ "&f]");
 	}
 
@@ -109,5 +112,13 @@ public class ConfigHandler {
 
 	public static boolean getDebugging() {
 		return ConfigHandler.getConfig("config.yml").getBoolean("Debugging");
+	}
+
+	public static UpdateHandler getUpdater() {
+		return updater;
+	}
+
+	private static void setUpdater(UpdateHandler update) {
+		updater = update;
 	}
 }

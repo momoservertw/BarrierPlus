@@ -6,7 +6,7 @@
 
     <groupId>momocraft.tw</groupId>
     <artifactId>BarrierPlus</artifactId>
-    <version>1.0.8</version>
+    <version>1.1.0</version>
     <build>
         <plugins>
             <plugin>

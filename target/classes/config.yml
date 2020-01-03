@@ -1,30 +1,24 @@
 # --{ =-=-=-=-=-=-=-=-=-= BarrierPlus's Configuration Settings, by Momocraft =-=-=-=-=-=-=-=-=-= }--
-Config-Version: 4
+Config-Version: 5
 Log-Coloration: true
 Debugging: false
+Check-Updates: true
 
-# The menu item for some events like showing barriers or destroying it.
+# The menu item for some events like showing creative blocks or destroying it.
 # Item types: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
 # If you don't have a menu in your server, you can set Item-Name to '' to use a vanilla item.
 Menu:
   Item-Type: 'PLAYER_HEAD'
   Item-Name: '&e&lMy &6&lMenu'
 
-# Price-Type can set to "money" or "points". PlayerPointsAPI only support PlayerPoints.
+# Buy or give creative blocks.
+# Price-Type: "money" or "points". "points" only support PlayerPoints.
 # PlayerPoints: https://dev.bukkit.org/projects/playerpoints
-# If you don't set option "Amount", it will give player the max stack size of that item like barrier x64.
-# Amount can set overy than the max stack size.
-
-# Buy command: /barrierplus buy <item> [player]
-# Command permission: barrierplus.command.buy
-# Command permission for other player: barrierplus.command.buy.other
-# Item permission: barrierplus.buy.MATERIAL or barrierplus.buy.*
-
-# If you want to give the items to player for free, you can use give command.
-# Give command: /barrierplus give <item> [amount] [player]
-# Command permission: barrierplus.command.give
-# Command permission for other player: barrierplus.command.give.other
-# Item [ermission: barrierplus.give.MATERIAL or barrierplus.give.*
+# Amount: Can set over the max stack size. By default, it will give the max stack size of item like "barrier x64".
+# Buy command permission: barrierplus.command.buy
+# Buy item permission: barrierplus.buy.MATERIAL or barrierplus.buy.*
+# Give command permission: barrierplus.command.give
+# Guve item permission: barrierplus.give.MATERIAL or barrierplus.give.*
 Buy:
   List:
     BARRIER:
@@ -42,13 +36,14 @@ Buy:
       Price: 1000
       Amount: 640
 
-# You can add any type of blocks and custom display particle.
+# Display near creative blocks.
+# Distance: The display creative range near player. Setting too high may cause lags.
+# Cooldown(tick): Set "0" to disable cooldown feature.
 # Particle type: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Particle.html
 # Permission: barrierplus.see.MATERIAL or barrierplus.see.*
 See:
   Enable: false
   Distance: 10
-  # You can set cooldown to 0 (tick) to disable this feature.
   Cooldown: 60
   Cooldown-Message: false
   List:
@@ -64,33 +59,32 @@ See:
       Times: 10
       Interval-Tick: 10
 
-# These blocks will need permission to place.
+# These creative blocks will need permission to place.
 # Permission: barrierplus.place.MATERIAL or barrierplus.place.*
 Place:
   Enable: false
   List:
-    - BARRIER
-    - STRUCTURE_VOID
-    - BEDROCK
+    BARRIER: []
+    STRUCTURE_VOID: []
+    BEDROCK:
+      Location:
+        world:
+          Y: ">= 5"
+        world_nether:
+          Y: "5 ~ 123"
 
-# These blocks can destroy by menu.
+# Control blocks destroy conditions. The creative blocks can be broken by the menu.
+# Help-Message: Send a help message to player if they try to break the block which disable vanilla break.
+# cooldown(tick): Set "0" to disable the Menu-break cooldown.
+# Default: Menu-Break: true, Menu-Drop: true, Vanilla-Break: false,
+#          Vanilla-Drop: false, Explode-Break: false, Explode-Drop: false
 # Permission: barrierplus.destroy.MATERIAL or barrierplus.destroy.*
 Destroy:
   Enable: false
-  # Send a help message to player if they try to break the block which disable vanilla break.
   Menu-Break:
     Help-Message: true
-    # Menu-break cooldown.You can set 0 (tick) to disable this feature.
     Cooldown: 10
-    Cooldown-Message: true
-  # It will cancel vanilla break event and only allows player to use menu to break blocks.
-  # Default settings:
-  #   Menu-Break: true
-  #   Menu-Drop: true
-  #   Vanilla-Break: false
-  #   Vanilla-Drop: false
-  #   Explode-Break: false
-  #   Explode-Drop: false
+    Cooldown-Message: false
   List:
     BARRIER:
       Menu-Break: true
@@ -100,7 +94,12 @@ Destroy:
       Explode-Break: false
       Explode-Drop: false
     STRUCTURE_VOID: []
-    BEDROCK: []
+    BEDROCK:
+      Location:
+        world:
+          Y: ">= 5"
+        world_nether:
+          Y: "5 ~ 123"
 
 Message:
   prefix: '&7[&dBarrierPlus&7]&r '
@@ -110,15 +109,35 @@ Message:
   cooldown: '&fPlease try it again later.'
   targetNotFound: '&cThe player &c%targetplayer% &ccould not be found!'
   BarrierPlus:
+    Commands:
+      title: "&8▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩ &d&lBarrierPlus &8▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩"
+      help: "&a/barrierplus help &8- &7This help menu."
+      reload: "&a/barrierplus reload &8- &7Reloads config file."
+      buy: "&a/barrierplus buy <item> &8- &7Buy creative items."
+      buyOther: "&a/barrierplus buy <item> [player] &8- &7Execute buy creative items command to a player."
+      give: "&a/barrierplus give <item> [amount] &8- &7Give creative items."
+      giveOther: "&a/barrierplus give <item> [amount] [player] &8- &7Give creative items to a player."
     noPermDestroy: '&cYou dont have &6build &cpermission<s> here.'
-    noPermPlace: '&cYou dont have permission to place that block.'
+    noPermPlace: '&cYou dont have permission to place this block.'
+    noPermBreak: '&cYou dont have permission to break this block.'
+    placeLocFail: '&7You cannot place the %item% in this position.'
     breakHelp: '&7Holding menu and "&eleft-click + shift&7" to break this block.'
+    breakLocFail: '&7You cannot break the %item% in this position.'
     noShopItem: '&cYou can not buy this block.'
     inventoryFull: '&cYou dont have enough inventory space.'
     targetInventoryFull: '&c%targetplayer% dont have enough inventory space.'
-    buySuccess: '&aSuccess buy &e%item% x%amount% &afor %price% %pricetype% &8- &a%pricetype%: %balance%.'
-    buyTargetSuccess: '&aSuccess buy &e%item% x%amount% &afor %price% %pricetype% for %targetplayer% &8- &a%pricetype%: %balance%.'
+    buyDisable: '&cThis feature is disabled.'
+    buyNoPerm: '&cYou do not have permission to buy %item%.'
+    buySuccess: '&aSuccess buy &e%item% x%amount% &afor %price% %pricetype% &8- &a%pricetype%: %balance%'
+    buyTargetSuccess: '&aSuccess buy &e%item% x%amount% &afor %price% %pricetype% for %targetplayer% &8- &a%pricetype%: %balance%'
     buyNotEnoughMoney: '&cYou need &e%price% %pricetype%&c to buy %item% x%amount% &8- &c%pricetype%: %balance%.'
-    buyTargetNotEnoughMoney: '&c%targetplayer% need &e%price% %pricetype%&c to buy %item% &%amount% &8- &c%pricetype%: %balance%.'
-    giveSuccess: '&aSuccess give &e%item% &7x%amount%.'
-    giveTargetSuccess: '&aSuccess give &e%item% &7x%amount% &afor %targetplayer%.'
+    buyTargetNotEnoughMoney: '&c%targetplayer% need &e%price% %pricetype%&c to buy %item% x%amount% &8- &c%pricetype%: %balance%'
+    giveSuccess: '&aSuccess give &e%item% x%amount%&a.'
+    giveTargetSuccess: '&aSuccess give &e%item% x%amount% &afor %targetplayer%.'
+    Items:
+      BARRIER: 'barrier'
+      STRUCTURE_VOID: 'structure_void'
+      BEDROCK: 'bedrock'
+    PriceTypes:
+      money: 'money'
+      points: 'points'

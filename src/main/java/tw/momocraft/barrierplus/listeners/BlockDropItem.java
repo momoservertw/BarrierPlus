@@ -8,14 +8,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDropItemEvent;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.barrierplus.handlers.ServerHandler;
-import tw.momocraft.barrierplus.utils.Language;
 
 import java.util.*;
 
 public class BlockDropItem implements Listener {
 
     /**
-     *
      * @param e when a item drops.
      */
     @EventHandler
@@ -40,7 +38,6 @@ public class BlockDropItem implements Listener {
     }
 
     /**
-     *
      * @param dropList the list of drop items.
      * @return the list which will not drops.
      */
