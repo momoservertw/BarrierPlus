@@ -16,7 +16,7 @@ public class PlayerJoin implements Listener {
         Player player = e.getPlayer();
         if (PermissionsHandler.hasPermission(player, "barrierplus.command.version")) {
             Language.dispatchMessage(player, "&d&lBarrierPlus &e&lv" + BarrierPlus.getInstance().getDescription().getVersion() + "&8 - &fby Momocraft");
-            ConfigHandler.getUpdater().checkUpdates(player, true);
+            ConfigHandler.getUpdater().checkUpdates(player);
         }
     }
 }

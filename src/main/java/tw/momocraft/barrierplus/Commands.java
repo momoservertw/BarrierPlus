@@ -68,7 +68,7 @@ public class Commands implements CommandExecutor {
         } else if (args[0].equalsIgnoreCase("version")) {
             if (PermissionsHandler.hasPermission(sender, "barrierplus.command.version")) {
                 Language.dispatchMessage(sender, "&d&lBarrierPlus &e&lv" + BarrierPlus.getInstance().getDescription().getVersion() + "&8 - &fby Momocraft");
-                ConfigHandler.getUpdater().checkUpdates(sender, false);
+                ConfigHandler.getUpdater().checkUpdates(sender);
             } else {
                 Language.sendLangMessage("Message.noPermission", sender);
             }
