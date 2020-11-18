@@ -8,7 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.barrierplus.handlers.ServerHandler;
-import tw.momocraft.barrierplus.utils.LocationAPI;
 
 import java.util.*;
 
@@ -34,7 +33,8 @@ public class EntityExplode implements Listener {
                     blockType = block.getType();
                     if (!blockList.contains(block.getType().name())) {
                         if (LocationAPI.getLocation(e.getLocation().getBlock(), "Destroy.List." + block + ".Location")) {
-                            ServerHandler.debugMessage("(EntityExplode) Destroy-Explode", blockType.name(), "Location = false", "cancel");
+                            ServerHandler.debugMessage("(EntityExplode) Destroy-Explode", blockType.name(), "Location = false", "cancel", groupName,
+                                    new Throwable().getStackTrace()[0]);
                             i.remove();
                             continue;
                         }

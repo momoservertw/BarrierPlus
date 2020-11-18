@@ -9,7 +9,6 @@ import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.barrierplus.handlers.PermissionsHandler;
 import tw.momocraft.barrierplus.handlers.ServerHandler;
 import tw.momocraft.barrierplus.utils.Language;
-import tw.momocraft.barrierplus.utils.LocationAPI;
 
 import java.util.List;
 

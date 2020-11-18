@@ -1,15 +1,46 @@
 # --{ =-=-=-=-=-=-=-=-=-= BarrierPlus's Configuration Settings, by Momocraft =-=-=-=-=-=-=-=-=-= }--
-Config-Version: 5
+Config-Version: 6
 Log-Coloration: true
 Debugging: false
 Check-Updates: true
+
+
+General:
+  Location:
+    NormalWorlds:
+      Worlds:
+        - world
+    NetherWorlds:
+      Worlds:
+        - world_nether
+    EndWorlds:
+      Worlds:
+        - world_the_end
+    NormalBorder:
+      Worlds:
+        - world
+      Area:
+        S: 10000
+    Bedrock_World:
+      Worlds:
+        - world
+      Area:
+        Y: ">= 5"
+    Bedrock_Nether:
+      Worlds:
+        - world_nether
+      Area:
+        Y: "5 ~ 123"
+
 
 # The menu item for some events like showing creative blocks or destroying it.
 # Item types: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
 # If you don't have a menu in your server, you can set Item-Name to '' to use a vanilla item.
 Menu:
-  Item-Type: 'PLAYER_HEAD'
-  Item-Name: '&e&lMy &6&lMenu'
+  ItemJoin: ""
+  Item:
+    Type: "PLAYER_HEAD"
+    Name: "&e&lMy &6&lMenu"
 
 # Buy or give creative blocks.
 # Price-Type: "money" or "points". "points" only support PlayerPoints.
@@ -20,60 +51,66 @@ Menu:
 # Give command permission: barrierplus.command.give
 # Guve item permission: barrierplus.give.MATERIAL or barrierplus.give.*
 Buy:
-  List:
-    BARRIER:
+  Enable: false
+  Groups:
+    Barrier:
+      Enable: true
       Price-Type: points
       Price: 25
       Amount: 64
-    STRUCTURE_VOID:
-      Price-Type: points
-      Price: 25
-    BEDROCK:
-      Price-Type: points
-      Price: 25
-    DIRT:
-      Price-Type: money
-      Price: 1000
-      Amount: 640
+      Types:
+        - BARRIER
+        - STRUCTURE_VOID
+        - BEDROCK
 
 # Display near creative blocks.
 # Distance: The display creative range near player. Setting too high may cause lags.
 # Cooldown(tick): Set "0" to disable cooldown feature.
 # Creative-Mode: Display the particles is player is op.
 # Particle type: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Particle.html
-# Permission: barrierplus.see.MATERIAL or barrierplus.see.*
+# Permission: barrierplus.see.GROUP or barrierplus.see.*
 See:
   Enable: false
-  Distance: 10
-  Cooldown: 60
-  Cooldown-Message: false
-  List:
-    BARRIER:
-      Creative-Mode: false
-      Particle: BARRIER
-      Amount: 1
-      Times: 1
-      Interval-Tick: 10
-    STRUCTURE_VOID:
-      Particle: CRIT_MAGIC
-      Amount: 2
-      Times: 10
-      Interval-Tick: 10
+  Settings:
+    Distance: 10
+    Cooldown:
+      Interval: 60
+      Message: false
+  Groups:
+    Barrier:
+      Creative: false
+      Particle:
+        Type: BARRIER
+        Amount: 1
+        Times: 1
+        Interval: 10
+      Types:
+        - BARRIER
+    Structure_void:
+      Particle:
+        Type: CRIT_MAGIC
+        Amount: 2
+        Times: 10
+        Interval-Tick: 10
+      Types:
+        - STRUCTURE_VOID
 
 # These creative blocks will need permission to place.
 # It will not limit place location if you don' add the location setting.
-# Permission: barrierplus.place.MATERIAL or barrierplus.place.*
+# Permission: barrierplus.place.GROUP or barrierplus.place.*
 Place:
   Enable: false
   List:
-    BARRIER: []
-    STRUCTURE_VOID: []
-    BEDROCK:
+    Creative:
+      Types:
+        - BARRIER
+        - STRUCTURE_VOID
+    Bedrock:
+      Types:
+        - BEDROCK
       Location:
-        world:
-          Y: ">= 5"
-        world_nether:
-          Y: "5 ~ 123"
+        - Bedrock_World
+        - Bedrock_Nether
 
 # Control blocks destroy conditions. The creative blocks can be broken by the menu.
 # Help-Message: Send a help message to player if they try to break the block which disable vanilla break.
@@ -84,25 +121,32 @@ Place:
 # Permission: barrierplus.destroy.MATERIAL or barrierplus.destroy.*
 Destroy:
   Enable: false
-  Menu-Break:
-    Help-Message: true
-    Cooldown: 10
-    Cooldown-Message: false
-  List:
-    BARRIER:
-      Menu-Break: true
-      Menu-Drop: true
-      Vanilla-Break: false
-      Vanilla-Drop: false
-      Explode-Break: false
-      Explode-Drop: false
-    STRUCTURE_VOID: []
-    BEDROCK:
+  Settings:
+    Menu-Break:
+      Help-Message: true
+      Cooldown: 10
+      Cooldown-Message: false
+    Default:
+      Menu:
+        Break: true
+        Drop: true
+      Vanilla:
+        Break: false
+        Drop: false
+      Explode:
+        Break: false
+        Drop: false
+  Groups:
+    Barrier:
+      Types:
+        - BARRIER
+        - STRUCTURE_VOID
+    Bedrock:
+      Types:
+        - BEDROCK
       Location:
-        world:
-          Y: ">= 5"
-        world_nether:
-          Y: "5 ~ 123"
+        - Bedrock_World
+        - Bedrock_Nether
 
 Message:
   prefix: '&7[&dBarrierPlus&7]&r '
