@@ -9,7 +9,6 @@ tw\momocraft\barrierplus\utils\PlayerPointsAPI.class
 tw\momocraft\barrierplus\listeners\BlockBreak.class
 tw\momocraft\barrierplus\utils\VaultAPI.class
 tw\momocraft\barrierplus\utils\LocationAPI.class
-tw\momocraft\barrierplus\listeners\PlayerJoin.class
 tw\momocraft\barrierplus\utils\DependAPI.class
 tw\momocraft\barrierplus\handlers\ConfigHandler.class
 tw\momocraft\barrierplus\handlers\PlayerHandler.class

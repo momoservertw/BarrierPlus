@@ -9,7 +9,7 @@ import java.net.URLConnection;
 
 public class UpdateHandler {
 
-    private final int PROJECTID = 70510;
+    private final int PROJECTID = 76878;
 
 	private final String HOST = "https://api.spigotmc.org/legacy/update.php?resource=" + this.PROJECTID;
 	private String versionExact = BarrierPlus.getInstance().getDescription().getVersion();
@@ -33,7 +33,7 @@ public class UpdateHandler {
 	public void checkUpdates(final CommandSender sender) {
 		if (this.updateNeeded(sender) && this.updatesAllowed) {
 			ServerHandler.sendMessage(sender, "&aNew version is available: " + "&e&lv" + this.latestVersion);
-			ServerHandler.sendMessage(sender, "&ehttps://www.spigotmc.org/resources/entityplus.70510/history");
+			ServerHandler.sendMessage(sender, "&ehttps://www.spigotmc.org/resources/barrierplus.76878/history");
 		} else if (this.updatesAllowed) {
 			ServerHandler.sendMessage(sender, "&fYou are up to date!");
 		}
