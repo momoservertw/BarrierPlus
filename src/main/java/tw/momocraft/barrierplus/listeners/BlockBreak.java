@@ -1,6 +1,5 @@
 package tw.momocraft.barrierplus.listeners;
 
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -8,6 +7,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.barrierplus.handlers.PermissionsHandler;
 import tw.momocraft.barrierplus.handlers.ServerHandler;
+import tw.momocraft.barrierplus.utils.DestroyMap;
 import tw.momocraft.barrierplus.utils.Language;
 
 public class BlockBreak implements Listener {
@@ -17,48 +17,49 @@ public class BlockBreak implements Listener {
         if (ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Enable")) {
             Player player = e.getPlayer();
             String block = e.getBlock().getBlockData().getMaterial().name();
-            ConfigurationSection blockList = ConfigHandler.getConfig("config.yml").getConfigurationSection("Destroy.List");
-            if (blockList != null) {
-                if (blockList.getKeys(false).contains(block)) {
-                    // Has bypass permission.
-                    if (PermissionsHandler.hasPermission(player, "barrierplus.bypass.destroy")) {
-                        ServerHandler.debugMessage("(BreakBlock) Destroy", block, "has bypass permission", "bypass");
-                        return;
+            DestroyMap destroyMap = ConfigHandler.getConfigPath().getDestroyProp().get(block);
+            DestroyMap destroyDefMap = ConfigHandler.getConfigPath().getDestroyProp().get("default");
+            if (destroyMap != null) {
+                // Has bypass permission.
+                if (PermissionsHandler.hasPermission(player, "barrierplus.bypass.destroy")) {
+                    ServerHandler.sendFeatureMessage("Destroy", block, "bypass permission", "bypass",
+                            new Throwable().getStackTrace()[0]);
+                    return;
+                }
+                // Cancel vanilla break event.
+                if (destroyMap.getVanillaBreak() == null && !Boolean.parseBoolean(destroyDefMap.getVanillaBreak()) ||
+                        destroyMap.getVanillaBreak() != null && destroyMap.getVanillaBreak().equals("true")) {
+                    if (ConfigHandler.getConfigPath().isDestroyHelp()) {
+                        Language.sendLangMessage("Message.BarrierPlus.breakHelp", player);
                     }
-                    // Cancel vanilla break event.
-                    if (!ConfigHandler.getConfig("config.yml").getBoolean("Destroy.List." + block + ".Vanilla-Break")) {
-                        if (player.getInventory().getItemInMainHand().getType().name().equals(ConfigHandler.getConfig("config.yml").getString("Menu.Item-Type"))) {
-                            String menuItemName = ConfigHandler.getConfig("config.yml").getString("Menu.Item-Name");
-                            if (menuItemName.equals("") || player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(menuItemName.replace("&", "§"))) {
-                                e.setCancelled(true);
-                                return;
-                            }
-                        }
-                        if (ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Menu-Break.Help-Message")) {
-                            Language.sendLangMessage("Message.BarrierPlus.breakHelp", player);
-                        }
-                        ServerHandler.debugMessage("(BlockBreak) Destroy", block, "Vanilla-Break", "cancel");
-                        e.setCancelled(true);
-                        return;
-                    }
-                    // Has destroy permission.
-                    if (PermissionsHandler.hasPermission(player, "barrierplus.destroy." + block.toLowerCase()) ||
-                            PermissionsHandler.hasPermission(player, "barrierplus.destroy.*")) {
-                        // In a legal location.
-                        if (LocationAPI.getLocation(e.getBlock(), "Destroy.List." + block + ".Location")) {
-                            ServerHandler.debugMessage("(BlockBreak) Destroy", block, "location", "return");
-                            return;
-                        } else {
-                            String[] placeHolders = Language.newString();
-                            placeHolders[7] = block;
-                            Language.sendLangMessage("Message.BarrierPlus.breakLocFail", player, placeHolders);
-                            ServerHandler.debugMessage("(BlockBreak) Destroy", block, "Location = false", "return");
-                            e.setCancelled(true);
-                            return;
-                        }
-                    }
+                    ServerHandler.sendFeatureMessage("Destroy", block, "getVanillaBreak", "cancel",
+                            new Throwable().getStackTrace()[0]);
+                    e.setCancelled(true);
+                    return;
+                }
+                // Location.
+                if (!ConfigHandler.getConfigPath().getLocationUtils().checkLocation(e.getBlock().getLocation(), destroyDefMap.getLocMaps())) {
+                    ServerHandler.sendFeatureMessage("Destroy", block, "location", "return",
+                            new Throwable().getStackTrace()[0]);
+                    return;
+                }
+                // Has destroy block permission.
+                if (PermissionsHandler.hasPermission(player, "barrierplus.destroy." + block.toLowerCase()) ||
+                        PermissionsHandler.hasPermission(player, "barrierplus.destroy.*")) {
+
                     Language.sendLangMessage("Message.BarrierPlus.noPermDestroy", player);
-                    ServerHandler.debugMessage("(BlockBreak) Destroy", block, "permission = false", "cancel");
+                    ServerHandler.sendFeatureMessage("Destroy", block, "block permission", "cancel",
+                            new Throwable().getStackTrace()[0]);
+                    e.setCancelled(true);
+                    return;
+                }
+                // Prevent Location.
+                if (ConfigHandler.getConfigPath().getLocationUtils().checkLocation(e.getBlock().getLocation(), destroyDefMap.getPreventLocMaps())) {
+                    String[] placeHolders = Language.newString();
+                    placeHolders[7] = block;
+                    Language.sendLangMessage("Message.BarrierPlus.breakLocFail", player, placeHolders);
+                    ServerHandler.sendFeatureMessage("Destroy", block, "prevent location", "return",
+                            new Throwable().getStackTrace()[0]);
                     e.setCancelled(true);
                 }
             }

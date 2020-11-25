@@ -31,6 +31,11 @@
             <id>placeholderapi</id>
             <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
+        <!--CraftationGaming Repository-->
+        <repository>
+            <id>CraftationGaming</id>
+            <url>https://raw.githubusercontent.com/RockinChaos/repository/maven-public/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -77,6 +82,13 @@
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
             <version>LATEST</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--ItemJoin API-->
+        <dependency>
+            <groupId>me.RockinChaos.itemjoin</groupId>
+            <artifactId>ItemJoin</artifactId>
+            <version>5.1.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

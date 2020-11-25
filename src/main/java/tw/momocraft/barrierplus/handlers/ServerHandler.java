@@ -74,6 +74,7 @@ public class ServerHandler {
 			case "remove":
 			case "kill":
 			case "damage":
+			case "fail":
 				ServerHandler.sendDebugMessage("&f" + feature + "&8 - &f" + target + "&8 : &f" + check + "&8, &c" + action + "&8, &7" + detail
 						+ " &8(" + ste.getClassName() + " " + ste.getMethodName() + " " + ste.getLineNumber() + ")", true);
 				break;
@@ -84,6 +85,7 @@ public class ServerHandler {
 						+ " &8(" + ste.getClassName() + " " + ste.getMethodName() + " " + ste.getLineNumber() + ")", true);
 				break;
 			case "return":
+			case "success":
 			default:
 				ServerHandler.sendDebugMessage("&f" + feature + "&8 - &f" + target + "&8 : &f" + check + "&8, &a" + action + "&8, &7" + detail
 						+ " &8(" + ste.getClassName() + " " + ste.getMethodName() + " " + ste.getLineNumber() + ")", true);
@@ -110,6 +112,7 @@ public class ServerHandler {
 						+ " &8(" + ste.getClassName() + " " + ste.getMethodName() + " " + ste.getLineNumber() + ")", true);
 				break;
 			case "return":
+			case "success":
 			default:
 				ServerHandler.sendDebugMessage("&f" + feature + "&8 - &f" + target + "&8 : &f" + check + "&8, &a" + action
 						+ " &8(" + ste.getClassName() + " " + ste.getMethodName() + " " + ste.getLineNumber() + ")", true);

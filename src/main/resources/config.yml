@@ -6,6 +6,14 @@ Check-Updates: true
 
 
 General:
+  # The menu item for some events like showing creative blocks or destroying it.
+  # Item types: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+  # If you don't have a menu in your server, you can set Item-Name to '' to use a vanilla item.
+  Menu:
+    ItemJoin: ""
+    Item:
+      Type: "PLAYER_HEAD"
+      Name: "&e&lMy &6&lMenu"
   Location:
     NormalWorlds:
       Worlds:
@@ -33,14 +41,6 @@ General:
         Y: "5 ~ 123"
 
 
-# The menu item for some events like showing creative blocks or destroying it.
-# Item types: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
-# If you don't have a menu in your server, you can set Item-Name to '' to use a vanilla item.
-Menu:
-  ItemJoin: ""
-  Item:
-    Type: "PLAYER_HEAD"
-    Name: "&e&lMy &6&lMenu"
 
 # Buy or give creative blocks.
 # Price-Type: "money" or "points". "points" only support PlayerPoints.
@@ -124,8 +124,9 @@ Destroy:
   Settings:
     Menu-Break:
       Help-Message: true
-      Cooldown: 10
-      Cooldown-Message: false
+      Cooldown:
+        Interval: 60
+        Message: false
     Default:
       Menu:
         Break: true
@@ -144,9 +145,10 @@ Destroy:
     Bedrock:
       Types:
         - BEDROCK
-      Location:
-        - Bedrock_World
-        - Bedrock_Nether
+      Prevent:
+        Location:
+          - Bedrock_World
+          - Bedrock_Nether
 
 Message:
   prefix: '&7[&dBarrierPlus&7]&r '

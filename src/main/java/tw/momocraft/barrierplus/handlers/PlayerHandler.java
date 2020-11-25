@@ -102,11 +102,6 @@ public class PlayerHandler {
         return null;
     }
 
-    public static boolean getEnoughMoney(Player player, String priceType, int price) {
-        double balance = getTypeBalance(player, priceType);
-        return balance >= price;
-    }
-
     public static double getTypeBalance(Player player, String priceType) {
         if (priceType.equals("points") && ConfigHandler.getDepends().PlayerPointsEnabled()) {
             PlayerPointsAPI playerPointsAPI = new PlayerPointsAPI();

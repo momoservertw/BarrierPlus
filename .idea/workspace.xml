@@ -55,14 +55,14 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../LotteryPlus" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\sayuri\IdeaProjects\BarrierPlus\src\main\resources" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="tw.momocraft.barrierplus.utils" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Sayuri\IdeaProjects\BarrierPlus\src\main\java\tw\momocraft\barrierplus\utils" />
@@ -76,11 +76,11 @@
       <recent name="tw.momocraft.barrierplus.handlers" />
       <recent name="tw.momocraft.barrierplus.listeners" />
     </key>
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="tw.momocraft.barrierplus.utils" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\sayuri\IdeaProjects\BarrierPlus\src\main\resources" />
     </key>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -95,15 +95,27 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
+    <state x="480" y="139" key="#Inspections" timestamp="1605732227958">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state x="480" y="139" key="#Inspections/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1605732227958" />
+    <state x="299" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1605737015993">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state x="299" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1605737015993" />
     <state x="438" y="155" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1605672507904">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
     <state x="438" y="155" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.689@0.0.1280.689" timestamp="1605672507904" />
     <state x="584" y="207" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1605528984332" />
-    <state x="634" y="216" key="FileChooserDialogImpl" timestamp="1604509928703">
+    <state x="584" y="207" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog" timestamp="1605737584103">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="634" y="216" key="FileChooserDialogImpl/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1604509928703" />
+    <state x="584" y="207" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1605737584103" />
+    <state x="634" y="216" key="FileChooserDialogImpl" timestamp="1605993484304">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state x="634" y="216" key="FileChooserDialogImpl/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1605993484304" />
     <state width="1663" height="157" key="GridCell.Tab.0.bottom" timestamp="1605532371134">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -120,11 +132,11 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="1663" height="157" key="GridCell.Tab.0.right/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1605532371134" />
-    <state x="417" y="89" width="769" height="600" key="find.popup" timestamp="1605661459929">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state x="556" y="163" width="594" height="594" key="find.popup" timestamp="1605826535496">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="417" y="89" width="769" height="600" key="find.popup/0.0.1280.689@0.0.1280.689" timestamp="1605661459929" />
-    <state x="556" y="163" width="594" height="594" key="find.popup/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1604079576296" />
+    <state x="556" y="163" width="594" height="594" key="find.popup/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1605826535496" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />

@@ -18,7 +18,11 @@ public class ConfigPath {
     //  ============================================== //
     //         General Settings                        //
     //  ============================================== //
-    private static LocationUtils locationUtils;
+    private LocationUtils locationUtils;
+
+    private String menuIJ;
+    private String menuType;
+    private String menuName;
 
     //  ============================================== //
     //         Buy Settings                            //
@@ -45,12 +49,19 @@ public class ConfigPath {
     //         Destroy Settings                          //
     //  ============================================== //
     private boolean destroy;
-    private Map<String, Pair<String, DestroyMap>> destroyProp;
+    private boolean destroyHelp;
+    private int destroyCD;
+    private boolean destroyCDMsg;
+    private Map<String, DestroyMap> destroyProp;
 
     //  ============================================== //
     //         Setup all configuration.                //
     //  ============================================== //
     private void setUp() {
+        menuIJ = ConfigHandler.getConfig("config.yml").getString("General.Menu.ItemJoin");
+        menuType = ConfigHandler.getConfig("config.yml").getString("General.Menu.Item.Type");
+        menuName = ConfigHandler.getConfig("config.yml").getString("General.Menu.Item.Name");
+
         setupBuy();
         setupSee();
         setupPlace();
@@ -158,9 +169,12 @@ public class ConfigPath {
         if (!destroy) {
             return;
         }
+        destroyHelp = ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Settings.Help-Message");
+        destroyCD = ConfigHandler.getConfig("config.yml").getInt("Destroy.Settings.Cooldown.Interval");
+        destroyCDMsg = ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Settings.Cooldown.Message");
         ConfigurationSection destroyConfig = ConfigHandler.getConfig("config.yml").getConfigurationSection("Destroy.Groups");
         if (destroyConfig != null) {
-            placeProp = new HashMap<>();
+            destroyProp = new HashMap<>();
             ConfigurationSection groupConfig;
             String groupEnable;
             DestroyMap destroyMap;
@@ -174,19 +188,39 @@ public class ConfigPath {
                     if (groupConfig != null) {
                         destroyMap = new DestroyMap();
                         destroyMap.setMenuBreak(ConfigHandler.getConfig("config.yml").getString("Destroy.Groups." + group + ".Menu.Break"));
-                        destroyMap.setMenuDrop(ConfigHandler.getConfig("config.yml").getString("Destroy.Groups." + group + ".Menu.Break"));
+                        destroyMap.setMenuDrop(ConfigHandler.getConfig("config.yml").getString("Destroy.Groups." + group + ".Menu.Drop"));
                         destroyMap.setVanillaBreak(ConfigHandler.getConfig("config.yml").getString("Destroy.Groups." + group + ".Vanilla.Break"));
-                        destroyMap.setVanillaDrop(ConfigHandler.getConfig("config.yml").getString("Destroy.Groups." + group + ".Vanilla.Break"));
+                        destroyMap.setVanillaDrop(ConfigHandler.getConfig("config.yml").getString("Destroy.Groups." + group + ".Vanilla.Drop"));
                         destroyMap.setExplodeBreak(ConfigHandler.getConfig("config.yml").getString("Destroy.Groups." + group + ".Explode.Break"));
-                        destroyMap.setExplodeBreak(ConfigHandler.getConfig("config.yml").getString("Destroy.Groups." + group + ".Explode.Break"));
-                        destroyMap.setLocationMaps(locationUtils.getSpeLocMaps("config.yml", "Destroy.Groups." + group + ".Location"));
+                        destroyMap.setExplodeBreak(ConfigHandler.getConfig("config.yml").getString("Destroy.Groups." + group + ".Explode.Drop"));
+                        destroyMap.setLocMaps(locationUtils.getSpeLocMaps("config.yml", "Destroy.Groups." + group + ".Location"));
                         for (String type : ConfigHandler.getConfig("config.yml").getStringList("Destroy.Groups." + group + ".Types")) {
-                            destroyProp.put(type, new Pair<>(group, destroyMap));
+                            destroyProp.put(type, destroyMap);
                         }
                     }
                 }
             }
+            destroyMap = new DestroyMap();
+            destroyMap.setMenuBreak(ConfigHandler.getConfig("config.yml").getString("Destroy.Settings.Default.Menu.Break"));
+            destroyMap.setMenuDrop(ConfigHandler.getConfig("config.yml").getString("Destroy.Groups.Default.Menu.Drop"));
+            destroyMap.setVanillaBreak(ConfigHandler.getConfig("config.yml").getString("Destroy.Groups.Default.Vanilla.Break"));
+            destroyMap.setVanillaDrop(ConfigHandler.getConfig("config.yml").getString("Destroy.Groups.Default.Vanilla.Drop"));
+            destroyMap.setExplodeBreak(ConfigHandler.getConfig("config.yml").getString("Destroy.Groups.Default.Explode.Break"));
+            destroyMap.setExplodeBreak(ConfigHandler.getConfig("config.yml").getString("Destroy.Groups.Default.Explode.Drop"));
+            destroyProp.put("default", destroyMap);
         }
+    }
+
+    public String getMenuIJ() {
+        return menuIJ;
+    }
+
+    public String getMenuName() {
+        return menuName;
+    }
+
+    public String getMenuType() {
+        return menuType;
     }
 
     public boolean isBuy() {
@@ -217,7 +251,7 @@ public class ConfigPath {
         return seeProp;
     }
 
-    public static LocationUtils getLocationUtils() {
+    public LocationUtils getLocationUtils() {
         return locationUtils;
     }
 
@@ -233,7 +267,19 @@ public class ConfigPath {
         return destroy;
     }
 
-    public Map<String, Pair<String, DestroyMap>> getDestroyProp() {
+    public boolean isDestroyCDMsg() {
+        return destroyCDMsg;
+    }
+
+    public boolean isDestroyHelp() {
+        return destroyHelp;
+    }
+
+    public int getDestroyCD() {
+        return destroyCD;
+    }
+
+    public Map<String, DestroyMap> getDestroyProp() {
         return destroyProp;
     }
 }

@@ -1,11 +1,8 @@
 package tw.momocraft.barrierplus.listeners;
 
-import com.bekvon.bukkit.residence.Residence;
-import com.bekvon.bukkit.residence.containers.Flags;
-import com.bekvon.bukkit.residence.protection.ClaimedResidence;
-import com.bekvon.bukkit.residence.protection.ResidencePermissions;
+import me.RockinChaos.itemjoin.api.ItemJoinAPI;
 import org.bukkit.*;
-import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,168 +14,169 @@ import tw.momocraft.barrierplus.BarrierPlus;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.barrierplus.handlers.PermissionsHandler;
 import tw.momocraft.barrierplus.handlers.ServerHandler;
+import tw.momocraft.barrierplus.utils.DestroyMap;
 import tw.momocraft.barrierplus.utils.Language;
+import tw.momocraft.barrierplus.utils.ResidenceUtils;
+import tw.momocraft.barrierplus.utils.SeeMap;
 
 import java.util.*;
 
 public class BlockClick implements Listener {
 
-    private Map<String, Long> cooldownShowList = new HashMap<String, Long>();
-    private Map<String, Long> cooldownDestroyList = new HashMap<String, Long>();
+    private Map<String, Long> cdSeeList = new HashMap<>();
+    private Map<String, Long> cdDestroyList = new HashMap<>();
 
     @EventHandler
     public void onClickBlock(PlayerInteractEvent e) {
         Player player = e.getPlayer();
         // Holding a menu item.
-        String itemOnHand = player.getInventory().getItemInMainHand().getType().name();
-        if (player.getInventory().getItemInMainHand().getType().name().equals(ConfigHandler.getConfig("config.yml").getString("Menu.Item-Type"))) {
-            String menuItemName = ConfigHandler.getConfig("config.yml").getString("Menu.Item-Name");
-            if (menuItemName.equals("") || player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(menuItemName.replace("&", "§"))) {
-                // Left click a block.
-                if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
-                    String block = e.getClickedBlock().getBlockData().getMaterial().name();
-                    Location clickBlockLoc = e.getClickedBlock().getLocation();
-                    // Player isn't sneaking.
-                    if (!player.isSneaking()) {
-                        // See - Display near blocks.
-                        if (ConfigHandler.getConfig("config.yml").getBoolean("See.Enable")) {
-                            ConfigurationSection seeList = ConfigHandler.getConfig("config.yml").getConfigurationSection("See.List");
-                            if (seeList != null && seeList.getKeys(false).contains(block)) {
-                                // Player is on cooldown.
-                                if (onCooldownSee(player)) {
-                                    if (ConfigHandler.getConfig("config.yml").getBoolean("See.Cooldown-Message")) {
-                                        Language.sendLangMessage("Message.cooldown", player);
-                                    }
-                                    ServerHandler.debugMessage("(BlockClick) See", "show particle", "cooldown = true", "cancel");
-                                    return;
-                                }
-                                // Has see permission.
-                                if (PermissionsHandler.hasPermission(player, "barrierplus.see." + block.toLowerCase()) ||
-                                        PermissionsHandler.hasPermission(player, "barrierplus.see.*")) {
-                                    addCooldownSee(player);
-                                    checkBlock(player, block);
-                                    return;
-                                }
-                                ServerHandler.debugMessage("(BlockClick) See", block, "final", "return");
-                            }
-                        }
-                    } else {
-                        // Destroy - Break block by menu.
-                        if (ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Enable")) {
-                            if (ConfigHandler.getConfig("config.yml").getConfigurationSection("Destroy.List").getKeys(false).contains(block)) {
-                                String menuBreakEnable = ConfigHandler.getConfig("config.yml").getString("Destroy.List." + block + ".Menu-Break");
-                                if (menuBreakEnable == null || menuBreakEnable.equals("true")) {
-                                    // Player is on cooldown.
-                                    if (onCooldownDestroy(player)) {
-                                        if (ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Menu-Break.Cooldown-Message")) {
-                                            Language.sendLangMessage("Message.cooldown", player);
-                                        }
-                                        ServerHandler.debugMessage("(BlockClick) Destroy", "Menu-Break", "cooldown = true", "return");
-                                        return;
-                                    }
-                                    // Residence - Enable.
-                                    if (ConfigHandler.getDepends().ResidenceEnabled()) {
-                                        ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(clickBlockLoc);
-                                        // Residence - In protect area.
-                                        if (res != null) {
-                                            ResidencePermissions perms = res.getPermissions();
-                                            boolean hasPermBuild = perms.playerHas(player, Flags.build, true);
-                                            // Residence - Has build permission.
-                                            if (!hasPermBuild) {
-                                                if (!PermissionsHandler.hasPermission(player, "residence.bypass.build")) {
-                                                    Language.sendLangMessage("Message.BarrierPlus.noPermDestroy", player);
-                                                    ServerHandler.debugMessage("(BlockClick) Destroy-Menu", block, "residence permission = false", "return");
-                                                    return;
-                                                }
-                                            }
-                                        }
-                                        // Has destroy bypass permission.
-                                        if (PermissionsHandler.hasPermission(player, "barrierplus.bypass.destroy")) {
-                                            addCooldownDestroy(player);
-                                            Location blockLocation = e.getClickedBlock().getLocation();
-                                            blockLocation.getBlock().setType(Material.AIR);
-                                            ServerHandler.debugMessage("(BlockClick) Destroy", block, "has bypass permission", "bypass");
-                                            String drop = ConfigHandler.getConfig("config.yml").getString("Destroy.List." + block + ".Menu-Drop");
-                                            // Block - Menu-Drop = true
-                                            if (drop == null || drop.equals("true")) {
-                                                player.getWorld().dropItem(blockLocation, new ItemStack(Material.getMaterial(block)));
-                                                ServerHandler.debugMessage("(BlockClick) Destroy", block, "Menu-Drop = true", "return");
-                                                return;
-                                            }
-                                        }
-                                        // Has destroy permission.
-                                        if (PermissionsHandler.hasPermission(player, "barrierplus.destroy." + block.toLowerCase()) ||
-                                                PermissionsHandler.hasPermission(player, "barrierplus.destroy.*")) {
-                                            // The location can place the block.
-                                            if (LocationAPI.getLocation(e.getClickedBlock(), "Destroy.List." + block + ".Location")) {
-                                                addCooldownDestroy(player);
-                                                Location blockLocation = e.getClickedBlock().getLocation();
-                                                blockLocation.getBlock().setType(Material.AIR);
-                                                String drop = ConfigHandler.getConfig("config.yml").getString("Destroy.List." + block + ".Menu-Drop");
-                                                // Block - Menu-Drop = true
-                                                if (drop == null || drop.equals("true")) {
-                                                    player.getWorld().dropItem(blockLocation, new ItemStack(Material.getMaterial(block)));
-                                                    ServerHandler.debugMessage("(BlockClick) Destroy", block, "Menu-Drop = true", "return");
-                                                    return;
-                                                }
-                                            // The location cannot place the block.
-                                            } else {
-                                                String[] placeHolders = Language.newString();
-                                                placeHolders[7] = block;
-                                                Language.sendLangMessage("Message.BarrierPlus.breakLocFail", player, placeHolders);
-                                                ServerHandler.debugMessage("(BlockBreak) Destroy", block, "Location = false", "return");
-                                                return;
-                                            }
-                                        }
-                                    }
-                                }
-                                ServerHandler.debugMessage("(BlockClick) Destroy", block, "final", "return");
-                            }
-                        }
-                    }
+        ItemStack itemStack = player.getInventory().getItemInMainHand();
+        ItemJoinAPI itemJoinAPI = new ItemJoinAPI();
+        if (!ConfigHandler.getConfigPath().getMenuIJ().equals("")) {
+            if (!itemJoinAPI.isCustom(itemStack)) {
+                return;
+            }
+        }
+        Block block = e.getClickedBlock();
+        String blockType = block.getBlockData().getMaterial().name();
+        Location blockLoc = e.getClickedBlock().getLocation();
+        if (itemStack.getType().name().equals(ConfigHandler.getConfigPath().getMenuType())) {
+            String menuName = ConfigHandler.getConfigPath().getMenuName();
+            if (!menuName.equals("") && !itemStack.getItemMeta().getDisplayName().equals(menuName.replace("&", "§"))) {
+                if (itemStack.getType().name().equals(blockType)) {
+                    seeBlock(player, blockType);
+                    return;
                 }
             }
-        // Holding a creative block.
-        } else if (ConfigHandler.getConfig("config.yml").getBoolean("See.Enable")) {
-            if (e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.LEFT_CLICK_AIR) {
-                if (ConfigHandler.getConfig("config.yml").getConfigurationSection("See.List").getKeys(false).contains(itemOnHand)) {
-                    if (onCooldownSee(e.getPlayer())) {
-                        if (ConfigHandler.getConfig("config.yml").getBoolean("See.Cooldown-Message")) {
-                            Language.sendLangMessage("Message.cooldown", player);
-                        }
-                        ServerHandler.debugMessage("(BlockClick) See", itemOnHand, "cooldown = true", "return");
-                        return;
+        }
+        if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
+            if (player.isSneaking()) {
+                // See - Display near blocks.
+                if (!ConfigHandler.getConfigPath().isSee()) {
+                    // Left click a block.
+                    seeBlock(player, blockType);
+                }
+            } else {
+                // Destroy - Break block by menu.
+                if (ConfigHandler.getConfigPath().isDestroy()) {
+                    if (e.getAction() == Action.LEFT_CLICK_BLOCK && player.isSneaking()) {
+                        destroyBlock(player, blockLoc, blockType);
                     }
-                    if (PermissionsHandler.hasPermission(player, "barrierplus.see." + itemOnHand.toLowerCase()) ||
-                            PermissionsHandler.hasPermission(player, "barrierplus.see.*")) {
-                        addCooldownSee(player);
-                        checkBlock(player, itemOnHand);
-                        return;
-                    }
-                    ServerHandler.debugMessage("(BlockClick) See", itemOnHand, "final", "return");
                 }
             }
         }
     }
 
-    /**
-     *
-     *  Display nearby creative blocks like barriers.
-     *
-     * @param player the trigger player.
-     * @param block the display creative blocks.
-     */
-    private void checkBlock(Player player, String block) {
-        String enableCreature = ConfigHandler.getConfig("config.yml").getString("See." + block + ".Creative-Mode");
-        if (enableCreature != null && enableCreature.equals("false")) {
-            if (player.getGameMode().equals(GameMode.CREATIVE)) {
-                ServerHandler.debugMessage("(BlockClick) See", block, "Creative-Mode = false", "return");
+    private void seeBlock(Player player, String blockType) {
+        SeeMap seeMap = ConfigHandler.getConfigPath().getSeeProp().get(blockType);
+        if (seeMap != null) {
+            String creature = seeMap.getCreative();
+            if (creature != null && creature.equals("false")) {
+                if (player.getGameMode().equals(GameMode.CREATIVE)) {
+                    ServerHandler.sendFeatureMessage("See", blockType, "creative", "return",
+                            new Throwable().getStackTrace()[0]);
+                    return;
+                }
+            }
+            // Player is on cooldown.
+            if (onCooldownSee(player)) {
+                if (ConfigHandler.getConfigPath().isSeeCDMsg()) {
+                    Language.sendLangMessage("Message.cooldown", player);
+                }
+                ServerHandler.sendFeatureMessage("See", blockType, "cooldown", "return",
+                        new Throwable().getStackTrace()[0]);
                 return;
             }
+            // Has see permission.
+            if (PermissionsHandler.hasPermission(player, "barrierplus.see." + blockType) ||
+                    PermissionsHandler.hasPermission(player, "barrierplus.see.*")) {
+                addCDSee(player);
+                checkBlock(player, blockType, seeMap);
+                ServerHandler.sendFeatureMessage("See", blockType, "final", "return",
+                        new Throwable().getStackTrace()[0]);
+            }
         }
-        Set<Location> locations = new HashSet();
-        int range = ConfigHandler.getConfig("config.yml").getInt("See.Distance");
+    }
 
+    private void destroyBlock(Player player, Location blockLoc, String blockType) {
+        DestroyMap destroyMap = ConfigHandler.getConfigPath().getDestroyProp().get(blockType);
+        DestroyMap destroyDefMap = ConfigHandler.getConfigPath().getDestroyProp().get("default");
+        if (destroyMap != null) {
+            // MenuBreak enable.
+            if (destroyMap.getMenuBreak() == null && !Boolean.parseBoolean(destroyDefMap.getMenuBreak()) ||
+                    destroyMap.getMenuBreak() != null && destroyMap.getMenuBreak().equals("false")) {
+                return;
+            }
+            // Location.
+            if (!ConfigHandler.getConfigPath().getLocationUtils().checkLocation(blockLoc, destroyDefMap.getLocMaps())) {
+                ServerHandler.sendFeatureMessage("Destroy", blockType, "location", "return",
+                        new Throwable().getStackTrace()[0]);
+                return;
+            }
+            // Has destroy permission.
+            if (!PermissionsHandler.hasPermission(player, "barrierplus.destroy." + blockType) &&
+                    !PermissionsHandler.hasPermission(player, "barrierplus.destroy.*")) {
+                ServerHandler.sendFeatureMessage("Destroy", blockType, "permission", "return",
+                        new Throwable().getStackTrace()[0]);
+                return;
+            }
+            // Player is on cooldown.
+            if (onCooldownDestroy(player)) {
+                if (ConfigHandler.getConfigPath().isDestroyCDMsg()) {
+                    Language.sendLangMessage("Message.cooldown", player);
+                }
+                ServerHandler.sendFeatureMessage("Destroy", blockType, "cooldown", "return",
+                        new Throwable().getStackTrace()[0]);
+                return;
+            }
+            // Residence - Enable.
+            if (ConfigHandler.getDepends().ResidenceEnabled()) {
+                if (!ResidenceUtils.getBuildPerms(blockLoc, "destroy", false, player)) {
+                    Language.sendLangMessage("Message.BarrierPlus.noPermDestroy", player);
+                    ServerHandler.sendFeatureMessage("Destroy", blockType, "residence", "return", "destroy",
+                            new Throwable().getStackTrace()[0]);
+                    return;
+                }
+            }
+            // Prevent Location.
+            if (ConfigHandler.getConfigPath().getLocationUtils().checkLocation(blockLoc, destroyDefMap.getPreventLocMaps())) {
+                String[] placeHolders = Language.newString();
+                placeHolders[7] = blockType;
+                Language.sendLangMessage("Message.BarrierPlus.breakLocFail", player, placeHolders);
+                ServerHandler.sendFeatureMessage("Destroy", blockType, "prevent location", "return",
+                        new Throwable().getStackTrace()[0]);
+                return;
+            }
+            // Has destroy bypass permission.
+            if (PermissionsHandler.hasPermission(player, "barrierplus.bypass.destroy")) {
+                ServerHandler.sendFeatureMessage("Destroy", blockType, "bypass permission", "bypass",
+                        new Throwable().getStackTrace()[0]);
+                return;
+            }
+            // MenuDrop enable.
+            if (destroyMap.getMenuDrop() == null && Boolean.parseBoolean(destroyDefMap.getMenuDrop()) ||
+                    destroyMap.getMenuDrop() != null && destroyMap.getMenuDrop().equals("true")) {
+                player.getWorld().dropItem(blockLoc, new ItemStack(Material.getMaterial(blockType)));
+                ServerHandler.sendFeatureMessage("Destroy", blockType, "Drop", "return",
+                        new Throwable().getStackTrace()[0]);
+                return;
+            }
+            addCDDestroy(player);
+            blockLoc.getBlock().setType(Material.AIR);
+            ServerHandler.sendFeatureMessage("Destroy", blockType, "final", "return",
+                    new Throwable().getStackTrace()[0]);
+        }
+    }
+
+    /**
+     * Display nearby creative blocks like barriers.
+     *
+     * @param player the trigger player.
+     * @param block  the display creative blocks.
+     */
+    private void checkBlock(Player player, String block, SeeMap seeMap) {
+        List<Location> locations = new ArrayList<>();
+        int range = ConfigHandler.getConfigPath().getSeeDistance();
         for (int x = -range; x <= range; x++) {
             for (int y = -range; y <= range; y++) {
                 for (int z = -range; z <= range; z++) {
@@ -189,58 +187,60 @@ public class BlockClick implements Listener {
                 }
             }
         }
-        String particleType = ConfigHandler.getConfig("config.yml").getString("See.List." + block + ".Particle");
-        int particleAmount = ConfigHandler.getConfig("config.yml").getInt("See.List." + block + ".Amount");
-        long particleTimes = ConfigHandler.getConfig("config.yml").getLong("See.List." + block + ".Times");
-        long particleInterval = ConfigHandler.getConfig("config.yml").getLong("See.List." + block + ".Interval-Tick");
+        Particle particle = Particle.valueOf(seeMap.getParticle());
+        int amount = seeMap.getAmount();
+        int times = seeMap.getTimes();
+        int interval = seeMap.getInterval();
         new BukkitRunnable() {
             int i = 1;
 
             @Override
             public void run() {
-                if (i > particleTimes) {
-                    ServerHandler.debugMessage("(BlockClick) See", block, "Show particle", "cancel");
+                if (i > times) {
+                    ServerHandler.sendFeatureMessage("See", block, "particle", "cancel",
+                            new Throwable().getStackTrace()[0]);
                     cancel();
                 } else {
                     ++i;
-                    locations.forEach((loc) -> player.spawnParticle(Particle.valueOf(particleType), loc, particleAmount, 0, 0, 0, 0));
-                    ServerHandler.debugMessage("(BlockClick) See", block, "Show particle", "continue");
+                    locations.forEach((loc) -> player.spawnParticle(particle, loc, amount, 0, 0, 0, 0));
+                    ServerHandler.sendFeatureMessage("See", block, "particle", "continue",
+                            new Throwable().getStackTrace()[0]);
                 }
             }
-        }.runTaskTimer(BarrierPlus.getInstance(), 0, particleInterval);
+        }.runTaskTimer(BarrierPlus.getInstance(), 0, interval);
     }
 
     private boolean onCooldownSee(Player player) {
-        int cooldownTick = ConfigHandler.getConfig("config.yml").getInt("See.Cooldown");
-        if (cooldownTick == 0) {
+        int cdTick = ConfigHandler.getConfigPath().getSeeCDInterval();
+        if (cdTick == 0) {
             return false;
         }
-        int cdMillis = cooldownTick * 50;
-        long playersCooldownList = 0L;
-        if (cooldownShowList.containsKey(player.getWorld().getName() + "." + player.getName())) {
-            playersCooldownList = cooldownShowList.get(player.getWorld().getName() + "." + player.getName());
+        int cdMillis = cdTick * 50;
+        long playersCDList = 0L;
+        if (cdSeeList.containsKey(player.getWorld().getName() + "." + player.getName())) {
+            playersCDList = cdSeeList.get(player.getWorld().getName() + "." + player.getName());
         }
-        return System.currentTimeMillis() - playersCooldownList < cdMillis;
+        return System.currentTimeMillis() - playersCDList < cdMillis;
     }
 
-    private void addCooldownSee(Player player) {
-        cooldownShowList.put(player.getWorld().getName() + "." + player.getName(), System.currentTimeMillis());
+    private void addCDSee(Player player) {
+        cdSeeList.put(player.getWorld().getName() + "." + player.getName(), System.currentTimeMillis());
     }
 
     private boolean onCooldownDestroy(Player player) {
-        int cooldownTick = ConfigHandler.getConfig("config.yml").getInt("Destroy.Menu-Break.Cooldown");
-        if (cooldownTick == 0) {
+        int cdTick = ConfigHandler.getConfigPath().getDestroyCD();
+        if (cdTick == 0) {
             return false;
         }
-        int cdMillis = cooldownTick * 50;
-        long playersCooldownList = 0L;
-        if (cooldownDestroyList.containsKey(player.getWorld().getName() + "." + player.getName())) {
-            playersCooldownList = cooldownDestroyList.get(player.getWorld().getName() + "." + player.getName());
+        int cdMillis = cdTick * 50;
+        long playersCDList = 0L;
+        if (cdDestroyList.containsKey(player.getWorld().getName() + "." + player.getName())) {
+            playersCDList = cdDestroyList.get(player.getWorld().getName() + "." + player.getName());
         }
-        return System.currentTimeMillis() - playersCooldownList < cdMillis;
+        return System.currentTimeMillis() - playersCDList < cdMillis;
     }
 
-    private void addCooldownDestroy(Player player) {
-        cooldownDestroyList.put(player.getWorld().getName() + "." + player.getName(), System.currentTimeMillis());
+    private void addCDDestroy(Player player) {
+        cdDestroyList.put(player.getWorld().getName() + "." + player.getName(), System.currentTimeMillis());
     }
 }

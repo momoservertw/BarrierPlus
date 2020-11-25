@@ -12,10 +12,15 @@ public class DestroyMap {
     private String vanillaDrop;
     private String explodeBreak;
     private String explodeDrop;
-    private List<LocationMap> locationMaps;
+    private List<LocationMap> locMaps;
+    private List<LocationMap> preventLocMaps;
 
-    public List<LocationMap> getLocationMaps() {
-        return locationMaps;
+    public List<LocationMap> getLocMaps() {
+        return locMaps;
+    }
+
+    public List<LocationMap> getPreventLocMaps() {
+        return preventLocMaps;
     }
 
     public String getExplodeBreak() {
@@ -42,8 +47,12 @@ public class DestroyMap {
         return vanillaDrop;
     }
 
-    public void setLocationMaps(List<LocationMap> locationMaps) {
-        this.locationMaps = locationMaps;
+    public void setLocMaps(List<LocationMap> locMaps) {
+        this.locMaps = locMaps;
+    }
+
+    public void setPreventLocMaps(List<LocationMap> preventLocMaps) {
+        this.preventLocMaps = preventLocMaps;
     }
 
     public void setExplodeBreak(String explodeBreak) {

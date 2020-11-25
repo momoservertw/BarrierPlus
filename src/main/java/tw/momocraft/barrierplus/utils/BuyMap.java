@@ -1,6 +1,5 @@
 package tw.momocraft.barrierplus.utils;
 
-import java.util.List;
 
 public class BuyMap {
     private String priceType;

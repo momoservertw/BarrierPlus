@@ -16,6 +16,7 @@ public class ConfigHandler {
 	private static YamlConfiguration configYAML;
 	private static DependAPI depends;
 	private static UpdateHandler updater;
+	private static ConfigPath configPath;
 
 	public static void generateData() {
 		configFile();
@@ -27,23 +28,21 @@ public class ConfigHandler {
 	public static void registerEvents() {
 		BarrierPlus.getInstance().getCommand("barrierplus").setExecutor(new Commands());
 		BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockClick(), BarrierPlus.getInstance());
-		ServerHandler.sendFeatureMessage("Register-Event", "MyPet", "MyPet", "continue",
-				new Throwable().getStackTrace()[0]);
+
 		BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockPlace(), BarrierPlus.getInstance());
-		ServerHandler.sendFeatureMessage("Register-Event", "MyPet", "MyPet", "continue",
+		ServerHandler.sendFeatureMessage("Register-Event", "Place", "BlockPlace", "continue",
 				new Throwable().getStackTrace()[0]);
 		BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockBreak(), BarrierPlus.getInstance());
-		ServerHandler.sendFeatureMessage("Register-Event", "MyPet", "MyPet", "continue",
+		ServerHandler.sendFeatureMessage("Register-Event", "Destroy", "BlockBreak", "continue",
 				new Throwable().getStackTrace()[0]);
 		BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockExplode(), BarrierPlus.getInstance());
-		ServerHandler.sendFeatureMessage("Register-Event", "MyPet", "MyPet", "continue",
+		ServerHandler.sendFeatureMessage("Register-Event", "Destroy", "BlockExplode", "continue",
 				new Throwable().getStackTrace()[0]);
 		BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new EntityExplode(), BarrierPlus.getInstance());
-
-		ServerHandler.sendFeatureMessage("Register-Event", "MyPet", "MyPet", "continue",
+		ServerHandler.sendFeatureMessage("Register-Event", "Destroy", "EntityExplode", "continue",
 				new Throwable().getStackTrace()[0]);
 		BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockDropItem(), BarrierPlus.getInstance());
-		ServerHandler.sendFeatureMessage("Register-Event", "MyPet", "MyPet", "continue",
+		ServerHandler.sendFeatureMessage("Register-Event", "Destroy", "BlockDropItem", "continue",
 				new Throwable().getStackTrace()[0]);
 	}
 
@@ -132,5 +131,9 @@ public class ConfigHandler {
 
 	private static void setUpdater(UpdateHandler update) {
 		updater = update;
+	}
+
+	public static ConfigPath getConfigPath() {
+		return configPath;
 	}
 }
