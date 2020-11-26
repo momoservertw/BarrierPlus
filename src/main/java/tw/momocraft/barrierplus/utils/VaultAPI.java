@@ -1,9 +1,8 @@
 package tw.momocraft.barrierplus.utils;
 
 import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.economy.EconomyResponse;
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import tw.momocraft.barrierplus.BarrierPlus;
 import tw.momocraft.barrierplus.handlers.ServerHandler;
@@ -11,32 +10,45 @@ import tw.momocraft.barrierplus.handlers.ServerHandler;
 public class VaultAPI {
     private Economy econ = null;
     private boolean isEnabled = false;
+    private Permission perms = null;
 
-    public VaultAPI() {
+    VaultAPI() {
         this.setVaultStatus(Bukkit.getServer().getPluginManager().getPlugin("Vault") != null);
     }
 
-    private void enableEconomy() {
+    private void enableFeatures() {
         if (BarrierPlus.getInstance().getServer().getPluginManager().getPlugin("Vault") != null) {
             if (!this.setupEconomy()) {
-                ServerHandler.sendErrorMessage("There was an issue setting up Vault to work with BarrierPlus!");
-                ServerHandler.sendErrorMessage("If this continues, please contact the plugin developer!");
+                ServerHandler.sendErrorMessage("&cCan not find the Economy plugin.");
+            }
+            if (!this.setupPermissions()) {
+                ServerHandler.sendErrorMessage("&cCan not find the Permission plugin.");
             }
         }
     }
 
     private boolean setupEconomy() {
-        if (BarrierPlus.getInstance().getServer().getPluginManager().getPlugin("Vault") == null) {  return false; }
+        if (BarrierPlus.getInstance().getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
         RegisteredServiceProvider<Economy> rsp = BarrierPlus.getInstance().getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null) {
             return false;
         }
         this.econ = rsp.getProvider();
-        return this.econ != null;
+        return true;
     }
 
-    public Economy getEconomy() {
-        return this.econ;
+    private boolean setupPermissions() {
+        if (BarrierPlus.getInstance().getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Permission> rsp = BarrierPlus.getInstance().getServer().getServicesManager().getRegistration(Permission.class);
+        if (rsp == null) {
+            return false;
+        }
+        this.perms = rsp.getProvider();
+        return true;
     }
 
     public boolean vaultEnabled() {
@@ -45,16 +57,16 @@ public class VaultAPI {
 
     private void setVaultStatus(boolean bool) {
         if (bool) {
-            this.enableEconomy();
+            this.enableFeatures();
         }
         this.isEnabled = bool;
     }
 
-    public double getBalance(Player player) {
-        return this.econ.getBalance(player);
+    public Economy getEconomy() {
+        return this.econ;
     }
 
-    public EconomyResponse withdrawBalance(Player player, int cost) {
-        return this.econ.withdrawPlayer(player, cost);
+    public Permission getPermissions() {
+        return this.perms;
     }
 }

@@ -25,15 +25,9 @@ public class BlockPlace implements Listener {
             if (placeMap == null) {
                 return;
             }
+            Player player = e.getPlayer();
             Location loc = block.getLocation();
             if (ConfigHandler.getConfigPath().getLocationUtils().checkLocation(loc, placeMap)) {
-                Player player = e.getPlayer();
-                // Has bypass permission.
-                if (PermissionsHandler.hasPermission(player, "barrierplus.bypass.place")) {
-                    ServerHandler.sendFeatureMessage("Place", blockType, " bypasspermission", "bypass",
-                            new Throwable().getStackTrace()[0]);
-                    return;
-                }
                 //Check placing permissions.
                 if (PermissionsHandler.hasPermission(player, "barrierplus.place." + blockType) ||
                         PermissionsHandler.hasPermission(player, "barrierplus.place.*")) {

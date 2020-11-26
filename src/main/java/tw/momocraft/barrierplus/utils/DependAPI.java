@@ -1,6 +1,7 @@
 package tw.momocraft.barrierplus.utils;
 
 import org.bukkit.Bukkit;
+import tw.momocraft.barrierplus.handlers.ConfigHandler;
 
 public class DependAPI {
     private boolean Residence = false;
@@ -9,10 +10,18 @@ public class DependAPI {
     private VaultAPI vault;
 
     public DependAPI() {
-        this.setResidenceStatus(Bukkit.getServer().getPluginManager().getPlugin("Residence") != null);
-        this.setPlayerPointsStatus(Bukkit.getServer().getPluginManager().getPlugin("PlayerPoints") != null);
-        this.setPlaceHolderStatus(Bukkit.getServer().getPluginManager().getPlugin("PlaceHolderAPI") != null);
-        this.setVault();
+        if (ConfigHandler.getConfig("config.yml").getBoolean("General.Settings.Features.Hook.Vault")) {
+            this.setVault();
+        }
+        if (ConfigHandler.getConfig("config.yml").getBoolean("General.Settings.Features.Hook.PlaceHolderAPI")) {
+            this.setPlaceHolderStatus(Bukkit.getServer().getPluginManager().getPlugin("PlaceHolderAPI") != null);
+        }
+        if (ConfigHandler.getConfig("config.yml").getBoolean("General.Settings.Features.Hook.Residence")) {
+            this.setResidenceStatus(Bukkit.getServer().getPluginManager().getPlugin("Residence") != null);
+        }
+        if (ConfigHandler.getConfig("config.yml").getBoolean("General.Settings.Features.Hook.PlayerPoints")) {
+            this.setPlayerPointsStatus(Bukkit.getServer().getPluginManager().getPlugin("PlayerPoints") != null);
+        }
     }
 
     public boolean ResidenceEnabled() {

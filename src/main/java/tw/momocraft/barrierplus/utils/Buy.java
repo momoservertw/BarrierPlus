@@ -141,7 +141,7 @@ public class Buy {
                     new Throwable().getStackTrace()[0]);
             return;
         }
-        PlayerHandler.takeTypeMoney(player, priceType, price);
+        balance = PlayerHandler.takeTypeMoney(player, priceType, price);
         String[] placeHolders = Language.newString();
         addItem(player, material, itemMaxSize, itemStacks, itemRemain);
         placeHolders[7] = item;

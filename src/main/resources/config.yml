@@ -6,6 +6,14 @@ Check-Updates: true
 
 
 General:
+  Settings:
+    Features:
+      # Changed these options need to restart the server.
+      Hook:
+        Vault: true
+        PlaceHolderAPI: true
+        Residence: true
+        PlayerPoints: true
   # The menu item for some events like showing creative blocks or destroying it.
   # Item types: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
   # If you don't have a menu in your server, you can set Item-Name to '' to use a vanilla item.
@@ -187,7 +195,6 @@ Message:
     Translate:
       money: 'money'
       points: 'points'
-
       BARRIER: 'barrier'
       STRUCTURE_VOID: 'structure_void'
       BEDROCK: 'bedrock'

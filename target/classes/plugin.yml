@@ -186,12 +186,3 @@ permissions:
   barrierplus.bypass.*:
     description: Bypass all event's permission and limits.
     default: op
-    children:
-      barrierplus.bypass.destroy: true
-      barrierplus.bypass.place: true
-  barrierplus.bypass.destroy:
-    description: Bypass the destroy permission and limits.
-    default: op
-  barrierplus.bypass.place:
-    description: Bypass the place permission and limits.
-    default: op

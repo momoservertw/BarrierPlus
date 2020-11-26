@@ -24,12 +24,6 @@ public class BlockBreak implements Listener {
             String blockType = block.getBlockData().getMaterial().name();
             DestroyMap destroyMap = ConfigHandler.getConfigPath().getDestroyProp().get(blockType);
             if (destroyMap != null) {
-                // Has bypass permission.
-                if (PermissionsHandler.hasPermission(player, "barrierplus.bypass.destroy")) {
-                    ServerHandler.sendFeatureMessage("Destroy", blockType, "bypass permission", "bypass",
-                            new Throwable().getStackTrace()[0]);
-                    return;
-                }
                 Location blockLoc = e.getBlock().getLocation();
                 // Cancel vanilla break event.
                 if (destroyMap.getVanillaBreak() == null && !ConfigHandler.getConfigPath().isDestroyVanillaBreak() ||
@@ -61,7 +55,6 @@ public class BlockBreak implements Listener {
                 // Has destroy permission.
                 if (PermissionsHandler.hasPermission(player, "barrierplus.destroy." + blockType.toLowerCase()) ||
                         PermissionsHandler.hasPermission(player, "barrierplus.destroy.*")) {
-
                     Language.sendLangMessage("Message.BarrierPlus.noPermDestroy", player);
                     ServerHandler.sendFeatureMessage("Destroy", blockType, "block permission", "cancel",
                             new Throwable().getStackTrace()[0]);

@@ -1,6 +1,5 @@
 package tw.momocraft.barrierplus.utils.locationutils;
 
-
 import tw.momocraft.barrierplus.handlers.ServerHandler;
 
 import java.util.ArrayList;
