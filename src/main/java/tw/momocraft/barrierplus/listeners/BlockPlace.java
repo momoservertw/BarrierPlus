@@ -1,6 +1,7 @@
 package tw.momocraft.barrierplus.listeners;
 
-import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,6 +10,7 @@ import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.barrierplus.handlers.PermissionsHandler;
 import tw.momocraft.barrierplus.handlers.ServerHandler;
 import tw.momocraft.barrierplus.utils.Language;
+import tw.momocraft.barrierplus.utils.locationutils.LocationMap;
 
 import java.util.List;
 
@@ -16,59 +18,30 @@ public class BlockPlace implements Listener {
 
     @EventHandler
     public void onPlaceBlock(BlockPlaceEvent e) {
-        if (ConfigHandler.getConfig("config.yml").getBoolean("Place.Enable")) {
-            Player player = e.getPlayer();
-            String block = e.getBlockPlaced().getBlockData().getMaterial().name();
-            List<String> placeList = ConfigHandler.getConfig("config.yml").getStringList("Place.List");
-            if (!placeList.isEmpty()) {
-                if (ConfigHandler.getConfig("config.yml").getStringList("Place.List").contains(block)) {
-                    // Has bypass permission.
-                    if (PermissionsHandler.hasPermission(player, "barrierplus.bypass.place")) {
-                        ServerHandler.debugMessage("(BlockPlace) Place", block, "has bypass permission", "bypass");
-                        return;
-                    }
-                    //Check placing permissions.
-                    if (PermissionsHandler.hasPermission(player, "barrierplus.place." + block.toLowerCase()) ||
-                            PermissionsHandler.hasPermission(player, "barrierplus.place.*")) {
-                        String[] placeHolders = Language.newString();
-                        placeHolders[7] = block;
-                        Language.sendLangMessage("Message.BarrierPlus.placeLocFail", player, placeHolders);
-                        ServerHandler.debugMessage("(BlockPlace) Place", block, "Location = false", "return");
-                        e.setCancelled(true);
-                        return;
-                    }
-                    Language.sendLangMessage("Message.BarrierPlus.noPermPlace", player);
-                    ServerHandler.debugMessage("(BlockPlace) Place", block, "permission", "cancel");
-                    e.setCancelled(true);
-                    return;
-                }
+        if (ConfigHandler.getConfigPath().isPlace()) {
+            Block block = e.getBlockPlaced();
+            String blockType = block.getBlockData().getMaterial().name();
+            List<LocationMap> placeMap = ConfigHandler.getConfigPath().getPlaceProp().get(block);
+            if (placeMap == null) {
                 return;
             }
-            ConfigurationSection placeConfig = ConfigHandler.getConfig("config.yml").getConfigurationSection("Place.List");
-            if (placeConfig != null) {
-                if (placeConfig.getKeys(false).contains(block)) {
-                    // Has bypass permission.
-                    if (PermissionsHandler.hasPermission(player, "barrierplus.bypass.place")) {
-                        ServerHandler.debugMessage("(BlockPlace) Place", block, "has bypass permission", "bypass");
-                        return;
-                    }
-                    //Check placing permissions.
-                    if (PermissionsHandler.hasPermission(player, "barrierplus.place." + block.toLowerCase()) ||
-                            PermissionsHandler.hasPermission(player, "barrierplus.place.*")) {
-                        if (LocationAPI.getLocation(e.getBlock(), "Place.List." + block + ".Location")) {
-                            ServerHandler.debugMessage("(BlockPlace) Place", block, "permission", "bypass");
-                            return;
-                        } else {
-                            String[] placeHolders = Language.newString();
-                            placeHolders[7] = block;
-                            Language.sendLangMessage("Message.BarrierPlus.placeLocFail", player, placeHolders);
-                            ServerHandler.debugMessage("(BlockPlace) Place", block, "Location = false", "return");
-                            e.setCancelled(true);
-                            return;
-                        }
-                    }
-                    Language.sendLangMessage("Message.BarrierPlus.noPermPlace", player);
-                    ServerHandler.debugMessage("(BlockPlace) Place", block, "permission", "cancel");
+            Location loc = block.getLocation();
+            if (ConfigHandler.getConfigPath().getLocationUtils().checkLocation(loc, placeMap)) {
+                Player player = e.getPlayer();
+                // Has bypass permission.
+                if (PermissionsHandler.hasPermission(player, "barrierplus.bypass.place")) {
+                    ServerHandler.sendFeatureMessage("Place", blockType, " bypasspermission", "bypass",
+                            new Throwable().getStackTrace()[0]);
+                    return;
+                }
+                //Check placing permissions.
+                if (PermissionsHandler.hasPermission(player, "barrierplus.place." + blockType) ||
+                        PermissionsHandler.hasPermission(player, "barrierplus.place.*")) {
+                    String[] placeHolders = Language.newString();
+                    placeHolders[7] = blockType;
+                    Language.sendLangMessage("Message.BarrierPlus.placeLocFail", player, placeHolders);
+                    ServerHandler.sendFeatureMessage("Place", blockType, "permmission", "fail",
+                            new Throwable().getStackTrace()[0]);
                     e.setCancelled(true);
                 }
             }

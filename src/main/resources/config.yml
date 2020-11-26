@@ -108,9 +108,10 @@ Place:
     Bedrock:
       Types:
         - BEDROCK
-      Location:
-        - Bedrock_World
-        - Bedrock_Nether
+      Prevent:
+        Location:
+          - Bedrock_World
+          - Bedrock_Nether
 
 # Control blocks destroy conditions. The creative blocks can be broken by the menu.
 # Help-Message: Send a help message to player if they try to break the block which disable vanilla break.
@@ -183,10 +184,10 @@ Message:
     buyTargetNotEnoughMoney: '&c%targetplayer% need &e%price% %pricetype%&c to buy %item% x%amount% &8- &c%pricetype%: %balance%'
     giveSuccess: '&aSuccess give &e%item% x%amount%&a.'
     giveTargetSuccess: '&aSuccess give &e%item% x%amount% &afor %targetplayer%.'
-    Items:
+    Translate:
+      money: 'money'
+      points: 'points'
+
       BARRIER: 'barrier'
       STRUCTURE_VOID: 'structure_void'
       BEDROCK: 'bedrock'
-    PriceTypes:
-      money: 'money'
-      points: 'points'

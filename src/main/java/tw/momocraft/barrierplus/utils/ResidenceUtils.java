@@ -1,79 +1,81 @@
 package tw.momocraft.barrierplus.utils;
 
-import com.bekvon.bukkit.residence.Residence;
 import com.bekvon.bukkit.residence.containers.Flags;
-import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 import com.bekvon.bukkit.residence.protection.ResidencePermissions;
 import org.bukkit.Location;
+import com.bekvon.bukkit.residence.Residence;
+import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 import org.bukkit.entity.Player;
+import tw.momocraft.barrierplus.handlers.ConfigHandler;
+import tw.momocraft.barrierplus.handlers.PermissionsHandler;
 
 public class ResidenceUtils {
-
-    public static boolean getBuildPerms(ResidencePermissions perms, String flag, boolean def, Player player) {
-        if (player != null) {
-            if (perms.playerHas(player, Flags.build, false)) {
-                return perms.playerHas(player, Flags.getFlag(flag), true);
-            }
+    public static boolean checkFlag(Player player, Location loc, boolean check, String flag) {
+        if (!ConfigHandler.getDepends().ResidenceEnabled()) {
+            return false;
         }
-        if (perms.has(Flags.build, false)) {
-            return perms.has(Flags.getFlag(flag), true);
+        if (!check) {
+            return false;
         }
-        return perms.has(Flags.getFlag(flag), def);
-    }
-
-    public static boolean getBuildPerms(ResidencePermissions perms, String flag, boolean def) {
-        if (perms.has(Flags.build, false)) {
-            return perms.has(Flags.getFlag(flag), true);
-        }
-        return perms.has(Flags.getFlag(flag), def);
-    }
-
-    public static boolean getBuildPerms(Location location, String flag, boolean def, Player player) {
-        ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(location);
-        if (res != null) {
-            ResidencePermissions perms = res.getPermissions();
-            if (player != null) {
-                if (perms.playerHas(player, Flags.build, false)) {
-                    return perms.playerHas(player, Flags.getFlag(flag), true);
+        if (flag != null && !flag.equals("")) {
+            ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(loc);
+            if (res != null) {
+                ResidencePermissions perms = res.getPermissions();
+                if (player != null) {
+                    switch (flag) {
+                        case "build":
+                            if (PermissionsHandler.hasPermission(player, "residence.bypass.build")) {
+                                return true;
+                            }
+                            break;
+                        case "destroy":
+                            if (PermissionsHandler.hasPermission(player, "residence.bypass.destroy")) {
+                                return true;
+                            }
+                            if (perms.playerHas(player, Flags.build, false)) {
+                                return perms.playerHas(player, Flags.getFlag(flag), true);
+                            }
+                            break;
+                        case "place":
+                            if (perms.playerHas(player, Flags.build, false)) {
+                                return perms.playerHas(player, Flags.getFlag(flag), true);
+                            }
+                            break;
+                        case "use":
+                            if (PermissionsHandler.hasPermission(player, "residence.bypass.use")) {
+                                return true;
+                            }
+                            break;
+                        case "fly":
+                            if (PermissionsHandler.hasPermission(player, "residence.bypass.fly")) {
+                                return true;
+                            }
+                            break;
+                        case "nofly":
+                            if (PermissionsHandler.hasPermission(player, "residence.bypass.nofly")) {
+                                return true;
+                            }
+                            break;
+                        case "tp":
+                            if (PermissionsHandler.hasPermission(player, "residence.bypass.tp")) {
+                                return true;
+                            }
+                            break;
+                        case "command":
+                            if (PermissionsHandler.hasPermission(player, "residence.bypass.command")) {
+                                return true;
+                            }
+                            break;
+                        case "itempickup":
+                            if (PermissionsHandler.hasPermission(player, "residence.bypass.itempickup")) {
+                                return true;
+                            }
+                            break;
+                    }
+                    return perms.playerHas(player, Flags.getFlag(flag), false);
                 }
+                return perms.has(Flags.getFlag(flag), false);
             }
-            if (perms.has(Flags.build, false)) {
-                return perms.has(Flags.getFlag(flag), true);
-            }
-            return perms.has(Flags.getFlag(flag), def);
-        }
-        return true;
-    }
-
-    public static boolean getBuildPerms(Location location, String flag, boolean def) {
-        ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(location);
-        if (res != null) {
-            ResidencePermissions perms = res.getPermissions();
-            if (perms.has(Flags.build, false)) {
-                return perms.has(Flags.getFlag(flag), true);
-            }
-            return perms.has(Flags.getFlag(flag), def);
-        }
-        return true;
-    }
-
-    public static boolean getPerms(Location location, String flag, boolean def, Player player) {
-        ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(location);
-        if (res != null) {
-            ResidencePermissions perms = res.getPermissions();
-            if (player != null) {
-                return perms.playerHas(player, Flags.getFlag(flag), def);
-            }
-            return perms.has(Flags.getFlag(flag), def);
-        }
-        return true;
-    }
-
-    public static boolean getPerms(Location location, String flag, boolean def) {
-        ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(location);
-        if (res != null) {
-            ResidencePermissions perms = res.getPermissions();
-            return perms.has(Flags.getFlag(flag), def);
         }
         return true;
     }

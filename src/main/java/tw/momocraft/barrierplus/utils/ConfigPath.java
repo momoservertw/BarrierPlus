@@ -1,6 +1,5 @@
 package tw.momocraft.barrierplus.utils;
 
-import javafx.util.Pair;
 import org.bukkit.configuration.ConfigurationSection;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.barrierplus.utils.locationutils.LocationMap;
@@ -19,6 +18,8 @@ public class ConfigPath {
     //         General Settings                        //
     //  ============================================== //
     private LocationUtils locationUtils;
+
+    private Map<String, String> translateMap;
 
     private String menuIJ;
     private String menuType;
@@ -43,32 +44,51 @@ public class ConfigPath {
     //         Place Settings                          //
     //  ============================================== //
     private boolean place;
-    private Map<String, Pair<String, List<LocationMap>>> placeProp;
+    private Map<String, List<LocationMap>> placeProp;
 
     //  ============================================== //
-    //         Destroy Settings                          //
+    //         Destroy Settings                        //
     //  ============================================== //
     private boolean destroy;
     private boolean destroyHelp;
     private int destroyCD;
     private boolean destroyCDMsg;
+    private boolean destroyMenuBreak;
+    private boolean destroyMenuDrop;
+    private boolean destroyVanillaBreak;
+    private boolean destroyVanillaDrop;
+    private boolean destroyExplodeBreak;
+    private boolean destroyExplodeDrop;
     private Map<String, DestroyMap> destroyProp;
 
     //  ============================================== //
     //         Setup all configuration.                //
     //  ============================================== //
     private void setUp() {
+        setGeneral();
+        setBuy();
+        setSee();
+        setPlace();
+        setDestroy();
+    }
+
+    private void setGeneral() {
+        locationUtils = new LocationUtils();
+
+        translateMap = new HashMap<>();
+        ConfigurationSection translateConfig = ConfigHandler.getConfig("config.yml").getConfigurationSection("Message.Translate");
+        if (translateConfig != null) {
+            for (String key : translateConfig.getKeys(false)) {
+                translateMap.put(key, ConfigHandler.getConfig("config.yml").getString("Message.Translate." + key));
+            }
+        }
+
         menuIJ = ConfigHandler.getConfig("config.yml").getString("General.Menu.ItemJoin");
         menuType = ConfigHandler.getConfig("config.yml").getString("General.Menu.Item.Type");
         menuName = ConfigHandler.getConfig("config.yml").getString("General.Menu.Item.Name");
-
-        setupBuy();
-        setupSee();
-        setupPlace();
-        setupDestroy();
     }
 
-    private void setupBuy() {
+    private void setBuy() {
         buy = ConfigHandler.getConfig("config.yml").getBoolean("Buy.Enable");
         if (!buy) {
             return;
@@ -100,7 +120,7 @@ public class ConfigPath {
         }
     }
 
-    private void setupSee() {
+    private void setSee() {
         see = ConfigHandler.getConfig("config.yml").getBoolean("See.Enable");
         if (!see) {
             return;
@@ -137,7 +157,7 @@ public class ConfigPath {
         }
     }
 
-    private void setupPlace() {
+    private void setPlace() {
         place = ConfigHandler.getConfig("config.yml").getBoolean("Place.Enable");
         if (!place) {
             return;
@@ -156,7 +176,7 @@ public class ConfigPath {
                     groupConfig = ConfigHandler.getConfig("config.yml").getConfigurationSection("Place.Groups." + group);
                     if (groupConfig != null) {
                         for (String type : ConfigHandler.getConfig("config.yml").getStringList("Place.Groups." + group + ".Types")) {
-                            placeProp.put(type, new Pair<>(group, locationUtils.getSpeLocMaps("config.yml", "Place.Groups." + group + ".Location")));
+                            placeProp.put(type, locationUtils.getSpeLocMaps("config.yml", "Place.Groups." + group + ".Prevent.Location"));
                         }
                     }
                 }
@@ -164,7 +184,7 @@ public class ConfigPath {
         }
     }
 
-    private void setupDestroy() {
+    private void setDestroy() {
         destroy = ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Enable");
         if (!destroy) {
             return;
@@ -172,6 +192,12 @@ public class ConfigPath {
         destroyHelp = ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Settings.Help-Message");
         destroyCD = ConfigHandler.getConfig("config.yml").getInt("Destroy.Settings.Cooldown.Interval");
         destroyCDMsg = ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Settings.Cooldown.Message");
+        destroyMenuBreak = ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Settings.Default.Menu.Break");
+        destroyMenuDrop = ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Settings.Default.Menu.Drop");
+        destroyVanillaBreak = ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Settings.Default.Vanilla.Break");
+        destroyVanillaDrop = ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Settings.Default.Vanilla.Drop");
+        destroyExplodeBreak = ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Settings.Default.Explode.Break");
+        destroyExplodeDrop = ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Settings.Default.Explode.Drop");
         ConfigurationSection destroyConfig = ConfigHandler.getConfig("config.yml").getConfigurationSection("Destroy.Groups");
         if (destroyConfig != null) {
             destroyProp = new HashMap<>();
@@ -211,6 +237,17 @@ public class ConfigPath {
         }
     }
 
+    //  ============================================== //
+    //         General Settings                        //
+    //  ============================================== //
+    public LocationUtils getLocationUtils() {
+        return locationUtils;
+    }
+
+    public Map<String, String> getTranslateMap() {
+        return translateMap;
+    }
+
     public String getMenuIJ() {
         return menuIJ;
     }
@@ -223,6 +260,9 @@ public class ConfigPath {
         return menuType;
     }
 
+    //  ============================================== //
+    //         Buy Settings                            //
+    //  ============================================== //
     public boolean isBuy() {
         return buy;
     }
@@ -231,6 +271,9 @@ public class ConfigPath {
         return buyProp;
     }
 
+    //  ============================================== //
+    //         See Settings                            //
+    //  ============================================== //
     public boolean isSee() {
         return see;
     }
@@ -251,18 +294,20 @@ public class ConfigPath {
         return seeProp;
     }
 
-    public LocationUtils getLocationUtils() {
-        return locationUtils;
-    }
-
+    //  ============================================== //
+    //         Place Settings                          //
+    //  ============================================== //
     public boolean isPlace() {
         return place;
     }
 
-    public Map<String, Pair<String, List<LocationMap>>> getPlaceProp() {
+    public Map<String, List<LocationMap>> getPlaceProp() {
         return placeProp;
     }
 
+    //  ============================================== //
+    //         Destroy Settings                        //
+    //  ============================================== //
     public boolean isDestroy() {
         return destroy;
     }
@@ -277,6 +322,30 @@ public class ConfigPath {
 
     public int getDestroyCD() {
         return destroyCD;
+    }
+
+    public boolean isDestroyExplodeBreak() {
+        return destroyExplodeBreak;
+    }
+
+    public boolean isDestroyExplodeDrop() {
+        return destroyExplodeDrop;
+    }
+
+    public boolean isDestroyMenuBreak() {
+        return destroyMenuBreak;
+    }
+
+    public boolean isDestroyMenuDrop() {
+        return destroyMenuDrop;
+    }
+
+    public boolean isDestroyVanillaBreak() {
+        return destroyVanillaBreak;
+    }
+
+    public boolean isDestroyVanillaDrop() {
+        return destroyVanillaDrop;
     }
 
     public Map<String, DestroyMap> getDestroyProp() {

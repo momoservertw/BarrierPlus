@@ -1,13 +1,15 @@
 package tw.momocraft.barrierplus.listeners;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.barrierplus.handlers.ServerHandler;
+import tw.momocraft.barrierplus.utils.DestroyMap;
+import tw.momocraft.barrierplus.utils.ResidenceUtils;
 
 import java.util.*;
 
@@ -19,71 +21,57 @@ public class EntityExplode implements Listener {
      */
     @EventHandler
     public void onEntityExplode(EntityExplodeEvent e) {
-        if (ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Enable")) {
-            ConfigurationSection blockConfig = ConfigHandler.getConfig("config.yml").getConfigurationSection("Destroy.List");
-            if (blockConfig != null) {
-                Set<String> blockList = blockConfig.getKeys(false);
-                List<Material> blockExplodeList = getDestroyExplodeList(blockConfig.getKeys(false));
-                List<Material> blockDropList = getDestroyExplodeDropMap(blockConfig.getKeys(false));
-                Block block;
-                Material blockType;
-                Iterator<Block> i = e.blockList().iterator();
-                while (i.hasNext()) {
-                    block = i.next();
-                    blockType = block.getType();
-                    if (!blockList.contains(block.getType().name())) {
-                        if (LocationAPI.getLocation(e.getLocation().getBlock(), "Destroy.List." + block + ".Location")) {
-                            ServerHandler.debugMessage("(EntityExplode) Destroy-Explode", blockType.name(), "Location = false", "cancel", groupName,
-                                    new Throwable().getStackTrace()[0]);
-                            i.remove();
-                            continue;
-                        }
-                        if (blockExplodeList.contains(blockType)) {
-                            ServerHandler.debugMessage("(EntityExplode) Destroy-Explode", blockType.name(), "Explode-Break = false or null", "cancel");
-                            i.remove();
-                            continue;
-                        }
-                        if (blockDropList.contains(blockType)) {
-                            ServerHandler.debugMessage("(BlockExplode) Destroy-Explode-Drop", blockType.name(), "Explode-Drop = false or null", "remove", "replace to air");
-                            block.setType(Material.AIR);
-                        }
-                    }
-                }
+        if (!ConfigHandler.getConfigPath().isDestroy()) {
+            return;
+        }
+        Block block;
+        String blockType;
+        Location blockLoc;
+        Iterator<Block> i = e.blockList().iterator();
+        while (i.hasNext()) {
+            block = i.next();
+            blockLoc = block.getLocation();
+            blockType = block.getType().name();
+            DestroyMap destroyMap = ConfigHandler.getConfigPath().getDestroyProp().get(blockType);
+            if (destroyMap == null) {
+                continue;
+            }
+            // Location.
+            if (!ConfigHandler.getConfigPath().getLocationUtils().checkLocation(blockLoc, destroyMap.getLocMaps())) {
+                ServerHandler.sendFeatureMessage("Destroy", blockType, "location", "continue", "Explode",
+                        new Throwable().getStackTrace()[0]);
+                continue;
+            }
+            // Prevent Location.
+            if (ConfigHandler.getConfigPath().getLocationUtils().checkLocation(blockLoc, destroyMap.getPreventLocMaps())) {
+                ServerHandler.sendFeatureMessage("Destroy", blockType, "prevent location", "bypass", "Explode",
+                        new Throwable().getStackTrace()[0]);
+                i.remove();
+                continue;
+            }
+            // Residence flag.
+            if (!ResidenceUtils.checkFlag(null, blockLoc, true, "destroy")) {
+                ServerHandler.sendFeatureMessage("Destroy", blockType, "residence", "continue", "Explode",
+                        new Throwable().getStackTrace()[0]);
+                continue;
+            }
+            // Explode break.
+            String explodeBreak = destroyMap.getExplodeBreak();
+            if (explodeBreak != null && explodeBreak.equals("false") ||
+                    explodeBreak == null && !ConfigHandler.getConfigPath().isDestroyExplodeBreak()) {
+                i.remove();
+                ServerHandler.sendFeatureMessage("Destroy", blockType, "destroy", "bypass", "Explode",
+                        new Throwable().getStackTrace()[0]);
+                continue;
+            }
+            // Explode drop.
+            String explodeDrop = destroyMap.getExplodeDrop();
+            if (explodeDrop != null && explodeDrop.equals("false") ||
+                    explodeDrop == null && !ConfigHandler.getConfigPath().isDestroyExplodeDrop()) {
+                block.setType(Material.AIR);
+                ServerHandler.sendFeatureMessage("Destroy", blockType, "drop", "bypass", "Explode",
+                        new Throwable().getStackTrace()[0]);
             }
         }
-    }
-
-    /**
-     *
-     * @param explodeList the block list from explosion.
-     * @return the list which will not destroys by explosion.
-     */
-    private List<Material> getDestroyExplodeList(Set<String> explodeList) {
-        List<Material> blockList = new ArrayList<>();
-        String enable;
-        for (String block : explodeList) {
-            enable = ConfigHandler.getConfig("config.yml").getString("Destroy.List." + block + ".Explode-Break");
-            if (enable == null || enable.equals("false")) {
-                blockList.add(Material.getMaterial(block));
-            }
-        }
-        return blockList;
-    }
-
-    /**
-     *
-     * @param explodeList the block list from explosion.
-     * @return the list which will not drops by explosion.
-     */
-    private List<Material> getDestroyExplodeDropMap(Set<String> explodeList) {
-        List<Material> blockList = new ArrayList<>();
-        String enable;
-        for (String block : explodeList) {
-            enable = ConfigHandler.getConfig("config.yml").getString("Destroy.List." + block + ".Explode-Drop");
-            if (enable == null || enable.equals("false")) {
-                blockList.add(Material.getMaterial(block));
-            }
-        }
-        return blockList;
     }
 }

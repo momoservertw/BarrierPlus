@@ -7,8 +7,11 @@ import org.bukkit.entity.Player;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.barrierplus.handlers.ServerHandler;
 
+import java.util.Arrays;
+import java.util.Map;
+
 public class Language {
-    private static Lang langType = Lang.ENGLISH;
+    private static final Lang langType = Lang.ENGLISH;
 
     public static void dispatchMessage(CommandSender sender, String langMessage, boolean hasPrefix) {
         if (hasPrefix) {
@@ -24,14 +27,14 @@ public class Language {
                 prefix += "";
             }
             langMessage = prefix + langMessage;
-            sender.sendMessage(Utils.stripLogColors(sender, langMessage));
+            sender.sendMessage(langMessage);
         } else {
             Player player = null;
             if (sender instanceof Player) {
                 player = (Player) sender;
             }
             langMessage = Utils.translateLayout(langMessage, player);
-            sender.sendMessage(Utils.stripLogColors(sender, langMessage));
+            sender.sendMessage(langMessage);
         }
     }
 
@@ -41,7 +44,7 @@ public class Language {
             player = (Player) sender;
         }
         langMessage = Utils.translateLayout(langMessage, player);
-        sender.sendMessage(Utils.stripLogColors(sender, langMessage));
+        sender.sendMessage(langMessage);
     }
 
     public static void sendLangMessage(String nodeLocation, CommandSender sender, String... placeHolder) {
@@ -62,11 +65,8 @@ public class Language {
             String[] langLines = langMessage.split(" /n ");
             for (String langLine : langLines) {
                 String langStrip = prefix + langLine;
-                if (sender instanceof ConsoleCommandSender) {
-                    langStrip = Utils.stripLogColors(sender, langStrip);
-                }
                 if (isConsoleMessage(nodeLocation)) {
-                    ServerHandler.sendConsoleMessage(Utils.stripLogColors(sender, langLine));
+                    ServerHandler.sendConsoleMessage(langLine);
                 } else {
                     sender.sendMessage(langStrip);
                 }
@@ -93,14 +93,7 @@ public class Language {
                 String[] langLines = langMessage.split(" /n ");
                 for (String langLine : langLines) {
                     String langStrip = prefix + langLine;
-                    if (sender instanceof ConsoleCommandSender) {
-                        langStrip = Utils.stripLogColors(sender, langStrip);
-                    }
-                    if (isConsoleMessage(nodeLocation)) {
-                        ServerHandler.sendConsoleMessage(Utils.stripLogColors(sender, langLine));
-                    } else {
-                        sender.sendMessage(langStrip);
-                    }
+                    sender.sendMessage(langStrip);
                 }
             }
         } else {
@@ -114,15 +107,7 @@ public class Language {
                 langMessage = Utils.translateLayout(langMessage, player);
                 String[] langLines = langMessage.split(" /n ");
                 for (String langLine : langLines) {
-                    String langStrip = langLine;
-                    if (sender instanceof ConsoleCommandSender) {
-                        langStrip = Utils.stripLogColors(sender, langStrip);
-                    }
-                    if (isConsoleMessage(nodeLocation)) {
-                        ServerHandler.sendConsoleMessage(Utils.stripLogColors(sender, langLine));
-                    } else {
-                        sender.sendMessage(langStrip);
-                    }
+                    sender.sendMessage(langLine);
                 }
             }
         }
@@ -131,29 +116,25 @@ public class Language {
     private static String[] initializeRows(String... placeHolder) {
         if (placeHolder == null || placeHolder.length != newString().length) {
             String[] langHolder = Language.newString();
-            for (int i = 0; i < langHolder.length; i++) {
-                langHolder[i] = "null";
-            }
+            Arrays.fill(langHolder, "null");
             return langHolder;
         } else {
-            String[] langHolder = placeHolder;
-            for (int i = 0; i < langHolder.length; i++) {
-                if (langHolder[i] == null) {
-                    langHolder[i] = "null";
+            for (int i = 0; i < placeHolder.length; i++) {
+                if (placeHolder[i] == null) {
+                    placeHolder[i] = "null";
                 }
             }
-            return langHolder;
+            return placeHolder;
         }
     }
 
     private static String translateLangHolders(String langMessage, String... langHolder) {
-        ConfigurationSection itemName = ConfigHandler.getConfig("config.yml").getConfigurationSection("Message.BarrierPlus.Items");
-        if (itemName != null && itemName.getKeys(false).contains(langHolder[7])) {
-            langHolder[7] = ConfigHandler.getConfig("config.yml").getString("Message.BarrierPlus.Items." + langHolder[7]);
+        Map<String, String> translateMap = ConfigHandler.getConfigPath().getTranslateMap();
+        if (translateMap.containsKey(langHolder[3])) {
+            langHolder[3] = translateMap.get(langHolder[3]);
         }
-        ConfigurationSection priceTypeName = ConfigHandler.getConfig("config.yml").getConfigurationSection("Message.BarrierPlus.PriceTypes");
-        if (priceTypeName != null && priceTypeName.getKeys(false).contains(langHolder[3])) {
-            langHolder[3] = ConfigHandler.getConfig("config.yml").getString("Message.BarrierPlus.PriceTypes." + langHolder[3]);
+        if (translateMap.containsKey(langHolder[7])) {
+            langHolder[7] = translateMap.get(langHolder[7]);
         }
         return langMessage
                 .replace("%command%", langHolder[0])
@@ -172,9 +153,9 @@ public class Language {
 
 
     private enum Lang {
-        DEFAULT("config.yml", 0), ENGLISH("config.yml", 1);
+        ENGLISH("config.yml", 1);
 
-        private Lang(final String nodeLocation, final int i) {
+        Lang(final String nodeLocation, final int i) {
             this.nodeLocation = nodeLocation;
         }
 
@@ -187,11 +168,5 @@ public class Language {
 
     private static boolean isConsoleMessage(String nodeLocation) {
         return false;
-    }
-
-    public static void debugMessage(String feature, String depiction) {
-        if (ConfigHandler.getDebugging()) {
-            ServerHandler.sendDebugMessage("&8" + feature + " - &f" + depiction);
-        }
     }
 }
