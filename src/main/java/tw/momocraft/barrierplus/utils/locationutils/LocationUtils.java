@@ -79,9 +79,9 @@ public class LocationUtils {
      * @param locMaps the checking location maps.
      * @return if the location is one of locMaps.
      */
-    public boolean checkLocation(Location loc, List<LocationMap> locMaps) {
-        if (locMaps.isEmpty()) {
-            return true;
+    public boolean checkLocation(Location loc, List<LocationMap> locMaps, boolean defaultValue) {
+        if (locMaps == null || locMaps.isEmpty()) {
+            return defaultValue;
         }
         String worldName = loc.getWorld().getName();
         Map<String, String> cord;

@@ -10,58 +10,9 @@ commands:
   barrierplus:
     description: Displays main command menu.
     permission: barrierplus.use
+    aliases: [brp]
     usage: |
       /barrierplus
-  barrierplus reload:
-    description: Reloads all configuration files and caches any new data.
-    permission: barrierplus.command.version
-    usage: |
-      /barrierplus reload
-  barrierplus version:
-    description: Check the plugin version.
-    permission: barrierplus.command.version
-    usage: |
-      /barrierplus version
-  barrierplus buy:
-    description: To buy creative blocks.
-    permission: barrierplus.command.buy
-    usage: |
-      /barrierplus buy
-  barrierplus buy barrier:
-    description: To buy barriers.
-    permission: barrierplus.command.buy
-    usage: |
-      /barrierplus buy barrier
-  barrierplus buy structure_void:
-    description: To buy structure_voids.
-    permission: barrierplus.command.buy
-    usage: |
-      /barrierplus buy structure_void
-  barrierplus buy bedrock:
-    description: To buy bedrocks.
-    permission: barrierplus.command.buy
-    usage: |
-      /barrierplus buy bedrock
-  barrierplus give:
-    description: To give creative blocks.
-    permission: barrierplus.command.give
-    usage: |
-      /barrierplus give
-  barrierplus give barrier:
-    description: To give barriers.
-    permission: barrierplus.command.give
-    usage: |
-      /barrierplus give barrier
-  barrierplus give structure_void:
-    description: To give structure_voids.
-    permission: barrierplus.command.give
-    usage: |
-      /barrierplus give structure_void
-  barrierplus give bedrock:
-    description: To give bedrocks.
-    permission: barrierplus.command.give
-    usage: |
-      /barrierplus give bedrock
 
 permissions:
   barrierplus.*:
@@ -74,8 +25,6 @@ permissions:
       barrierplus.place.*: true
       barrierplus.destroy.*: true
       barrierplus.buy.*: true
-      barrierplus.give.*: true
-      barrierplus.bypass.*: true
   barrierplus.use:
     description: Allows use of basic commands.
     default: true
@@ -87,8 +36,6 @@ permissions:
       barrierplus.command.version: true
       barrierplus.command.buy: true
       barrierplus.command.buy.other: true
-      barrierplus.command.give: true
-      barrierplus.command.give.other: true
   barrierplus.command.reload:
     description: Allows use of command /barrierplus reload.
     default: op
@@ -100,12 +47,6 @@ permissions:
     default: op
   barrierplus.command.buy.other:
     description: Allows to use command /barrierplus buy for other player.
-    default: op
-  barrierplus.command.give:
-    description: Allows to use command /barrierplus give.
-    default: op
-  barrierplus.command.give.other:
-    description: Allows to use command /barrierplus give for other player.
     default: op
   barrierplus.see.*:
     description: Allows to see near blocks.
@@ -166,23 +107,4 @@ permissions:
     default: op
   barrierplus.buy.bedrock:
     description: Allows to buy bedrocks.
-    default: op
-  barrierplus.give.*:
-    description: Allows to give all blocks.
-    default: op
-    children:
-      barrierplus.give.barrier: true
-      barrierplus.give.structure_void: true
-      barrierplus.give.bedrock: true
-  barrierplus.give.barrier:
-    description: Allows to give barriers.
-    default: op
-  barrierplus.give.structure_void:
-    description: Allows to give structure_voids.
-    default: op
-  barrierplus.give.bedrock:
-    description: Allows to give bedrocks.
-    default: op
-  barrierplus.bypass.*:
-    description: Bypass all event's permission and limits.
     default: op

@@ -4,14 +4,19 @@ import org.bukkit.Bukkit;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
 
 public class DependAPI {
+    private VaultAPI vaultApi;
+    private boolean Vault = false;
     private boolean Residence = false;
     private boolean PlayerPoints = false;
     private boolean PlaceHolderAPI = false;
-    private VaultAPI vault;
+    private boolean ItemJoin = false;
 
     public DependAPI() {
         if (ConfigHandler.getConfig("config.yml").getBoolean("General.Settings.Features.Hook.Vault")) {
-            this.setVault();
+            this.setVaultStatus(Bukkit.getServer().getPluginManager().getPlugin("Vault") != null);
+            if (Vault) {
+                setVaultApi();
+            }
         }
         if (ConfigHandler.getConfig("config.yml").getBoolean("General.Settings.Features.Hook.PlaceHolderAPI")) {
             this.setPlaceHolderStatus(Bukkit.getServer().getPluginManager().getPlugin("PlaceHolderAPI") != null);
@@ -22,6 +27,13 @@ public class DependAPI {
         if (ConfigHandler.getConfig("config.yml").getBoolean("General.Settings.Features.Hook.PlayerPoints")) {
             this.setPlayerPointsStatus(Bukkit.getServer().getPluginManager().getPlugin("PlayerPoints") != null);
         }
+        if (ConfigHandler.getConfig("config.yml").getBoolean("General.Settings.Features.Hook.ItemJoin")) {
+            this.setItemJoinStatus(Bukkit.getServer().getPluginManager().getPlugin("ItemJoin") != null);
+        }
+    }
+
+    public boolean VaultEnabled() {
+        return this.Vault;
     }
 
     public boolean ResidenceEnabled() {
@@ -36,6 +48,15 @@ public class DependAPI {
         return this.PlaceHolderAPI;
     }
 
+    public boolean ItemJoinEnabled() {
+        return this.ItemJoin;
+    }
+
+
+    public void setVaultStatus(boolean bool) {
+        this.Vault = bool;
+    }
+
     public void setResidenceStatus(boolean bool) {
         this.Residence = bool;
     }
@@ -48,11 +69,17 @@ public class DependAPI {
         this.PlaceHolderAPI = bool;
     }
 
-    public VaultAPI getVault() {
-        return this.vault;
+    public void setItemJoinStatus(boolean bool) {
+        this.ItemJoin = bool;
     }
 
-    private void setVault() {
-        this.vault = new VaultAPI();
+
+    public VaultAPI getVaultApi() {
+        return this.vaultApi;
     }
+
+    private void setVaultApi() {
+        vaultApi = new VaultAPI();
+    }
+
 }

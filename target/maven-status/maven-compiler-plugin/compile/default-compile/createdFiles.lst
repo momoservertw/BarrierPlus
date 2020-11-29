@@ -6,6 +6,7 @@ tw\momocraft\barrierplus\Commands.class
 tw\momocraft\barrierplus\listeners\EntityExplode.class
 tw\momocraft\barrierplus\utils\Language.class
 tw\momocraft\barrierplus\handlers\ServerHandler.class
+tw\momocraft\barrierplus\utils\TabComplete.class
 tw\momocraft\barrierplus\utils\Utils.class
 tw\momocraft\barrierplus\utils\PlayerPointsAPI.class
 tw\momocraft\barrierplus\listeners\BlockBreak.class
@@ -15,7 +16,6 @@ tw\momocraft\barrierplus\utils\CustomCommands.class
 tw\momocraft\barrierplus\utils\DependAPI.class
 tw\momocraft\barrierplus\handlers\ConfigHandler.class
 tw\momocraft\barrierplus\handlers\PlayerHandler.class
-tw\momocraft\barrierplus\utils\Language$Lang.class
 tw\momocraft\barrierplus\utils\ConfigPath.class
 tw\momocraft\barrierplus\handlers\PermissionsHandler.class
 tw\momocraft\barrierplus\listeners\BlockClick.class

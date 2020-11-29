@@ -18,26 +18,24 @@ public class BlockPlace implements Listener {
 
     @EventHandler
     public void onPlaceBlock(BlockPlaceEvent e) {
-        if (ConfigHandler.getConfigPath().isPlace()) {
-            Block block = e.getBlockPlaced();
-            String blockType = block.getBlockData().getMaterial().name();
-            List<LocationMap> placeMap = ConfigHandler.getConfigPath().getPlaceProp().get(block);
-            if (placeMap == null) {
-                return;
-            }
-            Player player = e.getPlayer();
-            Location loc = block.getLocation();
-            if (ConfigHandler.getConfigPath().getLocationUtils().checkLocation(loc, placeMap)) {
-                //Check placing permissions.
-                if (PermissionsHandler.hasPermission(player, "barrierplus.place." + blockType) ||
-                        PermissionsHandler.hasPermission(player, "barrierplus.place.*")) {
-                    String[] placeHolders = Language.newString();
-                    placeHolders[7] = blockType;
-                    Language.sendLangMessage("Message.BarrierPlus.placeLocFail", player, placeHolders);
-                    ServerHandler.sendFeatureMessage("Place", blockType, "permmission", "fail",
-                            new Throwable().getStackTrace()[0]);
-                    e.setCancelled(true);
-                }
+        if (!ConfigHandler.getConfigPath().isPlace()) {
+            return;
+        }
+        Block block = e.getBlockPlaced();
+        String blockType = block.getType().name();
+        List<LocationMap> preventLocMaps = ConfigHandler.getConfigPath().getPlaceProp().get(blockType);
+        Player player = e.getPlayer();
+        Location loc = block.getLocation();
+        if (ConfigHandler.getConfigPath().getLocationUtils().checkLocation(loc, preventLocMaps, true)) {
+            //Check placing permissions.
+            if (!PermissionsHandler.hasPermission(player, "barrierplus.place." + blockType) &&
+                    !PermissionsHandler.hasPermission(player, "barrierplus.place.*")) {
+                String[] placeHolders = Language.newString();
+                placeHolders[7] = blockType;
+                Language.sendLangMessage("Message.BarrierPlus.placeLocFail", player, placeHolders);
+                ServerHandler.sendFeatureMessage("Place", blockType, "permission", "fail",
+                        new Throwable().getStackTrace()[0]);
+                e.setCancelled(true);
             }
         }
     }

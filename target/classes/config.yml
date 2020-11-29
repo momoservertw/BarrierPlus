@@ -1,9 +1,7 @@
 # --{ =-=-=-=-=-=-=-=-=-= BarrierPlus's Configuration Settings, by Momocraft =-=-=-=-=-=-=-=-=-= }--
 Config-Version: 6
-Log-Coloration: true
-Debugging: false
 Check-Updates: true
-
+Debugging: false
 
 General:
   Settings:
@@ -14,9 +12,10 @@ General:
         PlaceHolderAPI: true
         Residence: true
         PlayerPoints: true
-  # The menu item for some events like showing creative blocks or destroying it.
-  # Item types: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
-  # If you don't have a menu in your server, you can set Item-Name to '' to use a vanilla item.
+        ItemJoin: true
+  # The menu item for some events like showing blocks or destroying it.
+  # If you don't have a menu in your server, you can set Item Name to "" to use a vanilla item.
+  # Support: ItemJoin
   Menu:
     ItemJoin: ""
     Item:
@@ -48,21 +47,16 @@ General:
       Area:
         Y: "5 ~ 123"
 
-
-
-# Buy or give creative blocks.
-# Price-Type: "money" or "points". "points" only support PlayerPoints.
-# PlayerPoints: https://dev.bukkit.org/projects/playerpoints
-# Amount: Can set over the max stack size. By default, it will give the max stack size of item like "barrier x64".
-# Buy command permission: barrierplus.command.buy
-# Buy item permission: barrierplus.buy.MATERIAL or barrierplus.buy.*
-# Give command permission: barrierplus.command.give
-# Guve item permission: barrierplus.give.MATERIAL or barrierplus.give.*
+# Blocks shop.
+# Permission: barrierplus.command.buy
+# Item permission: barrierplus.buy.MATERIAL or barrierplus.buy.*
+# More information: https://github.com/momoservertw/BarrierPlus/wiki/Buy
 Buy:
   Enable: false
   Groups:
-    Barrier:
+    Creative:
       Enable: true
+      # Price-Type: "money" or "points". "points" only support PlayerPoints.
       Price-Type: points
       Price: 25
       Amount: 64
@@ -72,11 +66,8 @@ Buy:
         - BEDROCK
 
 # Display near creative blocks.
-# Distance: The display creative range near player. Setting too high may cause lags.
-# Cooldown(tick): Set "0" to disable cooldown feature.
-# Creative-Mode: Display the particles is player is op.
-# Particle type: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Particle.html
 # Permission: barrierplus.see.GROUP or barrierplus.see.*
+# More information: https://github.com/momoservertw/BarrierPlus/wiki/See
 See:
   Enable: false
   Settings:
@@ -86,6 +77,7 @@ See:
       Message: false
   Groups:
     Barrier:
+      Enable: true
       Creative: false
       Particle:
         Type: BARRIER
@@ -95,6 +87,7 @@ See:
       Types:
         - BARRIER
     Structure_void:
+      Enable: true
       Particle:
         Type: CRIT_MAGIC
         Amount: 2
@@ -104,16 +97,18 @@ See:
         - STRUCTURE_VOID
 
 # These creative blocks will need permission to place.
-# It will not limit place location if you don' add the location setting.
-# Permission: barrierplus.place.GROUP or barrierplus.place.*
+# Permission: barrierplus.place.MATERIAL or barrierplus.place.*
+# More information: https://github.com/momoservertw/BarrierPlus/wiki/Place
 Place:
   Enable: false
-  List:
+  Groups:
     Creative:
+      Enable: true
       Types:
         - BARRIER
         - STRUCTURE_VOID
     Bedrock:
+      Enable: true
       Types:
         - BEDROCK
       Prevent:
@@ -122,17 +117,13 @@ Place:
           - Bedrock_Nether
 
 # Control blocks destroy conditions. The creative blocks can be broken by the menu.
-# Help-Message: Send a help message to player if they try to break the block which disable vanilla break.
-# cooldown(tick): Set "0" to disable the Menu-break cooldown.
-# Default: Menu-Break: true, Menu-Drop: true, Vanilla-Break: false,
-#          Vanilla-Drop: false, Explode-Break: false, Explode-Drop: false
-# It will not limit destroy location if you don' add the location setting.
 # Permission: barrierplus.destroy.MATERIAL or barrierplus.destroy.*
+# More information: https://github.com/momoservertw/BarrierPlus/wiki/Destroy
 Destroy:
   Enable: false
   Settings:
+    Help-Message: true
     Menu-Break:
-      Help-Message: true
       Cooldown:
         Interval: 60
         Message: false
@@ -148,10 +139,12 @@ Destroy:
         Drop: false
   Groups:
     Barrier:
+      Enable: true
       Types:
         - BARRIER
         - STRUCTURE_VOID
     Bedrock:
+      Enable: true
       Types:
         - BEDROCK
       Prevent:
@@ -173,8 +166,6 @@ Message:
       reload: "&a/barrierplus reload &8- &7Reloads config file."
       buy: "&a/barrierplus buy <item> &8- &7Buy creative items."
       buyOther: "&a/barrierplus buy <item> [player] &8- &7Execute buy creative items command to a player."
-      give: "&a/barrierplus give <item> [amount] &8- &7Give creative items."
-      giveOther: "&a/barrierplus give <item> [amount] [player] &8- &7Give creative items to a player."
     noPermDestroy: '&cYou dont have &6build &cpermission<s> here.'
     noPermPlace: '&cYou dont have permission to place this block.'
     noPermBreak: '&cYou dont have permission to break this block.'
@@ -190,8 +181,6 @@ Message:
     buyTargetSuccess: '&aSuccess buy &e%item% x%amount% &afor %price% %pricetype% for %targetplayer% &8- &a%pricetype%: %balance%'
     buyNotEnoughMoney: '&cYou need &e%price% %pricetype%&c to buy %item% x%amount% &8- &c%pricetype%: %balance%.'
     buyTargetNotEnoughMoney: '&c%targetplayer% need &e%price% %pricetype%&c to buy %item% x%amount% &8- &c%pricetype%: %balance%'
-    giveSuccess: '&aSuccess give &e%item% x%amount%&a.'
-    giveTargetSuccess: '&aSuccess give &e%item% x%amount% &afor %targetplayer%.'
     Translate:
       money: 'money'
       points: 'points'

@@ -9,14 +9,13 @@ import java.net.URLConnection;
 
 public class UpdateHandler {
 
-    private final int PROJECTID = 76878;
+    private final int PROJECTID = 70510;
 
-	private final String HOST = "https://api.spigotmc.org/legacy/update.php?resource=" + this.PROJECTID;
-	private String versionExact = BarrierPlus.getInstance().getDescription().getVersion();
-	private String localeVersion = this.versionExact.split("-")[0];
+	private final String versionExact = BarrierPlus.getInstance().getDescription().getVersion();
+	private final String localeVersion = this.versionExact.split("-")[0];
 	private String latestVersion;
 
-	private boolean updatesAllowed = ConfigHandler.getConfig("config.yml").getBoolean("Check-Updates");
+	private final boolean updatesAllowed = ConfigHandler.getConfig("config.yml").getBoolean("Check-Updates");
 
 	/**
 	 * Initializes the UpdateHandler and Checks for Updates upon initialization.
@@ -33,7 +32,7 @@ public class UpdateHandler {
 	public void checkUpdates(final CommandSender sender) {
 		if (this.updateNeeded(sender) && this.updatesAllowed) {
 			ServerHandler.sendMessage(sender, "&aNew version is available: " + "&e&lv" + this.latestVersion);
-			ServerHandler.sendMessage(sender, "&ehttps://www.spigotmc.org/resources/barrierplus.76878/history");
+			ServerHandler.sendMessage(sender, "&ehttps://www.spigotmc.org/resources/entityplus.70510/history");
 		} else if (this.updatesAllowed) {
 			ServerHandler.sendMessage(sender, "&fYou are up to date!");
 		}
@@ -49,7 +48,8 @@ public class UpdateHandler {
 		if (this.updatesAllowed) {
 			ServerHandler.sendMessage(sender, "&fChecking for updates...");
 			try {
-				URLConnection connection = new URL(this.HOST + "?_=" + System.currentTimeMillis()).openConnection();
+				String HOST = "https://api.spigotmc.org/legacy/update.php?resource=" + this.PROJECTID;
+				URLConnection connection = new URL(HOST + "?_=" + System.currentTimeMillis()).openConnection();
 				BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 				String version = reader.readLine();
 				reader.close();

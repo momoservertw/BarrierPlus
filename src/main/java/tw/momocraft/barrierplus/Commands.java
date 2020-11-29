@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.barrierplus.handlers.PermissionsHandler;
 import tw.momocraft.barrierplus.handlers.PlayerHandler;
+import tw.momocraft.barrierplus.handlers.ServerHandler;
 import tw.momocraft.barrierplus.utils.Buy;
 import tw.momocraft.barrierplus.utils.Language;
 
@@ -45,12 +46,6 @@ public class Commands implements CommandExecutor {
                         if (PermissionsHandler.hasPermission(sender, "barrierplus.command.buy.other")) {
                             Language.sendLangMessage("Message.BarrierPlus.Commands.buyOther", sender, false);
                         }
-                        if (PermissionsHandler.hasPermission(sender, "barrierplus.command.give")) {
-                            Language.sendLangMessage("Message.BarrierPlus.Commands.give", sender, false);
-                        }
-                        if (PermissionsHandler.hasPermission(sender, "barrierplus.command.give.other")) {
-                            Language.sendLangMessage("Message.BarrierPlus.Commands.giveOther", sender, false);
-                        }
                         Language.dispatchMessage(sender, "");
                     } else {
                         Language.sendLangMessage("Message.noPermission", sender);
@@ -82,29 +77,16 @@ public class Commands implements CommandExecutor {
                         Language.sendLangMessage("Message.noPermission", sender);
                     }
                     return true;
-                } else if (args[0].equalsIgnoreCase("give")) {
-                    if (PermissionsHandler.hasPermission(sender, "barrierplus.command.give.other")) {
-                        Language.sendLangMessage("Message.BarrierPlus.Commands.give", sender, false);
-                        Language.sendLangMessage("Message.BarrierPlus.Commands.giveOther", sender, false);
-                    } else if (PermissionsHandler.hasPermission(sender, "barrierplus.command.give")) {
-                        Language.sendLangMessage("Message.BarrierPlus.Commands.giveOther", sender, false);
-                    } else {
-                        Language.sendLangMessage("Message.noPermission", sender);
-                    }
-                    return true;
                 }
             case 2:
                 // /barrierplus buy <item>
                 if (args[0].equalsIgnoreCase("buy")) {
                     if (PermissionsHandler.hasPermission(sender, "barrierplus.command.buy")) {
+                        if (!ConfigHandler.getConfigPath().isBuy()) {
+                            Language.dispatchMessage(sender, "&cThe feature \"Buy\" is disabled.", true);
+                            return true;
+                        }
                         Buy.buyItem(sender, null, args[1].toUpperCase());
-                    } else {
-                        Language.sendLangMessage("Message.noPermission", sender);
-                    }
-                    return true;
-                } else if (args[0].equalsIgnoreCase("give")) {
-                    if (PermissionsHandler.hasPermission(sender, "barrierplus.command.give")) {
-                        Buy.giveItem(sender, null, args[1].toUpperCase(), 0);
                     } else {
                         Language.sendLangMessage("Message.noPermission", sender);
                     }
@@ -114,55 +96,19 @@ public class Commands implements CommandExecutor {
                 // /barrierplus buy <item> [player]
                 if (args[0].equalsIgnoreCase("buy")) {
                     if (PermissionsHandler.hasPermission(sender, "barrierplus.command.buy.other")) {
+                        if (!ConfigHandler.getConfigPath().isBuy()) {
+                            Language.dispatchMessage(sender, "&cThe feature \"Buy\" is disabled.", true);
+                            return true;
+                        }
                         Player player = PlayerHandler.getPlayerString(args[2]);
                         if (player == null) {
                             String[] placeHolders = Language.newString();
-                            placeHolders[1] = args[2];
+                            placeHolders[2] = args[2];
                             Language.sendLangMessage("Message.targetNotFound", sender, placeHolders);
                             return true;
                         }
                         Buy.buyItem(sender, player, args[1].toUpperCase());
                         return true;
-                    } else {
-                        Language.sendLangMessage("Message.noPermission", sender);
-                    }
-                    return true;
-                    // /barrierplus give <item> [amount]
-                } else if (args[0].equalsIgnoreCase("give") && args[2].matches("-?[0-9]\\d*$")) {
-                    if (PermissionsHandler.hasPermission(sender, "barrierplus.command.give")) {
-                        Buy.giveItem(sender, null, args[1].toUpperCase(), Integer.parseInt(args[2]));
-                    } else {
-                        Language.sendLangMessage("Message.noPermission", sender);
-                    }
-                    return true;
-                    // /barrierplus give <item> [player]
-                } else if (args[0].equalsIgnoreCase("give")) {
-                    if (PermissionsHandler.hasPermission(sender, "barrierplus.command.give.other")) {
-                        Player player = PlayerHandler.getPlayerString(args[2]);
-                        if (player == null) {
-                            String[] placeHolders = Language.newString();
-                            placeHolders[1] = args[2];
-                            Language.sendLangMessage("Message.targetNotFound", sender, placeHolders);
-                            return true;
-                        }
-                        Buy.giveItem(sender, player, args[1].toUpperCase(), 0);
-                    } else {
-                        Language.sendLangMessage("Message.noPermission", sender);
-                    }
-                    return true;
-                }
-            case 4:
-                // /barrierplus give <item> [amount] [player]
-                if (args[0].equalsIgnoreCase("give") && args[2].matches("-?[0-9]\\d*$")) {
-                    if (PermissionsHandler.hasPermission(sender, "barrierplus.command.give.other")) {
-                        Player player = PlayerHandler.getPlayerString(args[2]);
-                        if (player == null) {
-                            String[] placeHolders = Language.newString();
-                            placeHolders[1] = args[2];
-                            Language.sendLangMessage("Message.targetNotFound", sender, placeHolders);
-                            return true;
-                        }
-                        Buy.giveItem(sender, player, args[1].toUpperCase(), Integer.parseInt(args[2]));
                     } else {
                         Language.sendLangMessage("Message.noPermission", sender);
                     }

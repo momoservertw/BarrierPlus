@@ -15,7 +15,7 @@ public class ServerHandler {
 	}
 
 	public static void sendDebugMessage(String message) {
-		if (ConfigHandler.getDebugging()) {
+		if (ConfigHandler.isDebugging()) {
 			String prefix = "&7[&dBarrierPlus_Debug&7] ";
 			message = prefix + message;
 			message = ChatColor.translateAlternateColorCodes('&', message);
@@ -25,7 +25,7 @@ public class ServerHandler {
 
 	public static void sendDebugMessage(String message, boolean check) {
 		if (!check) {
-			if (!ConfigHandler.getDebugging()) {
+			if (!ConfigHandler.isDebugging()) {
 				return;
 			}
 		}
@@ -60,13 +60,13 @@ public class ServerHandler {
 	}
 
 	public static void sendDebugTrace(Exception e) {
-		if (ConfigHandler.getDebugging()) {
+		if (ConfigHandler.isDebugging()) {
 			e.printStackTrace();
 		}
 	}
 
 	public static void sendFeatureMessage(String feature, String target, String check, String action, String detail, StackTraceElement ste) {
-		if (!ConfigHandler.getDebugging()) {
+		if (!ConfigHandler.isDebugging()) {
 			return;
 		}
 		switch (action) {
@@ -94,7 +94,7 @@ public class ServerHandler {
 	}
 
 	public static void sendFeatureMessage(String feature, String target, String check, String action, StackTraceElement ste) {
-		if (!ConfigHandler.getDebugging()) {
+		if (!ConfigHandler.isDebugging()) {
 			return;
 		}
 		switch (action) {
@@ -117,42 +117,6 @@ public class ServerHandler {
 				ServerHandler.sendDebugMessage("&f" + feature + "&8 - &f" + target + "&8 : &f" + check + "&8, &a" + action
 						+ " &8(" + ste.getClassName() + " " + ste.getMethodName() + " " + ste.getLineNumber() + ")", true);
 				break;
-		}
-	}
-
-	public static void debugMessage(String feature, String target, String check, String action, String detail) {
-		if (ConfigHandler.getDebugging()) {
-			if (action.equals("return")) {
-				ServerHandler.sendDebugMessage("&8" + feature + " - &f" + target + "&8 : &7" + check + "&8, " + "&a" + action + "&8, " + detail);
-			} else if (action.equals("cancel")) {
-				ServerHandler.sendDebugMessage("&8" + feature + " - &f" + target + "&8 : &7" + check + "&8, " + "&c" + action + "&8, " + detail);
-			} else if (action.equals("continue")) {
-				ServerHandler.sendDebugMessage("&8" + feature + " - &f" + target + "&8 : &7" + check + "&8, " + "&e" + action + "&8, " + detail);
-			} else if (action.equals("bypass")) {
-				ServerHandler.sendDebugMessage("&8" + feature + " - &f" + target + "&8 : &7" + check + "&8, " + "&e" + action + "&8, " + detail);
-			} else if (action.equals("remove")) {
-				ServerHandler.sendDebugMessage("&8" + feature + " - &f" + target + "&8 : &7" + check + "&8, " + "&c" + action + "&8, " + detail);
-			} else if (action.equals("change")) {
-				ServerHandler.sendDebugMessage("&8" + feature + " - &f" + target + "&8 : &7" + check + "&8, " + "&e" + action + "&8, " + detail);
-			}
-		}
-	}
-
-	public static void debugMessage(String feature, String target, String check, String action) {
-		if (ConfigHandler.getDebugging()) {
-			if (action.equals("return")) {
-				ServerHandler.sendDebugMessage("&8" + feature + " - &f" + target + "&8 : &7" + check + "&8, " + "&a" + action);
-			} else if (action.equals("cancel")) {
-				ServerHandler.sendDebugMessage("&8" + feature + " - &f" + target + "&8 : &7" + check + "&8, " + "&c" + action);
-			} else if (action.equals("continue")) {
-				ServerHandler.sendDebugMessage("&8" + feature + " - &f" + target + "&8 : &7" + check + "&8, " + "&e" + action);
-			} else if (action.equals("bypass")) {
-				ServerHandler.sendDebugMessage("&8" + feature + " - &f" + target + "&8 : &7" + check + "&8, " + "&e" + action);
-			} else if (action.equals("remove")) {
-				ServerHandler.sendDebugMessage("&8" + feature + " - &f" + target + "&8 : &7" + check + "&8, " + "&c" + action);
-			} else if (action.equals("change")) {
-				ServerHandler.sendDebugMessage("&8" + feature + " - &f" + target + "&8 : &7" + check + "&8, " + "&e" + action);
-			}
 		}
 	}
 }

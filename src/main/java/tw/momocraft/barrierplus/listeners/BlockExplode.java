@@ -36,13 +36,13 @@ public class BlockExplode implements Listener {
                 continue;
             }
             // Location.
-            if (!ConfigHandler.getConfigPath().getLocationUtils().checkLocation(blockLoc, destroyMap.getLocMaps())) {
+            if (!ConfigHandler.getConfigPath().getLocationUtils().checkLocation(blockLoc, destroyMap.getLocMaps(), true)) {
                 ServerHandler.sendFeatureMessage("Destroy", blockType, "location", "continue", "Explode",
                         new Throwable().getStackTrace()[0]);
                 continue;
             }
             // Prevent Location.
-            if (ConfigHandler.getConfigPath().getLocationUtils().checkLocation(blockLoc, destroyMap.getPreventLocMaps())) {
+            if (ConfigHandler.getConfigPath().getLocationUtils().checkLocation(blockLoc, destroyMap.getPreventLocMaps(), false)) {
                 ServerHandler.sendFeatureMessage("Destroy", blockType, "prevent location", "bypass", "Explode",
                         new Throwable().getStackTrace()[0]);
                 i.remove();
@@ -56,8 +56,7 @@ public class BlockExplode implements Listener {
             }
             // Explode break.
             String explodeBreak = destroyMap.getExplodeBreak();
-            if (explodeBreak != null && explodeBreak.equals("false") ||
-                    explodeBreak == null && !ConfigHandler.getConfigPath().isDestroyExplodeBreak()) {
+            if (explodeBreak != null && explodeBreak.equals("false")) {
                 i.remove();
                 ServerHandler.sendFeatureMessage("Destroy", blockType, "destroy", "bypass", "Explode",
                         new Throwable().getStackTrace()[0]);
@@ -65,8 +64,7 @@ public class BlockExplode implements Listener {
             }
             // Explode drop.
             String explodeDrop = destroyMap.getExplodeDrop();
-            if (explodeDrop != null && explodeDrop.equals("false") ||
-                    explodeDrop == null && !ConfigHandler.getConfigPath().isDestroyExplodeDrop()) {
+            if (explodeDrop != null && explodeDrop.equals("false")) {
                 block.setType(Material.AIR);
                 ServerHandler.sendFeatureMessage("Destroy", blockType, "drop", "bypass", "Explode",
                         new Throwable().getStackTrace()[0]);
