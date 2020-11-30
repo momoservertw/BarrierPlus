@@ -241,8 +241,9 @@ public class ConfigPath {
                     destroyMap.setVanillaBreak(vanillaBreak);
                     destroyMap.setVanillaDrop(vanillaDrop);
                     destroyMap.setExplodeBreak(explodeBreak);
-                    destroyMap.setExplodeBreak(explodeDrop);
+                    destroyMap.setExplodeDrop(explodeDrop);
                     destroyMap.setLocMaps(locationUtils.getSpeLocMaps("config.yml", "Destroy.Groups." + group + ".Location"));
+                    destroyMap.setPreventLocMaps(locationUtils.getSpeLocMaps("config.yml", "Destroy.Groups." + group + ".Prevent.Location"));
                     for (String type : ConfigHandler.getConfig("config.yml").getStringList("Destroy.Groups." + group + ".Types")) {
                         destroyProp.put(type, destroyMap);
                     }

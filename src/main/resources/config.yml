@@ -65,7 +65,7 @@ Buy:
         - STRUCTURE_VOID
         - BEDROCK
 
-# Display near creative blocks.
+# Display near creative blocks like barriers.
 # Permission: barrierplus.see.GROUP or barrierplus.see.*
 # More information: https://github.com/momoservertw/BarrierPlus/wiki/See
 See:

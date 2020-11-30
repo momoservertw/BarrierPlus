@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.barrierplus.handlers.PermissionsHandler;
 import tw.momocraft.barrierplus.handlers.PlayerHandler;
-import tw.momocraft.barrierplus.handlers.ServerHandler;
 import tw.momocraft.barrierplus.utils.Buy;
 import tw.momocraft.barrierplus.utils.Language;
 

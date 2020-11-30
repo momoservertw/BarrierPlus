@@ -105,7 +105,6 @@ public class BlockClick implements Listener {
                 if (player.getGameMode().equals(GameMode.CREATIVE)) {
                     ServerHandler.sendFeatureMessage("See", blockType, "creative", "return",
                             new Throwable().getStackTrace()[0]);
-                    return;
                 }
             }
         }
