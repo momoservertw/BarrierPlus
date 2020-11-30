@@ -90,9 +90,9 @@ See:
       Enable: true
       Particle:
         Type: CRIT_MAGIC
-        Amount: 2
-        Times: 10
-        Interval-Tick: 10
+        Amount: 1
+        Times: 6
+        Interval: 10
       Types:
         - STRUCTURE_VOID
 
