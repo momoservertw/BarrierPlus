@@ -2,6 +2,7 @@ package tw.momocraft.barrierplus.utils;
 
 import org.bukkit.Bukkit;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
+import tw.momocraft.barrierplus.handlers.ServerHandler;
 
 public class DependAPI {
     private VaultAPI vaultApi;
@@ -30,6 +31,17 @@ public class DependAPI {
         if (ConfigHandler.getConfig("config.yml").getBoolean("General.Settings.Features.Hook.ItemJoin")) {
             this.setItemJoinStatus(Bukkit.getServer().getPluginManager().getPlugin("ItemJoin") != null);
         }
+
+        sendUtilityDepends();
+    }
+
+    private void sendUtilityDepends() {
+        ServerHandler.sendConsoleMessage("&fHooked [ &e"
+                + (VaultEnabled() ? "Vault, " : "")
+                + (ResidenceEnabled() ? "Residence, " : "")
+                + (PlayerPointsEnabled() ? "PlayerPoints, " : "")
+                + (ItemJoinEnabled() ? "ItemJoin, " : "")
+                + "&f]");
     }
 
     public boolean VaultEnabled() {

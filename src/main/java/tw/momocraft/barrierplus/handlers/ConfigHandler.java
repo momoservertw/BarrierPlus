@@ -3,9 +3,7 @@ package tw.momocraft.barrierplus.handlers;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import tw.momocraft.barrierplus.Commands;
 import tw.momocraft.barrierplus.BarrierPlus;
-import tw.momocraft.barrierplus.listeners.*;
 import tw.momocraft.barrierplus.utils.*;
 
 import java.io.File;
@@ -22,47 +20,10 @@ public class ConfigHandler {
     public static void generateData(boolean reload) {
         genConfigFile("config.yml");
         setDepends(new DependAPI());
-        sendUtilityDepends();
         setConfigPath(new ConfigPath());
         if (!reload) {
             setUpdater(new UpdateHandler());
         }
-    }
-
-    public static void registerEvents() {
-        BarrierPlus.getInstance().getCommand("barrierplus").setExecutor(new Commands());
-
-        BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockBreak(), BarrierPlus.getInstance());
-        ServerHandler.sendFeatureMessage("Register-Event", "Destroy", "BlockBreak", "continue",
-                new Throwable().getStackTrace()[0]);
-        BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockClick(), BarrierPlus.getInstance());
-        ServerHandler.sendFeatureMessage("Register-Event", "See & Destroy", "BlockClick", "continue",
-                new Throwable().getStackTrace()[0]);
-        BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockExplode(), BarrierPlus.getInstance());
-        ServerHandler.sendFeatureMessage("Register-Event", "Destroy", "BlockExplode", "continue",
-                new Throwable().getStackTrace()[0]);
-        BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockPlace(), BarrierPlus.getInstance());
-        ServerHandler.sendFeatureMessage("Register-Event", "Place", "BlockPlace", "continue",
-                new Throwable().getStackTrace()[0]);
-        BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new EntityExplode(), BarrierPlus.getInstance());
-        ServerHandler.sendFeatureMessage("Register-Event", "Destroy", "EntityExplode", "continue",
-                new Throwable().getStackTrace()[0]);
-        /*
-        if (ConfigHandler.getDepends().ResidenceEnabled()) {
-            if (ConfigHandler.getConfigPath().isSpawnResFlag()) {
-                FlagPermissions.addFlag("spawnbypass");
-            }
-        }
-         */
-    }
-
-    private static void sendUtilityDepends() {
-        ServerHandler.sendConsoleMessage("&fHooked [ &e"
-                + (getDepends().VaultEnabled() ? "Vault, " : "")
-                + (getDepends().ResidenceEnabled() ? "Residence, " : "")
-                + (getDepends().PlayerPointsEnabled() ? "PlayerPoints, " : "")
-                + (getDepends().ItemJoinEnabled() ? "ItemJoin, " : "")
-                + "&f]");
     }
 
     public static FileConfiguration getConfig(String fileName) {

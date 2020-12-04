@@ -1,3 +1,4 @@
+tw\momocraft\barrierplus\handlers\RegisterHandler.class
 tw\momocraft\barrierplus\listeners\BlockClick$1.class
 tw\momocraft\barrierplus\utils\BuyMap.class
 tw\momocraft\barrierplus\utils\locationutils\LocationUtils.class

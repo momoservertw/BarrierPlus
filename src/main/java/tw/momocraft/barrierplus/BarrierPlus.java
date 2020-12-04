@@ -2,6 +2,7 @@ package tw.momocraft.barrierplus;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
+import tw.momocraft.barrierplus.handlers.RegisterHandler;
 import tw.momocraft.barrierplus.handlers.ServerHandler;
 
 public class BarrierPlus extends JavaPlugin {
@@ -11,7 +12,7 @@ public class BarrierPlus extends JavaPlugin {
     public void onEnable() {
         instance = this;
         ConfigHandler.generateData(false);
-        ConfigHandler.registerEvents();
+        RegisterHandler.registerEvents();
         ServerHandler.sendConsoleMessage("&fhas been Enabled.");
     }
 
