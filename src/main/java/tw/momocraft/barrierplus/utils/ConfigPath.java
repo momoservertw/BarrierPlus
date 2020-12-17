@@ -2,8 +2,8 @@ package tw.momocraft.barrierplus.utils;
 
 import org.bukkit.configuration.ConfigurationSection;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
-import tw.momocraft.barrierplus.utils.locationutils.LocationMap;
-import tw.momocraft.barrierplus.utils.locationutils.LocationUtils;
+import tw.momocraft.coreplus.api.CorePlusAPI;
+import tw.momocraft.coreplus.utils.locationutils.LocationMap;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,24 +15,26 @@ public class ConfigPath {
     }
 
     //  ============================================== //
-    //         General Settings                        //
+    //         Message Variables                       //
     //  ============================================== //
-    private LocationUtils locationUtils;
-
-    private Map<String, String> translateMap;
-
-    private String menuIJ;
-    private String menuType;
-    private String menuName;
+    private String msgTitle;
+    private String msgHelp;
+    private String msgReload;
+    private String msgVersion;
+    private String msgBuy;
+    private String msgBuyOther;
+    private String msgBreakHelp;
+    private String msgPlaceLocFail;
+    private String msgBreakLocFail;
 
     //  ============================================== //
-    //         Buy Settings                            //
+    //         Buy Variables                           //
     //  ============================================== //
     private boolean buy;
     private final Map<String, BuyMap> buyProp = new HashMap<>();
 
     //  ============================================== //
-    //         See Settings                            //
+    //         See Variables                           //
     //  ============================================== //
     private boolean see;
     private int seeDistance;
@@ -41,13 +43,13 @@ public class ConfigPath {
     private final Map<String, SeeMap> seeProp = new HashMap<>();
 
     //  ============================================== //
-    //         Place Settings                          //
+    //         Place Variables                         //
     //  ============================================== //
     private boolean place;
     private final Map<String, List<LocationMap>> placeProp = new HashMap<>();
 
     //  ============================================== //
-    //         Destroy Settings                        //
+    //         Destroy Variables                       //
     //  ============================================== //
     private boolean destroy;
     private boolean destroyHelp;
@@ -56,32 +58,34 @@ public class ConfigPath {
     private final Map<String, DestroyMap> destroyProp = new HashMap<>();
 
     //  ============================================== //
-    //         Setup all configuration.                //
+    //         Setup all configuration                 //
     //  ============================================== //
     private void setUp() {
-        setGeneral();
+        setupMsg();
         setBuy();
         setSee();
         setPlace();
         setDestroy();
     }
 
-    private void setGeneral() {
-        locationUtils = new LocationUtils();
-
-        translateMap = new HashMap<>();
-        ConfigurationSection translateConfig = ConfigHandler.getConfig("config.yml").getConfigurationSection("Message.Translate");
-        if (translateConfig != null) {
-            for (String key : translateConfig.getKeys(false)) {
-                translateMap.put(key, ConfigHandler.getConfig("config.yml").getString("Message.Translate." + key));
-            }
-        }
-
-        menuIJ = ConfigHandler.getConfig("config.yml").getString("General.Menu.ItemJoin");
-        menuType = ConfigHandler.getConfig("config.yml").getString("General.Menu.Item.Type");
-        menuName = ConfigHandler.getConfig("config.yml").getString("General.Menu.Item.Name");
+    //  ============================================== //
+    //         Message Setter                          //
+    //  ============================================== //
+    private void setupMsg() {
+        msgTitle = ConfigHandler.getConfig("config.yml").getString("Message.Commands.title");
+        msgHelp = ConfigHandler.getConfig("config.yml").getString("Message.Commands.help");
+        msgReload = ConfigHandler.getConfig("config.yml").getString("Message.Commands.reload");
+        msgVersion = ConfigHandler.getConfig("config.yml").getString("Message.Commands.version");
+        msgBuy = ConfigHandler.getConfig("config.yml").getString("Message.Commands.buy");
+        msgBuyOther = ConfigHandler.getConfig("config.yml").getString("Message.Commands.buyOther");
+        msgBreakHelp = ConfigHandler.getConfig("config.yml").getString("Message.breakHelp");
+        msgPlaceLocFail = ConfigHandler.getConfig("config.yml").getString("Message.placeLocFail");
+        msgBreakLocFail = ConfigHandler.getConfig("config.yml").getString("Message.breakLocFail");
     }
 
+    //  ============================================== //
+    //         Buy Setter                              //
+    //  ============================================== //
     private void setBuy() {
         buy = ConfigHandler.getConfig("config.yml").getBoolean("Buy.Enable");
         if (!buy) {
@@ -92,25 +96,31 @@ public class ConfigPath {
             return;
         }
         ConfigurationSection groupConfig;
-        String groupEnable;
         BuyMap buyMap;
         for (String group : buyConfig.getKeys(false)) {
-            groupEnable = ConfigHandler.getConfig("config.yml").getString("Buy.Groups." + group + ".Enable");
-            if (groupEnable == null || groupEnable.equals("true")) {
-                groupConfig = ConfigHandler.getConfig("config.yml").getConfigurationSection("Buy.Groups." + group);
-                if (groupConfig != null) {
-                    buyMap = new BuyMap();
-                    buyMap.setAmount(ConfigHandler.getConfig("config.yml").getInt("Buy.Groups." + group + ".Amount"));
-                    buyMap.setPrice(ConfigHandler.getConfig("config.yml").getDouble("Buy.Groups." + group + ".Price"));
-                    buyMap.setPriceType(ConfigHandler.getConfig("config.yml").getString("Buy.Groups." + group + ".Price-Type"));
-                    for (String type : ConfigHandler.getConfig("config.yml").getStringList("Buy.Groups." + group + ".Types")) {
-                        buyProp.put(type, buyMap);
-                    }
-                }
+            if (!ConfigHandler.getConfig("config.yml").getBoolean("Buy.Groups." + group + ".Enable", true)) {
+                continue;
+            }
+            groupConfig = ConfigHandler.getConfig("config.yml").getConfigurationSection("Buy.Groups." + group);
+            if (groupConfig == null) {
+                continue;
+            }
+            if (!ConfigHandler.getConfig("config.yml").getBoolean("Buy.Groups." + group + ".Enable", true)) {
+                continue;
+            }
+            buyMap = new BuyMap();
+            buyMap.setAmount(ConfigHandler.getConfig("config.yml").getInt("Buy.Groups." + group + ".Amount"));
+            buyMap.setPriceType(ConfigHandler.getConfig("config.yml").getString("Buy.Groups." + group + ".Price.Type"));
+            buyMap.setPrice(ConfigHandler.getConfig("config.yml").getDouble("Buy.Groups." + group + ".Price.Amount"));
+            for (String type : ConfigHandler.getConfig("config.yml").getStringList("Buy.Groups." + group + ".Types")) {
+                buyProp.put(type, buyMap);
             }
         }
     }
 
+    //  ============================================== //
+    //         See Setter                              //
+    //  ============================================== //
     private void setSee() {
         see = ConfigHandler.getConfig("config.yml").getBoolean("See.Enable");
         if (!see) {
@@ -124,33 +134,33 @@ public class ConfigPath {
             return;
         }
         ConfigurationSection groupConfig;
-        String groupEnable;
         SeeMap seeMap;
         String creative;
         for (String group : buyConfig.getKeys(false)) {
             groupConfig = ConfigHandler.getConfig("config.yml").getConfigurationSection("See.Groups." + group);
-            if (groupConfig != null) {
-                groupEnable = ConfigHandler.getConfig("config.yml").getString("See.Groups." + group + ".Enable");
-                if (groupEnable == null || groupEnable.equals("true")) {
-                    seeMap = new SeeMap();
-                    creative = ConfigHandler.getConfig("config.yml").getString("See.Groups." + group + ".Creative");
-                    if (creative == null) {
-                        creative = "true";
-                    }
-                    seeMap.setCreative(creative);
-                    seeMap.setParticle(ConfigHandler.getConfig("config.yml").getString("See.Groups." + group + ".Particle.Type"));
-                    seeMap.setAmount(ConfigHandler.getConfig("config.yml").getInt("See.Groups." + group + ".Particle.Amount"));
-                    seeMap.setTimes(ConfigHandler.getConfig("config.yml").getInt("See.Groups." + group + ".Particle.Times"));
-                    seeMap.setInterval(ConfigHandler.getConfig("config.yml").getInt("See.Groups." + group + ".Particle.Interval"));
-                    seeMap.setLocMaps(locationUtils.getSpeLocMaps("config.yml", "See.Groups." + group + ".Location"));
-                    for (String type : ConfigHandler.getConfig("config.yml").getStringList("See.Groups." + group + ".Types")) {
-                        seeProp.put(type, seeMap);
-                    }
-                }
+            if (groupConfig == null) {
+                continue;
+            }
+            if (!ConfigHandler.getConfig("config.yml").getBoolean("See.Groups." + group + ".Enable", true)) {
+                continue;
+            }
+            seeMap = new SeeMap();
+            creative = ConfigHandler.getConfig("config.yml").getString("See.Groups." + group + ".Creative");
+            if (creative == null) {
+                creative = "true";
+            }
+            seeMap.setCreative(creative);
+            seeMap.setParticle(ConfigHandler.getConfig("config.yml").getString("See.Groups." + group + ".Particle"));
+            seeMap.setLocMaps(CorePlusAPI.getLocationManager().getSpeLocMaps("config.yml", "See.Groups." + group + ".Location"));
+            for (String type : ConfigHandler.getConfig("config.yml").getStringList("See.Groups." + group + ".Types")) {
+                seeProp.put(type, seeMap);
             }
         }
     }
 
+    //  ============================================== //
+    //         Place Setter                            //
+    //  ============================================== //
     private void setPlace() {
         place = ConfigHandler.getConfig("config.yml").getBoolean("Place.Enable");
         if (!place) {
@@ -161,20 +171,23 @@ public class ConfigPath {
             return;
         }
         ConfigurationSection groupConfig;
-        String groupEnable;
         for (String group : placeConfig.getKeys(false)) {
             groupConfig = ConfigHandler.getConfig("config.yml").getConfigurationSection("Place.Groups." + group);
-            if (groupConfig != null) {
-                groupEnable = ConfigHandler.getConfig("config.yml").getString("Place.Groups." + group + ".Enable");
-                if (groupEnable == null || groupEnable.equals("true")) {
-                    for (String type : ConfigHandler.getConfig("config.yml").getStringList("Place.Groups." + group + ".Types")) {
-                        placeProp.put(type, locationUtils.getSpeLocMaps("config.yml", "Place.Groups." + group + ".Prevent.Location"));
-                    }
-                }
+            if (groupConfig == null) {
+                continue;
+            }
+            if (!ConfigHandler.getConfig("config.yml").getBoolean("Place.Groups." + group + ".Enable", true)) {
+                continue;
+            }
+            for (String type : ConfigHandler.getConfig("config.yml").getStringList("Place.Groups." + group + ".Types")) {
+                placeProp.put(type, CorePlusAPI.getLocationManager().getSpeLocMaps("config.yml", "Place.Groups." + group + ".Prevent.Location"));
             }
         }
     }
 
+    //  ============================================== //
+    //         Destroy Setter                          //
+    //  ============================================== //
     private void setDestroy() {
         destroy = ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Enable");
         if (!destroy) {
@@ -195,7 +208,6 @@ public class ConfigPath {
         String explodeDropDefault = ConfigHandler.getConfig("config.yml").getString("Destroy.Settings.Default.Explode.Drop");
 
         ConfigurationSection groupConfig;
-        String groupEnable;
         DestroyMap destroyMap;
         String menuBreak;
         String menuDrop;
@@ -207,76 +219,93 @@ public class ConfigPath {
             if (group.equals("Enable")) {
                 continue;
             }
-            groupEnable = ConfigHandler.getConfig("config.yml").getString("Destroy.Groups." + group + ".Enable");
-            if (groupEnable == null || groupEnable.equals("true")) {
-                groupConfig = ConfigHandler.getConfig("config.yml").getConfigurationSection("Destroy.Groups." + group);
-                if (groupConfig != null) {
-                    destroyMap = new DestroyMap();
-                    menuBreak = ConfigHandler.getConfig("config.yml").getString("Destroy.Groups." + group + ".Menu.Break");
-                    if (menuBreak == null) {
-                        menuBreak = menuBreakDefault;
-                    }
-                    menuDrop = ConfigHandler.getConfig("config.yml").getString("Destroy.Groups." + group + ".Menu.Drop");
-                    if (menuDrop == null) {
-                        menuDrop = menuDropDefault;
-                    }
-                    vanillaBreak = ConfigHandler.getConfig("config.yml").getString("Destroy.Groups." + group + ".Vanilla.Break");
-                    if (vanillaBreak == null) {
-                        vanillaBreak = vanillaBreakDefault;
-                    }
-                    vanillaDrop = ConfigHandler.getConfig("config.yml").getString("Destroy.Groups." + group + ".Vanilla.Drop");
-                    if (vanillaDrop == null) {
-                        vanillaDrop = vanillaDropDefault;
-                    }
-                    explodeBreak = ConfigHandler.getConfig("config.yml").getString("Destroy.Groups." + group + ".Explode.Break");
-                    if (explodeBreak == null) {
-                        explodeBreak = explodeBreakDefault;
-                    }
-                    explodeDrop = ConfigHandler.getConfig("config.yml").getString("Destroy.Groups." + group + ".Explode.Drop");
-                    if (explodeDrop == null) {
-                        explodeDrop = explodeDropDefault;
-                    }
-                    destroyMap.setMenuBreak(menuBreak);
-                    destroyMap.setMenuDrop(menuDrop);
-                    destroyMap.setVanillaBreak(vanillaBreak);
-                    destroyMap.setVanillaDrop(vanillaDrop);
-                    destroyMap.setExplodeBreak(explodeBreak);
-                    destroyMap.setExplodeDrop(explodeDrop);
-                    destroyMap.setLocMaps(locationUtils.getSpeLocMaps("config.yml", "Destroy.Groups." + group + ".Location"));
-                    destroyMap.setPreventLocMaps(locationUtils.getSpeLocMaps("config.yml", "Destroy.Groups." + group + ".Prevent.Location"));
-                    for (String type : ConfigHandler.getConfig("config.yml").getStringList("Destroy.Groups." + group + ".Types")) {
-                        destroyProp.put(type, destroyMap);
-                    }
-                }
+            groupConfig = ConfigHandler.getConfig("config.yml").getConfigurationSection("Destroy.Groups." + group);
+            if (groupConfig == null) {
+                continue;
+            }
+            if (!ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Groups." + group + ".Enable", true)) {
+                continue;
+            }
+            destroyMap = new DestroyMap();
+            menuBreak = ConfigHandler.getConfig("config.yml").getString("Destroy.Groups." + group + ".Menu.Break");
+            if (menuBreak == null) {
+                menuBreak = menuBreakDefault;
+            }
+            menuDrop = ConfigHandler.getConfig("config.yml").getString("Destroy.Groups." + group + ".Menu.Drop");
+            if (menuDrop == null) {
+                menuDrop = menuDropDefault;
+            }
+            vanillaBreak = ConfigHandler.getConfig("config.yml").getString("Destroy.Groups." + group + ".Vanilla.Break");
+            if (vanillaBreak == null) {
+                vanillaBreak = vanillaBreakDefault;
+            }
+            vanillaDrop = ConfigHandler.getConfig("config.yml").getString("Destroy.Groups." + group + ".Vanilla.Drop");
+            if (vanillaDrop == null) {
+                vanillaDrop = vanillaDropDefault;
+            }
+            explodeBreak = ConfigHandler.getConfig("config.yml").getString("Destroy.Groups." + group + ".Explode.Break");
+            if (explodeBreak == null) {
+                explodeBreak = explodeBreakDefault;
+            }
+            explodeDrop = ConfigHandler.getConfig("config.yml").getString("Destroy.Groups." + group + ".Explode.Drop");
+            if (explodeDrop == null) {
+                explodeDrop = explodeDropDefault;
+            }
+            destroyMap.setMenuBreak(Boolean.parseBoolean(menuBreak));
+            destroyMap.setMenuDrop(Boolean.parseBoolean(menuDrop));
+            destroyMap.setVanillaBreak(Boolean.parseBoolean(vanillaBreak));
+            destroyMap.setVanillaDrop(Boolean.parseBoolean(vanillaDrop));
+            destroyMap.setExplodeBreak(Boolean.parseBoolean(explodeBreak));
+            destroyMap.setExplodeDrop(Boolean.parseBoolean(explodeDrop));
+            destroyMap.setLocMaps(CorePlusAPI.getLocationManager().getSpeLocMaps("config.yml", "Destroy.Groups." + group + ".Location"));
+            destroyMap.setPreventLocMaps(CorePlusAPI.getLocationManager().getSpeLocMaps("config.yml", "Destroy.Groups." + group + ".Prevent.Location"));
+            for (String type : ConfigHandler.getConfig("config.yml").getStringList("Destroy.Groups." + group + ".Types")) {
+                destroyProp.put(type, destroyMap);
             }
         }
     }
 
     //  ============================================== //
-    //         General Settings                        //
+    //         Message Getter                          //
     //  ============================================== //
-    public LocationUtils getLocationUtils() {
-        return locationUtils;
+    public String getMsgTitle() {
+        return msgTitle;
     }
 
-    public Map<String, String> getTranslateMap() {
-        return translateMap;
+    public String getMsgHelp() {
+        return msgHelp;
     }
 
-    public String getMenuIJ() {
-        return menuIJ;
+    public String getMsgReload() {
+        return msgReload;
     }
 
-    public String getMenuName() {
-        return menuName;
+    public String getMsgVersion() {
+        return msgVersion;
     }
 
-    public String getMenuType() {
-        return menuType;
+    public String getMsgBuy() {
+        return msgBuy;
+    }
+
+    public String getMsgBuyOther() {
+        return msgBuyOther;
+    }
+
+    public String getMsgBreakHelp() {
+        return msgBreakHelp;
+    }
+
+    public String getMsgPlaceLocFail() {
+        return msgPlaceLocFail;
+    }
+
+    public String getMsgBreakLocFail() {
+        return msgBreakLocFail;
     }
 
     //  ============================================== //
-    //         Buy Settings                            //
+    //         Buy Getter                              //
     //  ============================================== //
     public boolean isBuy() {
         return buy;
@@ -287,7 +316,7 @@ public class ConfigPath {
     }
 
     //  ============================================== //
-    //         See Settings                            //
+    //         See Getter                              //
     //  ============================================== //
     public boolean isSee() {
         return see;
@@ -310,7 +339,7 @@ public class ConfigPath {
     }
 
     //  ============================================== //
-    //         Place Settings                          //
+    //         Place Getter                            //
     //  ============================================== //
     public boolean isPlace() {
         return place;
@@ -321,7 +350,7 @@ public class ConfigPath {
     }
 
     //  ============================================== //
-    //         Destroy Settings                        //
+    //         Destroy Getter                          //
     //  ============================================== //
     public boolean isDestroy() {
         return destroy;

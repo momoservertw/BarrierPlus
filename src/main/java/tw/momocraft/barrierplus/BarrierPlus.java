@@ -3,7 +3,7 @@ package tw.momocraft.barrierplus;
 import org.bukkit.plugin.java.JavaPlugin;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.barrierplus.handlers.RegisterHandler;
-import tw.momocraft.barrierplus.handlers.ServerHandler;
+import tw.momocraft.coreplus.api.CorePlusAPI;
 
 public class BarrierPlus extends JavaPlugin {
     private static BarrierPlus instance;
@@ -13,12 +13,12 @@ public class BarrierPlus extends JavaPlugin {
         instance = this;
         ConfigHandler.generateData(false);
         RegisterHandler.registerEvents();
-        ServerHandler.sendConsoleMessage("&fhas been Enabled.");
+        CorePlusAPI.getLangManager().sendConsoleMsg(ConfigHandler.getPrefix(), "&fhas been Enabled.");
     }
 
     @Override
     public void onDisable() {
-        ServerHandler.sendConsoleMessage("&fhas been Disabled.");
+        CorePlusAPI.getLangManager().sendConsoleMsg(ConfigHandler.getPrefix(), "&fhas been Disabled.");
     }
 
     public static BarrierPlus getInstance() {

@@ -6,78 +6,88 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
-import tw.momocraft.barrierplus.handlers.PermissionsHandler;
-import tw.momocraft.barrierplus.handlers.PlayerHandler;
-import tw.momocraft.barrierplus.handlers.ServerHandler;
+import tw.momocraft.coreplus.api.CorePlusAPI;
 
 
 public class Buy {
 
     public static void buyItem(CommandSender sender, Player target, String item) {
         String senderName = sender.getName();
-        if (ConfigHandler.getDepends().getVaultApi().getEconomy() == null && !ConfigHandler.getDepends().PlayerPointsEnabled()) {
-            Language.dispatchMessage(sender, "&cCan not find Vault or Economy plugin.", true);
-            ServerHandler.sendFeatureMessage("Buy", senderName, "plugin", "fail", item,
-                    new Throwable().getStackTrace()[0]);
-            return;
-        }
-        Material material;
-        try {
-            material = Material.getMaterial(item);
-        } catch (Exception e) {
-            Language.sendLangMessage("Message.BarrierPlus.noShopItem", sender);
-            ServerHandler.sendFeatureMessage("Buy", senderName, "noShopItem", "fail", item,
-                    new Throwable().getStackTrace()[0]);
-            return;
-        }
-        BuyMap buyMap = ConfigHandler.getConfigPath().getBuyProp().get(item);
-        if (buyMap == null) {
-            Language.sendLangMessage("Message.BarrierPlus.noShopItem", sender);
-            ServerHandler.sendFeatureMessage("Buy", senderName, "noShopItem", "fail", item,
-                    new Throwable().getStackTrace()[0]);
-            return;
-        }
-        if (!PermissionsHandler.hasPermission(sender, "barrierplus.buy." + item)) {
-            Language.sendLangMessage("Message.BarrierPlus.buyNoPerm", sender);
-            ServerHandler.sendFeatureMessage("Buy", senderName, "buyNoPerm", "fail", item,
-                    new Throwable().getStackTrace()[0]);
-            return;
-        }
-        int amount = buyMap.getAmount();
-        String priceType = buyMap.getPriceType();
-        int price = (int) buyMap.getPrice();
-        if (!priceType.equals("money") && !priceType.equals("points")) {
-            Language.dispatchMessage(sender, "&cCan not find the price type of &e" + item + "&c in config.");
-            ServerHandler.sendFeatureMessage("Buy", senderName, "priceType", "fail", item,
-                    new Throwable().getStackTrace()[0]);
-            return;
-        }
         Player player;
         if (target == null) {
             if (sender instanceof ConsoleCommandSender) {
-                Language.dispatchMessage(sender, "&c/barrierplus buy <item> [player]", true);
-                ServerHandler.sendFeatureMessage("Buy", senderName, "ConsoleCommandSender", "fail", item,
-                        new Throwable().getStackTrace()[0]);
+                CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.onlyPlayer", sender);
                 return;
             }
             player = (Player) sender;
         } else {
             player = target;
         }
-        double balance = PlayerHandler.getTypeBalance(player, priceType);
+        Material material;
+        try {
+            material = Material.getMaterial(item);
+        } catch (Exception e) {
+            CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.noShopItem", sender);
+            CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Buy", senderName, "noShopItem", "fail", item,
+                    new Throwable().getStackTrace()[0]);
+            return;
+        }
+        BuyMap buyMap = ConfigHandler.getConfigPath().getBuyProp().get(item);
+        if (buyMap == null) {
+            CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.noShopItem", sender);
+            CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Buy", senderName, "noShopItem", "fail", item,
+                    new Throwable().getStackTrace()[0]);
+            return;
+        }
+        if (!CorePlusAPI.getPermManager().hasPermission(sender, "barrierplus.buy." + item)) {
+            CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.noPermission", sender);
+            CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Buy", senderName, "noPermission", "fail", item,
+                    new Throwable().getStackTrace()[0]);
+            return;
+        }
+        String priceType = buyMap.getPriceType();
+        switch (priceType) {
+            case "money":
+                if (CorePlusAPI.getDependManager().VaultEnabled() && CorePlusAPI.getDependManager().getVaultApi().isEconEnable()) {
+                    CorePlusAPI.getLangManager().sendMsg(ConfigHandler.getPrefix(), sender, "&cCan not find plugin: Vault or Economy plugin");
+                    CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Buy", senderName, "Vault", "fail", item,
+                            new Throwable().getStackTrace()[0]);
+                    return;
+                }
+                break;
+            case "points":
+                if (!CorePlusAPI.getDependManager().PlayerPointsEnabled()) {
+                    CorePlusAPI.getLangManager().sendMsg(ConfigHandler.getPrefix(), sender, "&cCan not find plugin: PlayerPoints");
+                    CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Buy", senderName, "PlayerPoints", "fail", item,
+                            new Throwable().getStackTrace()[0]);
+                    return;
+                }
+                break;
+            default:
+                if (!CorePlusAPI.getDependManager().GemsEconomyEnabled()) {
+                    CorePlusAPI.getLangManager().sendMsg(ConfigHandler.getPrefix(), sender, "&cCan not find plugin: GemsEconomy or Unknown Economy plugin");
+                    CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Buy", senderName, "GemsEconomy", "fail", item,
+                            new Throwable().getStackTrace()[0]);
+                    return;
+                }
+                break;
+        }
+        int amount = buyMap.getAmount();
+        int price = (int) buyMap.getPrice();
+        double balance = CorePlusAPI.getPriceManager().getTypeBalance(player.getUniqueId(), priceType);
         if (balance < price) {
-            String[] placeHolders = Language.newString();
-            placeHolders[7] = item;
-            placeHolders[6] = String.valueOf(amount);
-            placeHolders[3] = priceType;
-            placeHolders[4] = String.valueOf(price);
-            placeHolders[5] = String.valueOf(balance);
-            Language.sendLangMessage("Message.BarrierPlus.buyNotEnoughMoney", player, placeHolders);
+            String[] placeHolders = CorePlusAPI.getLangManager().newString();
+            placeHolders[5] = priceType; // %pricetype%
+            placeHolders[6] = String.valueOf(price); // %price%
+            placeHolders[7] = String.valueOf(balance); // %balance%
+            placeHolders[8] = String.valueOf(amount); // %amount%
+            placeHolders[9] = item; // %material%
+            CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.buyNotEnoughMoney", player, placeHolders);
             if (target != null) {
-                placeHolders[2] = player.getName();
-                Language.sendLangMessage("Message.BarrierPlus.buyTargetSuccess", sender, placeHolders);
+                placeHolders[2] = player.getName(); // %targetplayer%
+                CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.buyTargetSuccess", sender, placeHolders);
             }
-            ServerHandler.sendFeatureMessage("Buy", senderName, "balance", "fail", item,
+            CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Buy", senderName, "balance", "fail", item,
                     new Throwable().getStackTrace()[0]);
             return;
         }
@@ -85,25 +95,25 @@ public class Buy {
         int itemStacks = (int) Math.ceil(amount / itemMaxSize);
         int itemRemain = amount % itemMaxSize;
         if (getInventoryFull(player, material, itemMaxSize, itemStacks, itemRemain)) {
-            Language.sendLangMessage("Message.BarrierPlus.inventoryFull", sender);
-            ServerHandler.sendFeatureMessage("Buy", senderName, "getInventoryFull", "fail", item,
+            CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.inventoryFull", sender);
+            CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Buy", senderName, "getInventoryFull", "fail", item,
                     new Throwable().getStackTrace()[0]);
             return;
         }
-        balance = PlayerHandler.takeTypeMoney(player, priceType, price);
-        String[] placeHolders = Language.newString();
+        balance = CorePlusAPI.getPriceManager().takeTypeMoney(player.getUniqueId(), priceType, price);
+        String[] placeHolders = CorePlusAPI.getLangManager().newString();
         addItem(player, material, itemMaxSize, itemStacks, itemRemain);
-        placeHolders[7] = item;
-        placeHolders[6] = String.valueOf(amount);
-        placeHolders[3] = priceType;
-        placeHolders[4] = String.valueOf(price);
-        placeHolders[5] = String.valueOf(balance);
-        Language.sendLangMessage("Message.BarrierPlus.buySuccess", player, placeHolders);
+        placeHolders[5] = priceType; // %pricetype%
+        placeHolders[6] = String.valueOf(price);  // %targetplayer%
+        placeHolders[7] = String.valueOf(balance); // %balance%
+        placeHolders[8] = String.valueOf(amount); // %amount%
+        placeHolders[9] = item; // %material%
+        CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.buySuccess", player, placeHolders);
         if (target != null) {
-            placeHolders[2] = player.getName();
-            Language.sendLangMessage("Message.BarrierPlus.buyTargetSuccess", sender, placeHolders);
+            placeHolders[2] = player.getName(); // %targetplayer%
+            CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.buyTargetSuccess", sender, placeHolders);
         }
-        ServerHandler.sendFeatureMessage("Buy", senderName, "final", "success", item,
+        CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Buy", senderName, "final", "success", item,
                 new Throwable().getStackTrace()[0]);
     }
 

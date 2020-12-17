@@ -5,6 +5,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import tw.momocraft.barrierplus.BarrierPlus;
 import tw.momocraft.barrierplus.utils.*;
+import tw.momocraft.coreplus.api.CorePlusAPI;
 
 import java.io.File;
 import java.time.LocalDateTime;
@@ -13,16 +14,15 @@ import java.time.format.DateTimeFormatter;
 public class ConfigHandler {
 
     private static YamlConfiguration configYAML;
-    private static DependAPI depends;
-    private static UpdateHandler updater;
     private static ConfigPath configPath;
 
     public static void generateData(boolean reload) {
         genConfigFile("config.yml");
-        setDepends(new DependAPI());
         setConfigPath(new ConfigPath());
         if (!reload) {
-            setUpdater(new UpdateHandler());
+            CorePlusAPI.getUpdateManager().check(getPrefix(), Bukkit.getConsoleSender(),
+                    BarrierPlus.getInstance().getDescription().getName(),
+                    BarrierPlus.getInstance().getDescription().getVersion());
         }
     }
 
@@ -49,7 +49,7 @@ public class ConfigHandler {
             try {
                 BarrierPlus.getInstance().saveResource(fileName, false);
             } catch (Exception e) {
-                ServerHandler.sendErrorMessage("&cCannot save " + fileName + " to disk!");
+                CorePlusAPI.getLangManager().sendErrorMsg(ConfigHandler.getPrefix(), "&cCannot save " + fileName + " to disk!");
                 return;
             }
         }
@@ -73,7 +73,7 @@ public class ConfigHandler {
         File filePath = BarrierPlus.getInstance().getDataFolder();
         switch (fileName) {
             case "config.yml":
-                configVersion = 6;
+                configVersion = 7;
                 break;
         }
         getConfigData(filePath, fileName);
@@ -90,31 +90,11 @@ public class ConfigHandler {
                     File configFile = new File(filePath, fileName);
                     configFile.delete();
                     getConfigData(filePath, fileName);
-                    ServerHandler.sendConsoleMessage("&4The file \"" + fileName + "\" is out of date, generating a new one!");
+                    CorePlusAPI.getLangManager().sendConsoleMsg(getPrefix(), "&4The file \"" + fileName + "\" is out of date, generating a new one!");
                 }
             }
         }
         getConfig(fileName).options().copyDefaults(false);
-    }
-
-    public static DependAPI getDepends() {
-        return depends;
-    }
-
-    private static void setDepends(DependAPI depend) {
-        depends = depend;
-    }
-
-    public static boolean isDebugging() {
-        return ConfigHandler.getConfig("config.yml").getBoolean("Debugging");
-    }
-
-    public static UpdateHandler getUpdater() {
-        return updater;
-    }
-
-    private static void setUpdater(UpdateHandler update) {
-        updater = update;
     }
 
     public static ConfigPath getConfigPath() {
@@ -123,5 +103,9 @@ public class ConfigHandler {
 
     public static void setConfigPath(ConfigPath configPath) {
         ConfigHandler.configPath = configPath;
+    }
+
+    public static String getPrefix() {
+        return getConfig("config.yml").getString("Message.prefix");
     }
 }

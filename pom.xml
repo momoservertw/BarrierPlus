@@ -6,7 +6,7 @@
 
     <groupId>momocraft.tw</groupId>
     <artifactId>BarrierPlus</artifactId>
-    <version>1.1.2</version>
+    <version>1.2.0</version>
     <build>
         <plugins>
             <plugin>
@@ -26,16 +26,6 @@
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
-        <!--PlaceholderAPI Repo-->
-        <repository>
-            <id>placeholderapi</id>
-            <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
-        </repository>
-        <!--CraftationGaming Repository-->
-        <repository>
-            <id>CraftationGaming</id>
-            <url>https://raw.githubusercontent.com/RockinChaos/repository/maven-public/</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -53,43 +43,13 @@
             <version>LATEST</version>
             <scope>provided</scope>
         </dependency>
-        <!--Vault API-->
+        <!--CorePlus API-->
         <dependency>
-            <groupId>net.milkbowl.vault</groupId>
-            <artifactId>Vault</artifactId>
+            <groupId>momocraft.tw</groupId>
+            <artifactId>CorePlus</artifactId>
             <scope>system</scope>
-            <systemPath>${pom.basedir}/src/main/java/tw/momocraft/barrierplus/extra/VaultAPI.jar</systemPath>
+            <systemPath>${pom.basedir}/src/main/java/tw/momocraft/barrierplus/extra/CorePlus-1.0.0.jar</systemPath>
             <version>LEGACY</version>
-        </dependency>
-        <!--Residence API-->
-        <dependency>
-            <groupId>me.Residence</groupId>
-            <artifactId>Residence</artifactId>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/src/main/java/tw/momocraft/barrierplus/extra/Residence4.9.2.1.jar</systemPath>
-            <version>LEGACY</version>
-        </dependency>
-        <!--PlayerPoints API-->
-        <dependency>
-            <groupId>org.black_ixx</groupId>
-            <artifactId>PlayerPoints</artifactId>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/src/main/java/tw/momocraft/barrierplus/extra/PlayerPoints.jar</systemPath>
-            <version>LEGACY</version>
-        </dependency>
-        <!--PlaceholderAPI API-->
-        <dependency>
-            <groupId>me.clip</groupId>
-            <artifactId>placeholderapi</artifactId>
-            <version>LATEST</version>
-            <scope>provided</scope>
-        </dependency>
-        <!--ItemJoin API-->
-        <dependency>
-            <groupId>me.RockinChaos.itemjoin</groupId>
-            <artifactId>ItemJoin</artifactId>
-            <version>5.1.1-SNAPSHOT</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 

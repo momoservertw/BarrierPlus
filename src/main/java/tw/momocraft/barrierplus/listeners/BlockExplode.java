@@ -7,9 +7,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockExplodeEvent;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
-import tw.momocraft.barrierplus.handlers.ServerHandler;
 import tw.momocraft.barrierplus.utils.DestroyMap;
-import tw.momocraft.barrierplus.utils.ResidenceUtils;
+import tw.momocraft.coreplus.api.CorePlusAPI;
 
 import java.util.*;
 
@@ -35,38 +34,36 @@ public class BlockExplode implements Listener {
             if (destroyMap == null) {
                 continue;
             }
-            // Location.
-            if (!ConfigHandler.getConfigPath().getLocationUtils().checkLocation(blockLoc, destroyMap.getLocMaps(), true)) {
-                ServerHandler.sendFeatureMessage("Destroy", blockType, "location", "continue", "Explode",
+            // Location
+            if (!CorePlusAPI.getLocationManager().checkLocation(blockLoc, destroyMap.getLocMaps(), true)) {
+                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Destroy", blockType, "location", "continue", "Explode",
                         new Throwable().getStackTrace()[0]);
                 continue;
             }
-            // Prevent Location.
-            if (ConfigHandler.getConfigPath().getLocationUtils().checkLocation(blockLoc, destroyMap.getPreventLocMaps(), false)) {
-                ServerHandler.sendFeatureMessage("Destroy", blockType, "prevent location", "bypass", "Explode",
+            // Prevent Location
+            if (CorePlusAPI.getLocationManager().checkLocation(blockLoc, destroyMap.getPreventLocMaps(), true)) {
+                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Destroy", blockType, "prevent location", "bypass", "Explode",
                         new Throwable().getStackTrace()[0]);
                 i.remove();
                 continue;
             }
-            // Residence flag.
-            if (!ResidenceUtils.checkFlag(null, blockLoc, true, "destroy")) {
-                ServerHandler.sendFeatureMessage("Destroy", blockType, "residence", "continue", "Explode",
+            // Residence flag
+            if (!CorePlusAPI.getResidenceManager().checkFlag(null, blockLoc, true, "destroy")) {
+                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Destroy", blockType, "residence", "continue", "Explode",
                         new Throwable().getStackTrace()[0]);
                 continue;
             }
-            // Explode break.
-            String explodeBreak = destroyMap.getExplodeBreak();
-            if (explodeBreak != null && explodeBreak.equals("false")) {
+            // Explode break
+            if (!destroyMap.isExplodeBreak()) {
                 i.remove();
-                ServerHandler.sendFeatureMessage("Destroy", blockType, "destroy", "bypass", "Explode",
+                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Destroy", blockType, "destroy", "bypass", "Explode",
                         new Throwable().getStackTrace()[0]);
                 continue;
             }
-            // Explode drop.
-            String explodeDrop = destroyMap.getExplodeDrop();
-            if (explodeDrop != null && explodeDrop.equals("false")) {
+            // Explode drop
+            if (!destroyMap.isExplodeDrop()) {
                 block.setType(Material.AIR);
-                ServerHandler.sendFeatureMessage("Destroy", blockType, "drop", "bypass", "Explode",
+                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Destroy", blockType, "drop", "bypass", "Explode",
                         new Throwable().getStackTrace()[0]);
             }
         }

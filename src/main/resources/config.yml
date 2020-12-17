@@ -1,51 +1,9 @@
-# --{ =-=-=-=-=-=-=-=-=-= BarrierPlus's Configuration Settings, by Momocraft =-=-=-=-=-=-=-=-=-= }--
-Config-Version: 6
+# ░░░░░░░░░░░░░░░   BarrierPlus, By Momocraft♥   ░░░░░░░░░░░░░░░
+#  Spigot: https://www.spigotmc.org/resources/barrierblus.70510/
+#  Wiki: https://github.com/momoservertw/BarrierPlus/wiki
+# ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+Config-Version: 7
 Check-Updates: true
-Debugging: false
-
-General:
-  Settings:
-    Features:
-      # Changed these options need to restart the server.
-      Hook:
-        Vault: true
-        PlaceHolderAPI: true
-        Residence: true
-        PlayerPoints: true
-        ItemJoin: true
-  # The menu item for some events like showing blocks or destroying it.
-  # If you don't have a menu in your server, you can set Item Name to "" to use a vanilla item.
-  # Support: ItemJoin
-  Menu:
-    ItemJoin: ""
-    Item:
-      Type: "PLAYER_HEAD"
-      Name: "&e&lMy &6&lMenu"
-  Location:
-    NormalWorlds:
-      Worlds:
-        - world
-    NetherWorlds:
-      Worlds:
-        - world_nether
-    EndWorlds:
-      Worlds:
-        - world_the_end
-    NormalBorder:
-      Worlds:
-        - world
-      Area:
-        S: 10000
-    Bedrock_World:
-      Worlds:
-        - world
-      Area:
-        Y: ">= 5"
-    Bedrock_Nether:
-      Worlds:
-        - world_nether
-      Area:
-        Y: "5 ~ 123"
 
 # Blocks shop.
 # Permission: barrierplus.command.buy
@@ -56,9 +14,10 @@ Buy:
   Groups:
     Creative:
       Enable: true
-      # Price-Type: "money" or "points". "points" only support PlayerPoints.
-      Price-Type: points
-      Price: 25
+      # PriceType: "money" or "points". "points" only support PlayerPoints.
+      Price:
+        Type: points
+        Amount: 25
       Amount: 64
       Types:
         - BARRIER
@@ -79,20 +38,12 @@ See:
     Barrier:
       Enable: true
       Creative: false
-      Particle:
-        Type: BARRIER
-        Amount: 1
-        Times: 1
-        Interval: 10
+      Particle: "Barrier"
       Types:
         - BARRIER
     Structure_void:
       Enable: true
-      Particle:
-        Type: CRIT_MAGIC
-        Amount: 1
-        Times: 6
-        Interval: 10
+      Particle: "Crit_Magic"
       Types:
         - STRUCTURE_VOID
 
@@ -107,6 +58,7 @@ Place:
       Types:
         - BARRIER
         - STRUCTURE_VOID
+      Commands: []
     Bedrock:
       Enable: true
       Types:
@@ -140,6 +92,7 @@ Destroy:
   Groups:
     Barrier:
       Enable: true
+      Commands: []
       Types:
         - BARRIER
         - STRUCTURE_VOID
@@ -153,37 +106,13 @@ Destroy:
           - Bedrock_Nether
 
 Message:
-  prefix: '&7[&dBarrierPlus&7]&r '
-  noPermission: '&cYou do not have permission to use that command!'
-  unknownCommand: '&cUnknown command, See &e/barrierplus help &cfor a list of commands.'
-  configReload: '&fConfiguration(s) Reloaded!'
-  cooldown: '&fPlease try it again later.'
-  targetNotFound: '&cThe player &c%targetplayer% &ccould not be found!'
-  BarrierPlus:
-    Commands:
-      title: "&8▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩ &d&lBarrierPlus &8▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩"
-      help: "&a/barrierplus help &8- &7This help menu."
-      reload: "&a/barrierplus reload &8- &7Reloads config file."
-      buy: "&a/barrierplus buy <item> &8- &7Buy creative items."
-      buyOther: "&a/barrierplus buy <item> [player] &8- &7Execute buy creative items command to a player."
-    noPermDestroy: '&cYou dont have &6build &cpermission<s> here.'
-    noPermPlace: '&cYou dont have permission to place this block.'
-    noPermBreak: '&cYou dont have permission to break this block.'
-    placeLocFail: '&7You cannot place the %item% in this position.'
-    breakHelp: '&7Holding menu and "&eleft-click + shift&7" to break this block.'
-    breakLocFail: '&7You cannot break the %item% in this position.'
-    noShopItem: '&cYou can not buy this block.'
-    inventoryFull: '&cYou dont have enough inventory space.'
-    targetInventoryFull: '&c%targetplayer% dont have enough inventory space.'
-    buyDisable: '&cThis feature is disabled.'
-    buyNoPerm: '&cYou do not have permission to buy %item%.'
-    buySuccess: '&aSuccess buy &e%item% x%amount% &afor %price% %pricetype% &8- &a%pricetype%: %balance%'
-    buyTargetSuccess: '&aSuccess buy &e%item% x%amount% &afor %price% %pricetype% for %targetplayer% &8- &a%pricetype%: %balance%'
-    buyNotEnoughMoney: '&cYou need &e%price% %pricetype%&c to buy %item% x%amount% &8- &c%pricetype%: %balance%.'
-    buyTargetNotEnoughMoney: '&c%targetplayer% need &e%price% %pricetype%&c to buy %item% x%amount% &8- &c%pricetype%: %balance%'
-    Translate:
-      money: 'money'
-      points: 'points'
-      BARRIER: 'barrier'
-      STRUCTURE_VOID: 'structure_void'
-      BEDROCK: 'bedrock'
+  prefix: "&7[&dBarrierPlus&7]&r "
+  Commands:
+    title: "&8▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩ &d&lBarrierPlus &8▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩"
+    help: "&a/barrierplus help &8- &7This help menu."
+    reload: "&a/barrierplus reload &8- &7Reloads config file."
+    buy: "&a/barrierplus buy <item> &8- &7Buy creative items."
+    buyOther: "&a/barrierplus buy <item> [player] &8- &7Execute buy creative items command to a player."
+  breakHelp: "&7Holding menu and '&eleft-click + shift&7' to break this block."
+  placeLocFail: "&7You cannot place the %block% in this position."
+  breakLocFail: "&7You cannot break the %block% in this position."

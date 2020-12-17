@@ -7,10 +7,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
-import tw.momocraft.barrierplus.handlers.PermissionsHandler;
-import tw.momocraft.barrierplus.handlers.ServerHandler;
-import tw.momocraft.barrierplus.utils.Language;
-import tw.momocraft.barrierplus.utils.locationutils.LocationMap;
+import tw.momocraft.coreplus.api.CorePlusAPI;
+import tw.momocraft.coreplus.utils.locationutils.LocationMap;
 
 import java.util.List;
 
@@ -25,18 +23,24 @@ public class BlockPlace implements Listener {
         String blockType = block.getType().name();
         List<LocationMap> preventLocMaps = ConfigHandler.getConfigPath().getPlaceProp().get(blockType);
         Player player = e.getPlayer();
+        // Prevent Location
         Location loc = block.getLocation();
-        if (ConfigHandler.getConfigPath().getLocationUtils().checkLocation(loc, preventLocMaps, true)) {
-            //Check placing permissions.
-            if (!PermissionsHandler.hasPermission(player, "barrierplus.place." + blockType) &&
-                    !PermissionsHandler.hasPermission(player, "barrierplus.place.*")) {
-                String[] placeHolders = Language.newString();
-                placeHolders[7] = blockType;
-                Language.sendLangMessage("Message.BarrierPlus.placeLocFail", player, placeHolders);
-                ServerHandler.sendFeatureMessage("Place", blockType, "permission", "fail",
-                        new Throwable().getStackTrace()[0]);
-                e.setCancelled(true);
-            }
+        if (CorePlusAPI.getLocationManager().checkLocation(loc, preventLocMaps, true)) {
+            CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Place", blockType, "Location", "return",
+                    new Throwable().getStackTrace()[0]);
+            return;
         }
+        // Permissions
+        if (CorePlusAPI.getPermManager().hasPermission(player, "barrierplus.place." + blockType)) {
+            CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Place", blockType, "permission", "return",
+                    new Throwable().getStackTrace()[0]);
+            return;
+        }
+        String[] placeHolders = CorePlusAPI.getLangManager().newString();
+        placeHolders[9] = blockType;
+        CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), ConfigHandler.getConfigPath().getMsgPlaceLocFail(), player, placeHolders);
+        e.setCancelled(true);
+        CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Place", blockType, "permission", "fail",
+                new Throwable().getStackTrace()[0]);
     }
 }

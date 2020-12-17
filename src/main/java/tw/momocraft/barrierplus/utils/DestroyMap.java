@@ -1,17 +1,17 @@
 package tw.momocraft.barrierplus.utils;
 
-import tw.momocraft.barrierplus.utils.locationutils.LocationMap;
+import tw.momocraft.coreplus.utils.locationutils.LocationMap;
 
 import java.util.List;
 
 public class DestroyMap {
 
-    private String menuBreak;
-    private String menuDrop;
-    private String vanillaBreak;
-    private String vanillaDrop;
-    private String explodeBreak;
-    private String explodeDrop;
+    private boolean menuBreak;
+    private boolean menuDrop;
+    private boolean vanillaBreak;
+    private boolean vanillaDrop;
+    private boolean explodeBreak;
+    private boolean explodeDrop;
     private List<LocationMap> locMaps;
     private List<LocationMap> preventLocMaps;
 
@@ -23,28 +23,28 @@ public class DestroyMap {
         return preventLocMaps;
     }
 
-    public String getExplodeBreak() {
-        return explodeBreak;
-    }
-
-    public String getExplodeDrop() {
-        return explodeDrop;
-    }
-
-    public String getMenuBreak() {
+    public boolean isMenuBreak() {
         return menuBreak;
     }
 
-    public String getMenuDrop() {
+    public boolean isMenuDrop() {
         return menuDrop;
     }
 
-    public String getVanillaBreak() {
+    public boolean isVanillaBreak() {
         return vanillaBreak;
     }
 
-    public String getVanillaDrop() {
+    public boolean isVanillaDrop() {
         return vanillaDrop;
+    }
+
+    public boolean isExplodeBreak() {
+        return explodeBreak;
+    }
+
+    public boolean isExplodeDrop() {
+        return explodeDrop;
     }
 
     public void setLocMaps(List<LocationMap> locMaps) {
@@ -55,27 +55,27 @@ public class DestroyMap {
         this.preventLocMaps = preventLocMaps;
     }
 
-    public void setExplodeBreak(String explodeBreak) {
-        this.explodeBreak = explodeBreak;
-    }
-
-    public void setExplodeDrop(String explodeDrop) {
-        this.explodeDrop = explodeDrop;
-    }
-
-    public void setMenuBreak(String menuBreak) {
+    public void setMenuBreak(boolean menuBreak) {
         this.menuBreak = menuBreak;
     }
 
-    public void setMenuDrop(String menuDrop) {
+    public void setMenuDrop(boolean menuDrop) {
         this.menuDrop = menuDrop;
     }
 
-    public void setVanillaBreak(String vanillaBreak) {
+    public void setVanillaBreak(boolean vanillaBreak) {
         this.vanillaBreak = vanillaBreak;
     }
 
-    public void setVanillaDrop(String vanillaDrop) {
+    public void setVanillaDrop(boolean vanillaDrop) {
         this.vanillaDrop = vanillaDrop;
+    }
+
+    public void setExplodeBreak(boolean explodeBreak) {
+        this.explodeBreak = explodeBreak;
+    }
+
+    public void setExplodeDrop(boolean explodeDrop) {
+        this.explodeDrop = explodeDrop;
     }
 }
