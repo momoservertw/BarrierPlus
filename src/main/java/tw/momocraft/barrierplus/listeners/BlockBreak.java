@@ -27,7 +27,7 @@ public class BlockBreak implements Listener {
         }
         Location blockLoc = e.getBlock().getLocation();
         // Cancel vanilla break event.
-        if (destroyMap.isVanillaBreak()) {
+        if (!destroyMap.isVanillaBreak()) {
             if (ConfigHandler.getConfigPath().isDestroyHelp()) {
                 CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), ConfigHandler.getConfigPath().getMsgBreakHelp(), player);
             }
@@ -53,7 +53,7 @@ public class BlockBreak implements Listener {
             return;
         }
         // Has destroy permission.
-        if (CorePlusAPI.getPermManager().hasPermission(player, "barrierplus.destroy." + blockType.toLowerCase())) {
+        if (!CorePlusAPI.getPermManager().hasPermission(player, "barrierplus.destroy." + blockType.toLowerCase())) {
             CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.noPermission", player);
             CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Destroy", blockType, "block permission", "cancel",
                     new Throwable().getStackTrace()[0]);

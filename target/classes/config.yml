@@ -1,9 +1,8 @@
 # ░░░░░░░░░░░░░░░   BarrierPlus, By Momocraft♥   ░░░░░░░░░░░░░░░
 #  Spigot: https://www.spigotmc.org/resources/barrierblus.70510/
 #  Wiki: https://github.com/momoservertw/BarrierPlus/wiki
-# ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+# ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 Config-Version: 7
-Check-Updates: true
 
 # Blocks shop.
 # Permission: barrierplus.command.buy

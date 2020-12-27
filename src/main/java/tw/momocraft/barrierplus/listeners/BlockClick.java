@@ -48,7 +48,7 @@ public class BlockClick implements Listener {
             }
             if (player.isSneaking()) {
                 // Holding menu.
-                if (!CorePlusAPI.getUtilsManager().isHoldingMenu(itemStack, player)) {
+                if (!CorePlusAPI.getUtilsManager().isMenu(itemStack)) {
                     return;
                 }
                 // Destroy - Break block by menu.
@@ -58,7 +58,7 @@ public class BlockClick implements Listener {
             } else {
                 // See - Display near blocks.
                 if (ConfigHandler.getConfigPath().isSee()) {
-                    if (!CorePlusAPI.getUtilsManager().isHoldingMenu(itemStack, player) &&
+                    if (!CorePlusAPI.getUtilsManager().isMenu(itemStack) &&
                             !itemStack.getType().name().equals(blockType)) {
                         return;
                     }
@@ -188,7 +188,7 @@ public class BlockClick implements Listener {
                 for (int z = -range; z <= range; z++) {
                     Location loc = player.getLocation().getBlock().getLocation().clone().add(x, y, z);
                     if (loc.getBlock().getType() == Material.getMaterial(block)) {
-                        CorePlusAPI.getCommandManager().executeMultipleCmds(ConfigHandler.getPrefix(), player, "Particle: " + seeMap.getParticle(), false);
+                        CorePlusAPI.getCommandManager().executeCmd(ConfigHandler.getPrefix(), player, "Particle: " + seeMap.getParticle(), false);
                     }
                 }
             }
