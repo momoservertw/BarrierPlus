@@ -39,7 +39,7 @@ public class Buy {
                     new Throwable().getStackTrace()[0]);
             return;
         }
-        if (!CorePlusAPI.getPermManager().hasPermission(sender, "barrierplus.buy." + item)) {
+        if (!CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.buy." + item)) {
             CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.noPermission", sender);
             CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Buy", senderName, "noPermission", "fail", item,
                     new Throwable().getStackTrace()[0]);
@@ -48,7 +48,7 @@ public class Buy {
         String priceType = buyMap.getPriceType();
         switch (priceType) {
             case "money":
-                if (CorePlusAPI.getDependManager().VaultEnabled() && CorePlusAPI.getDependManager().getVaultApi().isEconEnable()) {
+                if (CorePlusAPI.getDependManager().VaultEnabled() && CorePlusAPI.getDependManager().VaultEconEnabled()) {
                     CorePlusAPI.getLangManager().sendMsg(ConfigHandler.getPrefix(), sender, "&cCan not find plugin: Vault or Economy plugin");
                     CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Buy", senderName, "Vault", "fail", item,
                             new Throwable().getStackTrace()[0]);
@@ -74,17 +74,17 @@ public class Buy {
         }
         int amount = buyMap.getAmount();
         int price = (int) buyMap.getPrice();
-        double balance = CorePlusAPI.getPriceManager().getTypeBalance(player.getUniqueId(), priceType);
+        double balance = CorePlusAPI.getPlayerManager().getTypeBalance(player.getUniqueId(), priceType);
         if (balance < price) {
             String[] placeHolders = CorePlusAPI.getLangManager().newString();
-            placeHolders[5] = priceType; // %pricetype%
-            placeHolders[6] = String.valueOf(price); // %price%
-            placeHolders[7] = String.valueOf(balance); // %balance%
-            placeHolders[8] = String.valueOf(amount); // %amount%
-            placeHolders[9] = item; // %material%
+            placeHolders[9] = priceType; // %pricetype%
+            placeHolders[10] = String.valueOf(price); // %price%
+            placeHolders[11] = String.valueOf(balance); // %balance%
+            placeHolders[6] = String.valueOf(amount); // %amount%
+            placeHolders[7] = item; // %material%
             CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.buyNotEnoughMoney", player, placeHolders);
             if (target != null) {
-                placeHolders[2] = player.getName(); // %targetplayer%
+                placeHolders[1] = player.getName(); // %targetplayer%
                 CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.buyTargetSuccess", sender, placeHolders);
             }
             CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Buy", senderName, "balance", "fail", item,
@@ -100,14 +100,14 @@ public class Buy {
                     new Throwable().getStackTrace()[0]);
             return;
         }
-        balance = CorePlusAPI.getPriceManager().takeTypeMoney(player.getUniqueId(), priceType, price);
+        balance = CorePlusAPI.getPlayerManager().takeTypeMoney(player.getUniqueId(), priceType, price);
         String[] placeHolders = CorePlusAPI.getLangManager().newString();
         addItem(player, material, itemMaxSize, itemStacks, itemRemain);
-        placeHolders[5] = priceType; // %pricetype%
-        placeHolders[6] = String.valueOf(price);  // %targetplayer%
-        placeHolders[7] = String.valueOf(balance); // %balance%
-        placeHolders[8] = String.valueOf(amount); // %amount%
-        placeHolders[9] = item; // %material%
+        placeHolders[9] = priceType; // %pricetype%
+        placeHolders[10] = String.valueOf(price);  // %price%
+        placeHolders[11] = String.valueOf(balance); // %balance%
+        placeHolders[6] = String.valueOf(amount); // %amount%
+        placeHolders[7] = item; // %material%
         CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.buySuccess", player, placeHolders);
         if (target != null) {
             placeHolders[2] = player.getName(); // %targetplayer%

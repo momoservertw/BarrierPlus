@@ -7,8 +7,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
-import tw.momocraft.barrierplus.BarrierPlus;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.barrierplus.utils.*;
 import tw.momocraft.coreplus.api.CorePlusAPI;
@@ -77,7 +75,7 @@ public class BlockClick implements Listener {
         SeeMap seeMap = ConfigHandler.getConfigPath().getSeeProp().get(blockType);
         if (seeMap != null) {
             // Location.
-            if (!CorePlusAPI.getLocationManager().checkLocation(player.getLocation(), seeMap.getLocMaps(), true)) {
+            if (!CorePlusAPI.getConditionManager().checkLocation(player.getLocation(), seeMap.getLocList(), true)) {
                 CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Destroy", blockType, "location", "return",
                         new Throwable().getStackTrace()[0]);
                 return;
@@ -100,8 +98,8 @@ public class BlockClick implements Listener {
                 }
             }
             // Has see permission.
-            if (CorePlusAPI.getPermManager().hasPermission(player, "barrierplus.see." + blockType) ||
-                    CorePlusAPI.getPermManager().hasPermission(player, "barrierplus.see.*")) {
+            if (CorePlusAPI.getPlayerManager().hasPermission(player, "barrierplus.see." + blockType) ||
+                    CorePlusAPI.getPlayerManager().hasPermission(player, "barrierplus.see.*")) {
                 addCDSee(player);
                 displayBlock(player, blockType, seeMap);
                 CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "See", blockType, "final", "return",
@@ -127,13 +125,13 @@ public class BlockClick implements Listener {
                 return;
             }
             // Location
-            if (!CorePlusAPI.getLocationManager().checkLocation(blockLoc, destroyMap.getLocMaps(), true)) {
+            if (!CorePlusAPI.getConditionManager().checkLocation(blockLoc, destroyMap.getLocList(), true)) {
                 CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Destroy", blockType, "location", "return",
                         new Throwable().getStackTrace()[0]);
                 return;
             }
             // Prevent Location
-            if (CorePlusAPI.getLocationManager().checkLocation(blockLoc, destroyMap.getPreventLocMaps(), false)) {
+            if (CorePlusAPI.getConditionManager().checkLocation(blockLoc, destroyMap.getPreventLocList(), false)) {
                 String[] placeHolders = CorePlusAPI.getLangManager().newString();
                 placeHolders[9] = blockType; // %material%
                 CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), ConfigHandler.getConfigPath().getMsgBreakLocFail(), player, placeHolders);
@@ -142,14 +140,14 @@ public class BlockClick implements Listener {
                 return;
             }
             // Destroy permission
-            if (!CorePlusAPI.getPermManager().hasPermission(player, "barrierplus.destroy." + blockType)) {
+            if (!CorePlusAPI.getPlayerManager().hasPermission(player, "barrierplus.destroy." + blockType)) {
                 CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.noPermission", player);
                 CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Destroy", blockType, "permission", "return",
                         new Throwable().getStackTrace()[0]);
                 return;
             }
             // Residence flag
-            if (!CorePlusAPI.getResidenceManager().checkFlag(player, blockLoc, true, "destroy")) {
+            if (!CorePlusAPI.getConditionManager().checkFlag(player, blockLoc, "destroy", true, true)) {
                 String[] placeHolders = CorePlusAPI.getLangManager().newString();
                 placeHolders[12] = "destroy"; // %flag%
                 CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.noFlagPerm", player, placeHolders);

@@ -37,13 +37,13 @@ public class BlockBreak implements Listener {
             return;
         }
         // Location.
-        if (!CorePlusAPI.getLocationManager().checkLocation(blockLoc, destroyMap.getLocMaps(), true)) {
+        if (!CorePlusAPI.getConditionManager().checkLocation(blockLoc, destroyMap.getLocList(), true)) {
             CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Destroy", blockType, "location", "return",
                     new Throwable().getStackTrace()[0]);
             return;
         }
         // Prevent Location.
-        if (CorePlusAPI.getLocationManager().checkLocation(blockLoc, destroyMap.getPreventLocMaps(), false)) {
+        if (CorePlusAPI.getConditionManager().checkLocation(blockLoc, destroyMap.getPreventLocList(), false)) {
             String[] placeHolders = CorePlusAPI.getLangManager().newString();
             placeHolders[9] = blockType; // %material%
             CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), ConfigHandler.getConfigPath().getMsgBreakLocFail(), player, placeHolders);
@@ -53,7 +53,7 @@ public class BlockBreak implements Listener {
             return;
         }
         // Has destroy permission.
-        if (!CorePlusAPI.getPermManager().hasPermission(player, "barrierplus.destroy." + blockType.toLowerCase())) {
+        if (!CorePlusAPI.getPlayerManager().hasPermission(player, "barrierplus.destroy." + blockType.toLowerCase())) {
             CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.noPermission", player);
             CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Destroy", blockType, "block permission", "cancel",
                     new Throwable().getStackTrace()[0]);
@@ -61,7 +61,7 @@ public class BlockBreak implements Listener {
             return;
         }
         // Residence flag.
-        if (!CorePlusAPI.getResidenceManager().checkFlag(player, blockLoc, true, "destroy")) {
+        if (!CorePlusAPI.getConditionManager().checkFlag(player, blockLoc, "destroy", true, true)) {
             String[] placeHolders = CorePlusAPI.getLangManager().newString();
             placeHolders[12] = "destroy"; // %flag%
             CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.noFlagPerm", player, placeHolders);

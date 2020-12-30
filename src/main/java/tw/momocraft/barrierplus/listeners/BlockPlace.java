@@ -8,7 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.coreplus.api.CorePlusAPI;
-import tw.momocraft.coreplus.utils.locationutils.LocationMap;
 
 import java.util.List;
 
@@ -21,17 +20,17 @@ public class BlockPlace implements Listener {
         }
         Block block = e.getBlockPlaced();
         String blockType = block.getType().name();
-        List<LocationMap> preventLocMaps = ConfigHandler.getConfigPath().getPlaceProp().get(blockType);
+        List<String> preventLocList = ConfigHandler.getConfigPath().getPlaceProp().get(blockType);
         Player player = e.getPlayer();
         // Prevent Location
         Location loc = block.getLocation();
-        if (CorePlusAPI.getLocationManager().checkLocation(loc, preventLocMaps, true)) {
+        if (CorePlusAPI.getConditionManager().checkLocation(loc, preventLocList, true)) {
             CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Place", blockType, "Location", "return",
                     new Throwable().getStackTrace()[0]);
             return;
         }
         // Permissions
-        if (CorePlusAPI.getPermManager().hasPermission(player, "barrierplus.place." + blockType)) {
+        if (CorePlusAPI.getPlayerManager().hasPermission(player, "barrierplus.place." + blockType)) {
             CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Place", blockType, "permission", "return",
                     new Throwable().getStackTrace()[0]);
             return;

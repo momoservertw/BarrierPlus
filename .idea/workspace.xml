@@ -61,8 +61,8 @@
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="tw.momocraft.barrierplus.utils" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\sayuri\IdeaProjects\BarrierPlus\src\main\resources" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Sayuri\IdeaProjects\BarrierPlus\src\main\java\tw\momocraft\barrierplus\utils" />
@@ -76,8 +76,8 @@
       <recent name="tw.momocraft.barrierplus.handlers" />
       <recent name="tw.momocraft.barrierplus.listeners" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\sayuri\IdeaProjects\BarrierPlus\src\main\resources" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="tw.momocraft.barrierplus.utils" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -103,10 +103,14 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="659" y="162" key="#com.intellij.ide.util.MemberChooser/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1608159985366" />
-    <state x="299" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1605737015993">
+    <state x="628" y="354" width="451" height="220" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1609349596473">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="299" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1605737015993" />
+    <state x="628" y="354" width="451" height="220" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1609349596473" />
+    <state x="299" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1609349012670">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state x="299" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1609349012670" />
     <state x="584" y="207" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1608159758246">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -120,31 +124,31 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="634" y="216" key="FileChooserDialogImpl/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1608608883190" />
-    <state width="1663" height="149" key="GridCell.Tab.0.bottom" timestamp="1608726524417">
+    <state width="1663" height="149" key="GridCell.Tab.0.bottom" timestamp="1609348848589">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="1663" height="149" key="GridCell.Tab.0.bottom/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1608726524417" />
+    <state width="1663" height="149" key="GridCell.Tab.0.bottom/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1609348848589" />
     <state width="1663" height="149" key="GridCell.Tab.0.bottom/2560.10.1707.920/0.0.1707.920@2560.10.1707.920" timestamp="1608198717049" />
-    <state width="1663" height="149" key="GridCell.Tab.0.center" timestamp="1608726524417">
+    <state width="1663" height="149" key="GridCell.Tab.0.center" timestamp="1609348848589">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="1663" height="149" key="GridCell.Tab.0.center/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1608726524417" />
+    <state width="1663" height="149" key="GridCell.Tab.0.center/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1609348848589" />
     <state width="1663" height="149" key="GridCell.Tab.0.center/2560.10.1707.920/0.0.1707.920@2560.10.1707.920" timestamp="1608198717049" />
-    <state width="1663" height="149" key="GridCell.Tab.0.left" timestamp="1608726524417">
+    <state width="1663" height="149" key="GridCell.Tab.0.left" timestamp="1609348848589">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="1663" height="149" key="GridCell.Tab.0.left/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1608726524417" />
+    <state width="1663" height="149" key="GridCell.Tab.0.left/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1609348848589" />
     <state width="1663" height="149" key="GridCell.Tab.0.left/2560.10.1707.920/0.0.1707.920@2560.10.1707.920" timestamp="1608198717049" />
-    <state width="1663" height="149" key="GridCell.Tab.0.right" timestamp="1608726524417">
+    <state width="1663" height="149" key="GridCell.Tab.0.right" timestamp="1609348848589">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="1663" height="149" key="GridCell.Tab.0.right/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1608726524417" />
+    <state width="1663" height="149" key="GridCell.Tab.0.right/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1609348848589" />
     <state width="1663" height="149" key="GridCell.Tab.0.right/2560.10.1707.920/0.0.1707.920@2560.10.1707.920" timestamp="1608198717049" />
-    <state x="770" y="72" width="792" height="792" key="find.popup" timestamp="1608200255738">
+    <state x="748" y="70" width="792" height="792" key="find.popup" timestamp="1609349058813">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="417" y="89" width="769" height="600" key="find.popup/0.0.1280.689@0.0.1280.689" timestamp="1605661459929" />
-    <state x="770" y="72" width="792" height="792" key="find.popup/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1608200255738" />
+    <state x="748" y="70" width="792" height="792" key="find.popup/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1609349058813" />
     <state x="495" y="187" width="700" height="530" key="recent.locations.popup" timestamp="1608191338317">
       <screen x="0" y="0" width="1707" height="920" />
     </state>

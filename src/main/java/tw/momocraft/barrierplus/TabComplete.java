@@ -18,21 +18,21 @@ public class TabComplete implements TabCompleter {
         final List<String> commands = new ArrayList<>();
         switch (args.length) {
             case 1:
-                if (CorePlusAPI.getPermManager().hasPermission(sender, "barrierplus.use")) {
+                if (CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.use")) {
                     commands.add("help");
                 }
-                if (CorePlusAPI.getPermManager().hasPermission(sender, "barrierplus.command.reload")) {
+                if (CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.command.reload")) {
                     commands.add("reload");
                 }
-                if (CorePlusAPI.getPermManager().hasPermission(sender, "barrierplus.command.version")) {
+                if (CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.command.version")) {
                     commands.add("version");
                 }
-                if (CorePlusAPI.getPermManager().hasPermission(sender, "barrierplus.command.buy")) {
+                if (CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.command.buy")) {
                     commands.add("buy");
                 }
                 break;
             case 2:
-                if (CorePlusAPI.getPermManager().hasPermission(sender, "barrierplus.command.buy")) {
+                if (CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.command.buy")) {
                     commands.add("barrier");
                     commands.add("structure_void");
                     commands.add("bedrock");

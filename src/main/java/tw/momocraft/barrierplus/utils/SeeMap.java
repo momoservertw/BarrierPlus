@@ -1,21 +1,19 @@
 package tw.momocraft.barrierplus.utils;
 
-import tw.momocraft.coreplus.utils.locationutils.LocationMap;
-
 import java.util.List;
 
 public class SeeMap {
     private String creative;
     private String particle;
 
-    private List<LocationMap> locMaps;
+    private List<String> locList;
 
     public String getParticle() {
         return particle;
     }
 
-    public List<LocationMap> getLocMaps() {
-        return locMaps;
+    public List<String> getLocList() {
+        return locList;
     }
 
     public String getCreative() {
@@ -30,7 +28,7 @@ public class SeeMap {
         this.creative = creative;
     }
 
-    public void setLocMaps(List<LocationMap> locMaps) {
-        this.locMaps = locMaps;
+    public void setLocList(List<String> locList) {
+        this.locList = locList;
     }
 }

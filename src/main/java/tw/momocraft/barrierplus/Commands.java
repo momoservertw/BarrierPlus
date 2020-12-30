@@ -14,7 +14,7 @@ public class Commands implements CommandExecutor {
     public boolean onCommand(final CommandSender sender, Command c, String l, String[] args) {
         switch (args.length) {
             case 0:
-                if (CorePlusAPI.getPermManager().hasPermission(sender, "barrierplus.use")) {
+                if (CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.use")) {
                     CorePlusAPI.getLangManager().sendMsg(ConfigHandler.getPrefix(), sender, "");
                     CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), ConfigHandler.getConfigPath().getMsgTitle(), sender);
                     CorePlusAPI.getLangManager().sendMsg(ConfigHandler.getPrefix(), sender, "&f " + BarrierPlus.getInstance().getDescription().getName()
@@ -27,22 +27,22 @@ public class Commands implements CommandExecutor {
                 return true;
             case 1:
                 if (args[0].equalsIgnoreCase("help")) {
-                    if (CorePlusAPI.getPermManager().hasPermission(sender, "barrierplus.use")) {
+                    if (CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.use")) {
                         CorePlusAPI.getLangManager().sendMsg(ConfigHandler.getPrefix(), sender, "");
                         CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), ConfigHandler.getConfigPath().getMsgTitle(), sender);
                         CorePlusAPI.getLangManager().sendMsg(ConfigHandler.getPrefix(), sender, "&f " + BarrierPlus.getInstance().getDescription().getName()
                                 + " &ev" + BarrierPlus.getInstance().getDescription().getVersion() + "  &8by Momocraft");
                         CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), ConfigHandler.getConfigPath().getMsgHelp(), sender);
-                        if (CorePlusAPI.getPermManager().hasPermission(sender, "barrierplus.command.reload")) {
+                        if (CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.command.reload")) {
                             CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), ConfigHandler.getConfigPath().getMsgReload(), sender);
                         }
-                        if (CorePlusAPI.getPermManager().hasPermission(sender, "barrierplus.command.version")) {
+                        if (CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.command.version")) {
                             CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), ConfigHandler.getConfigPath().getMsgVersion(), sender);
                         }
-                        if (CorePlusAPI.getPermManager().hasPermission(sender, "barrierplus.command.buy")) {
+                        if (CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.command.buy")) {
                             CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), ConfigHandler.getConfigPath().getMsgBuy(), sender);
                         }
-                        if (CorePlusAPI.getPermManager().hasPermission(sender, "barrierplus.command.buy.other")) {
+                        if (CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.command.buy.other")) {
                             CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), ConfigHandler.getConfigPath().getMsgBuyOther(), sender);
                         }
                         CorePlusAPI.getLangManager().sendMsg(ConfigHandler.getPrefix(), sender, "");
@@ -51,7 +51,7 @@ public class Commands implements CommandExecutor {
                     }
                     return true;
                 } else if (args[0].equalsIgnoreCase("reload")) {
-                    if (CorePlusAPI.getPermManager().hasPermission(sender, "barrierplus.command.reload")) {
+                    if (CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.command.reload")) {
                         ConfigHandler.generateData(true);
                         CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.configReload", sender);
                     } else {
@@ -59,19 +59,20 @@ public class Commands implements CommandExecutor {
                     }
                     return true;
                 } else if (args[0].equalsIgnoreCase("version")) {
-                    if (CorePlusAPI.getPermManager().hasPermission(sender, "barrierplus.command.version")) {
+                    if (CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.command.version")) {
                         CorePlusAPI.getLangManager().sendMsg(ConfigHandler.getPrefix(), sender, "&f " + BarrierPlus.getInstance().getDescription().getName()
                                 + " &ev" + BarrierPlus.getInstance().getDescription().getVersion() + "  &8by Momocraft");
-                        CorePlusAPI.getUpdateManager().check(ConfigHandler.getPrefix(), sender, CorePlus.getInstance().getName(), CorePlus.getInstance().getDescription().getVersion());
+                        CorePlusAPI.getUpdateManager().check(ConfigHandler.getPrefix(), sender,
+                                CorePlus.getInstance().getName(), CorePlus.getInstance().getDescription().getVersion(), true);
                     } else {
                         CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.noPermission", sender);
                     }
                     return true;
                 } else if (args[0].equalsIgnoreCase("buy")) {
-                    if (CorePlusAPI.getPermManager().hasPermission(sender, "barrierplus.command.buy.other")) {
+                    if (CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.command.buy.other")) {
                         CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), ConfigHandler.getConfigPath().getMsgBuyOther(), sender);
                         CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), ConfigHandler.getConfigPath().getMsgBuy(), sender);
-                    } else if (CorePlusAPI.getPermManager().hasPermission(sender, "barrierplus.command.buy")) {
+                    } else if (CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.command.buy")) {
                         CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), ConfigHandler.getConfigPath().getMsgBuy(), sender);
                     } else {
                         CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.noPermission", sender);
@@ -81,7 +82,7 @@ public class Commands implements CommandExecutor {
             case 2:
                 // /barrierplus buy <item>
                 if (args[0].equalsIgnoreCase("buy")) {
-                    if (CorePlusAPI.getPermManager().hasPermission(sender, "barrierplus.command.buy")) {
+                    if (CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.command.buy")) {
                         if (!ConfigHandler.getConfigPath().isBuy()) {
                             CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.featureDisabled", sender);
                             return true;
@@ -95,7 +96,7 @@ public class Commands implements CommandExecutor {
             case 3:
                 // /barrierplus buy <item> [player]
                 if (args[0].equalsIgnoreCase("buy")) {
-                    if (CorePlusAPI.getPermManager().hasPermission(sender, "barrierplus.command.buy.other")) {
+                    if (CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.command.buy.other")) {
                         if (!ConfigHandler.getConfigPath().isBuy()) {
                             CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.featureDisabled", sender);
                             return true;
@@ -103,7 +104,7 @@ public class Commands implements CommandExecutor {
                         Player player = CorePlusAPI.getPlayerManager().getPlayerString(args[2]);
                         if (player == null) {
                             String[] placeHolders = CorePlusAPI.getLangManager().newString();
-                            placeHolders[2] = args[2]; // %targetplayer%
+                            placeHolders[1] = args[2]; // %targetplayer%
                             CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.targetNotFound", sender, placeHolders);
                             return true;
                         }

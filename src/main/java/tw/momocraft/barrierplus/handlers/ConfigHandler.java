@@ -22,7 +22,7 @@ public class ConfigHandler {
         if (!reload) {
             CorePlusAPI.getUpdateManager().check(getPrefix(), Bukkit.getConsoleSender(),
                     BarrierPlus.getInstance().getDescription().getName(),
-                    BarrierPlus.getInstance().getDescription().getVersion());
+                    BarrierPlus.getInstance().getDescription().getVersion(), true);
         }
     }
 
@@ -107,5 +107,9 @@ public class ConfigHandler {
 
     public static String getPrefix() {
         return getConfig("config.yml").getString("Message.prefix");
+    }
+
+    public static String getPlugin() {
+        return BarrierPlus.getInstance().getDescription().getName();
     }
 }

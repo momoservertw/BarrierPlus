@@ -1,7 +1,5 @@
 package tw.momocraft.barrierplus.utils;
 
-import tw.momocraft.coreplus.utils.locationutils.LocationMap;
-
 import java.util.List;
 
 public class DestroyMap {
@@ -12,15 +10,15 @@ public class DestroyMap {
     private boolean vanillaDrop;
     private boolean explodeBreak;
     private boolean explodeDrop;
-    private List<LocationMap> locMaps;
-    private List<LocationMap> preventLocMaps;
+    private List<String> locList;
+    private List<String> preventLocList;
 
-    public List<LocationMap> getLocMaps() {
-        return locMaps;
+    public List<String> getLocList() {
+        return locList;
     }
 
-    public List<LocationMap> getPreventLocMaps() {
-        return preventLocMaps;
+    public List<String> getPreventLocList() {
+        return preventLocList;
     }
 
     public boolean isMenuBreak() {
@@ -47,12 +45,12 @@ public class DestroyMap {
         return explodeDrop;
     }
 
-    public void setLocMaps(List<LocationMap> locMaps) {
-        this.locMaps = locMaps;
+    public void setLocList(List<String> locList) {
+        this.locList = locList;
     }
 
-    public void setPreventLocMaps(List<LocationMap> preventLocMaps) {
-        this.preventLocMaps = preventLocMaps;
+    public void setPreventLocList(List<String> preventLocList) {
+        this.preventLocList = preventLocList;
     }
 
     public void setMenuBreak(boolean menuBreak) {

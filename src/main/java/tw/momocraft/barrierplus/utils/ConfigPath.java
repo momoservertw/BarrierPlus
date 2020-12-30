@@ -2,8 +2,6 @@ package tw.momocraft.barrierplus.utils;
 
 import org.bukkit.configuration.ConfigurationSection;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
-import tw.momocraft.coreplus.api.CorePlusAPI;
-import tw.momocraft.coreplus.utils.locationutils.LocationMap;
 
 import java.util.HashMap;
 import java.util.List;
@@ -46,7 +44,7 @@ public class ConfigPath {
     //         Place Variables                         //
     //  ============================================== //
     private boolean place;
-    private final Map<String, List<LocationMap>> placeProp = new HashMap<>();
+    private final Map<String, List<String>> placeProp = new HashMap<>();
 
     //  ============================================== //
     //         Destroy Variables                       //
@@ -151,7 +149,7 @@ public class ConfigPath {
             }
             seeMap.setCreative(creative);
             seeMap.setParticle(ConfigHandler.getConfig("config.yml").getString("See.Groups." + group + ".Particle"));
-            seeMap.setLocMaps(CorePlusAPI.getLocationManager().getSpeLocMaps("config.yml", "See.Groups." + group + ".Location"));
+            seeMap.setLocList(ConfigHandler.getConfig("config.yml").getStringList("See.Groups." + group + ".Location"));
             for (String type : ConfigHandler.getConfig("config.yml").getStringList("See.Groups." + group + ".Types")) {
                 seeProp.put(type, seeMap);
             }
@@ -180,7 +178,7 @@ public class ConfigPath {
                 continue;
             }
             for (String type : ConfigHandler.getConfig("config.yml").getStringList("Place.Groups." + group + ".Types")) {
-                placeProp.put(type, CorePlusAPI.getLocationManager().getSpeLocMaps("config.yml", "Place.Groups." + group + ".Prevent.Location"));
+                placeProp.put(type, ConfigHandler.getConfig("config.yml").getStringList("Place.Groups." + group + ".Prevent.Location"));
             }
         }
     }
@@ -257,8 +255,8 @@ public class ConfigPath {
             destroyMap.setVanillaDrop(Boolean.parseBoolean(vanillaDrop));
             destroyMap.setExplodeBreak(Boolean.parseBoolean(explodeBreak));
             destroyMap.setExplodeDrop(Boolean.parseBoolean(explodeDrop));
-            destroyMap.setLocMaps(CorePlusAPI.getLocationManager().getSpeLocMaps("config.yml", "Destroy.Groups." + group + ".Location"));
-            destroyMap.setPreventLocMaps(CorePlusAPI.getLocationManager().getSpeLocMaps("config.yml", "Destroy.Groups." + group + ".Prevent.Location"));
+            destroyMap.setLocList(ConfigHandler.getConfig("config.yml").getStringList("Destroy.Groups." + group + ".Location"));
+            destroyMap.setPreventLocList(ConfigHandler.getConfig("config.yml").getStringList("Destroy.Groups." + group + ".Prevent.Location"));
             for (String type : ConfigHandler.getConfig("config.yml").getStringList("Destroy.Groups." + group + ".Types")) {
                 destroyProp.put(type, destroyMap);
             }
@@ -345,7 +343,7 @@ public class ConfigPath {
         return place;
     }
 
-    public Map<String, List<LocationMap>> getPlaceProp() {
+    public Map<String, List<String>> getPlaceProp() {
         return placeProp;
     }
 

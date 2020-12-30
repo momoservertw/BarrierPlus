@@ -35,20 +35,20 @@ public class BlockExplode implements Listener {
                 continue;
             }
             // Location
-            if (!CorePlusAPI.getLocationManager().checkLocation(blockLoc, destroyMap.getLocMaps(), true)) {
+            if (!CorePlusAPI.getConditionManager().checkLocation(blockLoc, destroyMap.getLocList(), true)) {
                 CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Destroy", blockType, "location", "continue", "Explode",
                         new Throwable().getStackTrace()[0]);
                 continue;
             }
             // Prevent Location
-            if (CorePlusAPI.getLocationManager().checkLocation(blockLoc, destroyMap.getPreventLocMaps(), true)) {
+            if (CorePlusAPI.getConditionManager().checkLocation(blockLoc, destroyMap.getPreventLocList(), true)) {
                 CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Destroy", blockType, "prevent location", "bypass", "Explode",
                         new Throwable().getStackTrace()[0]);
                 i.remove();
                 continue;
             }
             // Residence flag
-            if (!CorePlusAPI.getResidenceManager().checkFlag(null, blockLoc, true, "destroy")) {
+            if (!CorePlusAPI.getConditionManager().checkFlag(null, blockLoc, "destroy", true, true)) {
                 CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Destroy", blockType, "residence", "continue", "Explode",
                         new Throwable().getStackTrace()[0]);
                 continue;
