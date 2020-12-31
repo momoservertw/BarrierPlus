@@ -14,21 +14,21 @@ public class RegisterHandler {
         BarrierPlus.getInstance().getCommand("barrierplus").setTabCompleter(new TabComplete());
 
         BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockBreak(), BarrierPlus.getInstance());
-        CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Register-Event", "Spawner", "SpawnerSpawn", "continue",
+        CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPlugin(), "Register-Event", "Spawner", "SpawnerSpawn", "continue",
                 new Throwable().getStackTrace()[0]);
-        CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Register-Event", "Destroy", "BlockBreak", "continue",
+        CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPlugin(), "Register-Event", "Destroy", "BlockBreak", "continue",
                 new Throwable().getStackTrace()[0]);
         BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockClick(), BarrierPlus.getInstance());
-        CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Register-Event", "See & Destroy", "BlockClick", "continue",
+        CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPlugin(), "Register-Event", "See & Destroy", "BlockClick", "continue",
                 new Throwable().getStackTrace()[0]);
         BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockExplode(), BarrierPlus.getInstance());
-        CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Register-Event", "Destroy", "BlockExplode", "continue",
+        CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPlugin(), "Register-Event", "Destroy", "BlockExplode", "continue",
                 new Throwable().getStackTrace()[0]);
         BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockPlace(), BarrierPlus.getInstance());
-        CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Register-Event", "Place", "BlockPlace", "continue",
+        CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPlugin(), "Register-Event", "Place", "BlockPlace", "continue",
                 new Throwable().getStackTrace()[0]);
         BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new EntityExplode(), BarrierPlus.getInstance());
-        CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPrefix(), "Register-Event", "Destroy", "EntityExplode", "continue",
+        CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPlugin(), "Register-Event", "Destroy", "EntityExplode", "continue",
                 new Throwable().getStackTrace()[0]);
     }
 }

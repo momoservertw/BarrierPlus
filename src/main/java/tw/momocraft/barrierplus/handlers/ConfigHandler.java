@@ -110,6 +110,6 @@ public class ConfigHandler {
     }
 
     public static String getPlugin() {
-        return BarrierPlus.getInstance().getDescription().getName();
+        return "[" + BarrierPlus.getInstance().getDescription().getName() + "] ";
     }
 }
