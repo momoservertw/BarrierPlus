@@ -79,6 +79,7 @@ public class Commands implements CommandExecutor {
                     }
                     return true;
                 }
+                break;
             case 2:
                 // /barrierplus buy <item>
                 if (args[0].equalsIgnoreCase("buy")) {
@@ -93,6 +94,7 @@ public class Commands implements CommandExecutor {
                     }
                     return true;
                 }
+                break;
             case 3:
                 // /barrierplus buy <item> [player]
                 if (args[0].equalsIgnoreCase("buy")) {
@@ -115,9 +117,9 @@ public class Commands implements CommandExecutor {
                     }
                     return true;
                 }
-            default:
-                CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.unknownCommand", sender);
-                return true;
+                break;
         }
+        CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.unknownCommand", sender);
+        return true;
     }
 }
