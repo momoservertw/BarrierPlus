@@ -5,6 +5,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import tw.momocraft.barrierplus.BarrierPlus;
 import tw.momocraft.barrierplus.utils.*;
+import tw.momocraft.coreplus.CorePlus;
 import tw.momocraft.coreplus.api.CorePlusAPI;
 
 import java.io.File;
@@ -111,5 +112,13 @@ public class ConfigHandler {
 
     public static String getPlugin() {
         return "[" + BarrierPlus.getInstance().getDescription().getName() + "] ";
+    }
+
+    public static String getPluginName() {
+        return CorePlus.getInstance().getDescription().getName();
+    }
+
+    public static boolean isDebugging() {
+        return ConfigHandler.getConfig("config.yml").getBoolean("Debugging");
     }
 }

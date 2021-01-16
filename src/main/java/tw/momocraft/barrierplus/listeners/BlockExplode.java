@@ -36,34 +36,39 @@ public class BlockExplode implements Listener {
             }
             // Location
             if (!CorePlusAPI.getConditionManager().checkLocation(blockLoc, destroyMap.getLocList(), true)) {
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPlugin(), "Destroy", blockType, "location", "continue", "Explode",
+                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(),
+                        "Destroy", blockType, "location", "continue", "Explode",
                         new Throwable().getStackTrace()[0]);
                 continue;
             }
             // Prevent Location
             if (CorePlusAPI.getConditionManager().checkLocation(blockLoc, destroyMap.getPreventLocList(), true)) {
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPlugin(), "Destroy", blockType, "prevent location", "bypass", "Explode",
+                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(),
+                        "Destroy", blockType, "prevent location", "bypass", "Explode",
                         new Throwable().getStackTrace()[0]);
                 i.remove();
                 continue;
             }
             // Residence flag
             if (!CorePlusAPI.getConditionManager().checkFlag(null, blockLoc, "destroy", true, true)) {
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPlugin(), "Destroy", blockType, "residence", "continue", "Explode",
+                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(),
+                        "Destroy", blockType, "residence", "continue", "Explode",
                         new Throwable().getStackTrace()[0]);
                 continue;
             }
             // Explode break
             if (!destroyMap.isExplodeBreak()) {
                 i.remove();
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPlugin(), "Destroy", blockType, "destroy", "bypass", "Explode",
+                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(),
+                        "Destroy", blockType, "destroy", "bypass", "Explode",
                         new Throwable().getStackTrace()[0]);
                 continue;
             }
             // Explode drop
             if (!destroyMap.isExplodeDrop()) {
                 block.setType(Material.AIR);
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.getPlugin(), "Destroy", blockType, "drop", "bypass", "Explode",
+                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(),
+                        "Destroy", blockType, "drop", "bypass", "Explode",
                         new Throwable().getStackTrace()[0]);
             }
         }

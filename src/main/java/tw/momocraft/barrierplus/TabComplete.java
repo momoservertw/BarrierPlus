@@ -4,6 +4,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.util.StringUtil;
+import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.coreplus.api.CorePlusAPI;
 
 import java.util.ArrayList;
@@ -18,21 +19,21 @@ public class TabComplete implements TabCompleter {
         final List<String> commands = new ArrayList<>();
         switch (args.length) {
             case 1:
-                if (CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.use")) {
+                if (CorePlusAPI.getPlayerManager().hasPerm(ConfigHandler.getPluginName(), sender, "barrierplus.use")) {
                     commands.add("help");
                 }
-                if (CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.command.reload")) {
+                if (CorePlusAPI.getPlayerManager().hasPerm(ConfigHandler.getPluginName(), sender, "barrierplus.command.reload")) {
                     commands.add("reload");
                 }
-                if (CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.command.version")) {
+                if (CorePlusAPI.getPlayerManager().hasPerm(ConfigHandler.getPluginName(), sender, "barrierplus.command.version")) {
                     commands.add("version");
                 }
-                if (CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.command.buy")) {
+                if (CorePlusAPI.getPlayerManager().hasPerm(ConfigHandler.getPluginName(), sender, "barrierplus.command.buy")) {
                     commands.add("buy");
                 }
                 break;
             case 2:
-                if (CorePlusAPI.getPlayerManager().hasPermission(sender, "barrierplus.command.buy")) {
+                if (CorePlusAPI.getPlayerManager().hasPerm(ConfigHandler.getPluginName(), sender, "barrierplus.command.buy")) {
                     commands.add("barrier");
                     commands.add("structure_void");
                     commands.add("bedrock");

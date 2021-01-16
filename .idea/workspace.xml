@@ -5,23 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc4733f9-7cff-43d0-8cc5-8b92d4beb3e4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/BuyMap.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/ConfigPath.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/CustomCommands.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/DestroyMap.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/SeeMap.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/locationutils/LocationMap.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/locationutils/LocationUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/Commands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/TabComplete.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/TabComplete.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/extra/CorePlus-1.0.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/extra/CorePlus-1.0.0.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/ConfigHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/ConfigHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/ServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/ServerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/RegisterHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/handlers/RegisterHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockBreak.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockBreak.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockClick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockClick.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockExplode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockExplode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockPlace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/BlockPlace.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/EntityExplode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/listeners/EntityExplode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/LocationAPI.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/Buy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tw/momocraft/barrierplus/utils/Buy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BarrierPlus-1.2.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/BarrierPlus-1.2.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/Commands.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/Commands.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/TabComplete.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/TabComplete.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/handlers/ConfigHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/handlers/ConfigHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/handlers/RegisterHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/handlers/RegisterHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/listeners/BlockBreak.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/listeners/BlockBreak.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/listeners/BlockClick.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/listeners/BlockClick.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/listeners/BlockExplode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/listeners/BlockExplode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/listeners/BlockPlace.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/listeners/BlockPlace.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/listeners/EntityExplode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/listeners/EntityExplode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/utils/Buy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tw/momocraft/barrierplus/utils/Buy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +51,7 @@
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="mavenHome" value="C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.1\plugins\maven\lib\maven3" />
+        <option name="mavenHome" value="$APPLICATION_HOME_DIR$/plugins/maven/lib/maven3" />
       </MavenGeneralSettings>
     </option>
   </component>
@@ -55,10 +62,11 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ItemJoin" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -80,7 +88,7 @@
       <recent name="tw.momocraft.barrierplus.utils" />
     </key>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -144,19 +152,27 @@
     </state>
     <state width="1663" height="149" key="GridCell.Tab.0.right/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1609508571408" />
     <state width="1663" height="149" key="GridCell.Tab.0.right/2560.10.1707.920/0.0.1707.920@2560.10.1707.920" timestamp="1609397437290" />
+<<<<<<< Updated upstream
     <state x="748" y="70" width="792" height="792" key="find.popup" timestamp="1609513011226">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="417" y="89" width="769" height="600" key="find.popup/0.0.1280.689@0.0.1280.689" timestamp="1605661459929" />
     <state x="748" y="70" width="792" height="792" key="find.popup/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1609513011226" />
+=======
+    <state x="142" y="0" key="SettingsEditor" timestamp="1610091823011">
+      <screen x="0" y="0" width="1280" height="689" />
+    </state>
+    <state x="142" y="0" key="SettingsEditor/0.0.1280.689@0.0.1280.689" timestamp="1610091823011" />
+    <state x="417" y="89" width="769" height="600" key="find.popup" timestamp="1610784947255">
+      <screen x="0" y="0" width="1280" height="689" />
+    </state>
+    <state x="417" y="89" width="769" height="600" key="find.popup/0.0.1280.689@0.0.1280.689" timestamp="1610784947255" />
+    <state x="748" y="70" width="792" height="792" key="find.popup/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1609391181320" />
+>>>>>>> Stashed changes
     <state x="495" y="187" width="700" height="530" key="recent.locations.popup" timestamp="1608191338317">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="495" y="187" width="700" height="530" key="recent.locations.popup/2560.10.1707.920/0.0.1707.920@0.0.1707.920" timestamp="1608191338317" />
-  </component>
-  <component name="antWorkspaceConfiguration">
-    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
-    <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="masterDetails">
     <states>
