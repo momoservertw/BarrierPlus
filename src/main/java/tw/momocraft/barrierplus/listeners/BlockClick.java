@@ -188,12 +188,14 @@ public class BlockClick implements Listener {
      */
     private void displayBlock(Player player, String block, SeeMap seeMap) {
         int range = ConfigHandler.getConfigPath().getSeeDistance();
+        Location playerLoc = player.getLocation();
+        Location loc;
         for (int x = -range; x <= range; x++) {
             for (int y = -range; y <= range; y++) {
                 for (int z = -range; z <= range; z++) {
-                    Location loc = player.getLocation().getBlock().getLocation().clone().add(x, y, z);
-                    if (loc.getBlock().getType() == Material.getMaterial(block)) {
-                        CorePlusAPI.getCommandManager().executeCmd(ConfigHandler.getPrefix(), player, "Particle: " + seeMap.getParticle(), false);
+                    loc = playerLoc.clone().add(x, y, z);
+                    if (loc.getBlock().getType().name().equals(block)) {
+                        CorePlusAPI.getCommandManager().dispatchParticleCustomCmd(ConfigHandler.getPrefix(), loc, seeMap.getParticle());
                     }
                 }
             }
