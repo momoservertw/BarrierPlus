@@ -19,17 +19,9 @@ public class ConfigPath {
     private String msgHelp;
     private String msgReload;
     private String msgVersion;
-    private String msgBuy;
-    private String msgBuyOther;
     private String msgBreakHelp;
     private String msgPlaceLocFail;
     private String msgBreakLocFail;
-
-    //  ============================================== //
-    //         Buy Variables                           //
-    //  ============================================== //
-    private boolean buy;
-    private final Map<String, BuyMap> buyProp = new HashMap<>();
 
     //  ============================================== //
     //         See Variables                           //
@@ -60,7 +52,6 @@ public class ConfigPath {
     //  ============================================== //
     private void setUp() {
         setupMsg();
-        setBuy();
         setSee();
         setPlace();
         setDestroy();
@@ -74,46 +65,9 @@ public class ConfigPath {
         msgHelp = ConfigHandler.getConfig("config.yml").getString("Message.Commands.help");
         msgReload = ConfigHandler.getConfig("config.yml").getString("Message.Commands.reload");
         msgVersion = ConfigHandler.getConfig("config.yml").getString("Message.Commands.version");
-        msgBuy = ConfigHandler.getConfig("config.yml").getString("Message.Commands.buy");
-        msgBuyOther = ConfigHandler.getConfig("config.yml").getString("Message.Commands.buyOther");
         msgBreakHelp = ConfigHandler.getConfig("config.yml").getString("Message.breakHelp");
         msgPlaceLocFail = ConfigHandler.getConfig("config.yml").getString("Message.placeLocFail");
         msgBreakLocFail = ConfigHandler.getConfig("config.yml").getString("Message.breakLocFail");
-    }
-
-    //  ============================================== //
-    //         Buy Setter                              //
-    //  ============================================== //
-    private void setBuy() {
-        buy = ConfigHandler.getConfig("config.yml").getBoolean("Buy.Enable");
-        if (!buy) {
-            return;
-        }
-        ConfigurationSection buyConfig = ConfigHandler.getConfig("config.yml").getConfigurationSection("Buy.Groups");
-        if (buyConfig == null) {
-            return;
-        }
-        ConfigurationSection groupConfig;
-        BuyMap buyMap;
-        for (String group : buyConfig.getKeys(false)) {
-            if (!ConfigHandler.getConfig("config.yml").getBoolean("Buy.Groups." + group + ".Enable", true)) {
-                continue;
-            }
-            groupConfig = ConfigHandler.getConfig("config.yml").getConfigurationSection("Buy.Groups." + group);
-            if (groupConfig == null) {
-                continue;
-            }
-            if (!ConfigHandler.getConfig("config.yml").getBoolean("Buy.Groups." + group + ".Enable", true)) {
-                continue;
-            }
-            buyMap = new BuyMap();
-            buyMap.setAmount(ConfigHandler.getConfig("config.yml").getInt("Buy.Groups." + group + ".Amount"));
-            buyMap.setPriceType(ConfigHandler.getConfig("config.yml").getString("Buy.Groups." + group + ".Price.Type"));
-            buyMap.setPrice(ConfigHandler.getConfig("config.yml").getDouble("Buy.Groups." + group + ".Price.Amount"));
-            for (String type : ConfigHandler.getConfig("config.yml").getStringList("Buy.Groups." + group + ".Types")) {
-                buyProp.put(type, buyMap);
-            }
-        }
     }
 
     //  ============================================== //
@@ -282,14 +236,6 @@ public class ConfigPath {
         return msgVersion;
     }
 
-    public String getMsgBuy() {
-        return msgBuy;
-    }
-
-    public String getMsgBuyOther() {
-        return msgBuyOther;
-    }
-
     public String getMsgBreakHelp() {
         return msgBreakHelp;
     }
@@ -300,17 +246,6 @@ public class ConfigPath {
 
     public String getMsgBreakLocFail() {
         return msgBreakLocFail;
-    }
-
-    //  ============================================== //
-    //         Buy Getter                              //
-    //  ============================================== //
-    public boolean isBuy() {
-        return buy;
-    }
-
-    public Map<String, BuyMap> getBuyProp() {
-        return buyProp;
     }
 
     //  ============================================== //

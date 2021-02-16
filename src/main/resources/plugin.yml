@@ -21,7 +21,6 @@ permissions:
     children:
       barrierplus.use: true
       barrierplus.command.*: true
-      barrierplus.buy.*: true
       barrierplus.see.*: true
       barrierplus.place.*: true
       barrierplus.destroy.*: true
@@ -34,35 +33,11 @@ permissions:
     children:
       barrierplus.command.reload: true
       barrierplus.command.version: true
-      barrierplus.command.buy: true
-      barrierplus.command.buy.other: true
   barrierplus.command.reload:
     description: Allows use of command /barrierplus reload.
     default: op
   barrierplus.command.version:
     description: Allows use of command /barrierplus version.
-    default: op
-  barrierplus.command.buy:
-    description: Allows to use command /barrierplus buy.
-    default: op
-  barrierplus.command.buy.other:
-    description: Allows to use command /barrierplus buy for other player.
-    default: op
-  barrierplus.buy.*:
-    description: Allows to buy all blocks.
-    default: op
-    children:
-      barrierplus.buy.barrier: true
-      barrierplus.buy.structure_void: true
-      barrierplus.buy.bedrock: true
-  barrierplus.buy.barrier:
-    description: Allows to buy barriers.
-    default: op
-  barrierplus.buy.structure_void:
-    description: Allows to buy structure_voids.
-    default: op
-  barrierplus.buy.bedrock:
-    description: Allows to buy bedrocks.
     default: op
   barrierplus.see.*:
     description: Allows to see near blocks.

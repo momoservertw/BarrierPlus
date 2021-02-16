@@ -28,16 +28,6 @@ public class TabComplete implements TabCompleter {
                 if (CorePlusAPI.getPlayerManager().hasPerm(ConfigHandler.getPluginName(), sender, "barrierplus.command.version")) {
                     commands.add("version");
                 }
-                if (CorePlusAPI.getPlayerManager().hasPerm(ConfigHandler.getPluginName(), sender, "barrierplus.command.buy")) {
-                    commands.add("buy");
-                }
-                break;
-            case 2:
-                if (CorePlusAPI.getPlayerManager().hasPerm(ConfigHandler.getPluginName(), sender, "barrierplus.command.buy")) {
-                    commands.add("barrier");
-                    commands.add("structure_void");
-                    commands.add("bedrock");
-                }
                 break;
         }
         StringUtil.copyPartialMatches(args[(args.length - 1)], commands, completions);

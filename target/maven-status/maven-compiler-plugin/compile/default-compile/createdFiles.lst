@@ -1,5 +1,4 @@
 tw\momocraft\barrierplus\handlers\RegisterHandler.class
-tw\momocraft\barrierplus\utils\BuyMap.class
 tw\momocraft\barrierplus\utils\ConfigPath.class
 tw\momocraft\barrierplus\Commands.class
 tw\momocraft\barrierplus\listeners\EntityExplode.class
@@ -9,7 +8,6 @@ tw\momocraft\barrierplus\utils\SeeMap.class
 tw\momocraft\barrierplus\listeners\BlockBreak.class
 tw\momocraft\barrierplus\utils\DestroyMap.class
 tw\momocraft\barrierplus\listeners\BlockPlace.class
-tw\momocraft\barrierplus\utils\Buy.class
 tw\momocraft\barrierplus\BarrierPlus.class
 tw\momocraft\barrierplus\listeners\BlockExplode.class
 tw\momocraft\barrierplus\handlers\ConfigHandler.class

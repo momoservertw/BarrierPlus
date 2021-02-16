@@ -4,25 +4,6 @@
 # ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 Config-Version: 7
 
-# Blocks shop.
-# Permission: barrierplus.command.buy
-# Item permission: barrierplus.buy.MATERIAL or barrierplus.buy.*
-# More information: https://github.com/momoservertw/BarrierPlus/wiki/Buy
-Buy:
-  Enable: false
-  Groups:
-    Creative:
-      Enable: true
-      # PriceType: "money" or "points". "points" only support PlayerPoints.
-      Price:
-        Type: points
-        Amount: 25
-      Amount: 64
-      Types:
-        - BARRIER
-        - STRUCTURE_VOID
-        - BEDROCK
-
 # Display near creative blocks like barriers.
 # Permission: barrierplus.see.GROUP or barrierplus.see.*
 # More information: https://github.com/momoservertw/BarrierPlus/wiki/See
@@ -76,7 +57,7 @@ Destroy:
     Help-Message: true
     Menu-Break:
       Cooldown:
-        Interval: 60
+        Interval: 20
         Message: false
     Default:
       Menu:
@@ -110,8 +91,6 @@ Message:
     title: "&8▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩ &d&lBarrierPlus &8▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩"
     help: "&a/barrierplus help &8- &7This help menu."
     reload: "&a/barrierplus reload &8- &7Reloads config file."
-    buy: "&a/barrierplus buy <item> &8- &7Buy creative items."
-    buyOther: "&a/barrierplus buy <item> [player] &8- &7Execute buy creative items command to a player."
   breakHelp: "&7Holding menu and '&eleft-click + shift&7' to break this block."
   placeLocFail: "&7You cannot place the %block% in this position."
   breakLocFail: "&7You cannot break the %block% in this position."
