@@ -10,7 +10,7 @@ import tw.momocraft.barrierplus.handlers.ConfigHandler;
 import tw.momocraft.barrierplus.utils.DestroyMap;
 import tw.momocraft.coreplus.api.CorePlusAPI;
 
-import java.util.*;
+import java.util.Iterator;
 
 public class BlockExplode implements Listener {
 
@@ -35,15 +35,15 @@ public class BlockExplode implements Listener {
                 continue;
             }
             // Location
-            if (!CorePlusAPI.getConditionManager().checkLocation(blockLoc, destroyMap.getLocList(), true)) {
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(),
+            if (!CorePlusAPI.getConditionManager().checkLocation(ConfigHandler.getPluginName(), blockLoc, destroyMap.getLocList(), true)) {
+                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
                         "Destroy", blockType, "location", "continue", "Explode",
                         new Throwable().getStackTrace()[0]);
                 continue;
             }
             // Prevent Location
-            if (CorePlusAPI.getConditionManager().checkLocation(blockLoc, destroyMap.getPreventLocList(), true)) {
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(),
+            if (CorePlusAPI.getConditionManager().checkLocation(ConfigHandler.getPluginName(), blockLoc, destroyMap.getPreventLocList(), true)) {
+                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
                         "Destroy", blockType, "prevent location", "bypass", "Explode",
                         new Throwable().getStackTrace()[0]);
                 i.remove();
@@ -51,7 +51,7 @@ public class BlockExplode implements Listener {
             }
             // Residence flag
             if (!CorePlusAPI.getConditionManager().checkFlag(null, blockLoc, "destroy", true, true)) {
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(),
+                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
                         "Destroy", blockType, "residence", "continue", "Explode",
                         new Throwable().getStackTrace()[0]);
                 continue;
@@ -59,7 +59,7 @@ public class BlockExplode implements Listener {
             // Explode break
             if (!destroyMap.isExplodeBreak()) {
                 i.remove();
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(),
+                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
                         "Destroy", blockType, "destroy", "bypass", "Explode",
                         new Throwable().getStackTrace()[0]);
                 continue;
@@ -67,7 +67,7 @@ public class BlockExplode implements Listener {
             // Explode drop
             if (!destroyMap.isExplodeDrop()) {
                 block.setType(Material.AIR);
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(),
+                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
                         "Destroy", blockType, "drop", "bypass", "Explode",
                         new Throwable().getStackTrace()[0]);
             }

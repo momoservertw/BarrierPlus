@@ -1,6 +1,8 @@
 package tw.momocraft.barrierplus.listeners;
 
-import org.bukkit.*;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -8,10 +10,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
-import tw.momocraft.barrierplus.utils.*;
+import tw.momocraft.barrierplus.utils.DestroyMap;
+import tw.momocraft.barrierplus.utils.SeeMap;
 import tw.momocraft.coreplus.api.CorePlusAPI;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BlockClick implements Listener {
 
@@ -73,38 +77,45 @@ public class BlockClick implements Listener {
 
     private void seeBlock(Player player, String blockType) {
         SeeMap seeMap = ConfigHandler.getConfigPath().getSeeProp().get(blockType);
-        if (seeMap != null) {
-            // Location.
-            if (!CorePlusAPI.getConditionManager().checkLocation(player.getLocation(), seeMap.getLocList(), true)) {
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(), "Destroy", blockType, "location", "return",
+        if (seeMap == null) {
+            return;
+        }
+        // Location.
+        if (!CorePlusAPI.getConditionManager().checkLocation(ConfigHandler.getPluginName(),
+                player.getLocation(), seeMap.getLocList(), true)) {
+            CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+                    "Destroy", blockType, "location", "return",
+                    new Throwable().getStackTrace()[0]);
+            return;
+        }
+        // Player is on cooldown.
+        if (onCooldownSee(player)) {
+            if (ConfigHandler.getConfigPath().isSeeCDMsg()) {
+                CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
+                        "Message.cooldown", player);
+            }
+            CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+                    "See", blockType, "cooldown", "return",
+                    new Throwable().getStackTrace()[0]);
+            return;
+        }
+        // Creative mode disable.
+        if (seeMap.getCreative().equals("false")) {
+            if (player.getGameMode().equals(GameMode.CREATIVE)) {
+                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+                        "See", blockType, "creative", "return",
                         new Throwable().getStackTrace()[0]);
                 return;
             }
-            // Player is on cooldown.
-            if (onCooldownSee(player)) {
-                if (ConfigHandler.getConfigPath().isSeeCDMsg()) {
-                    CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.cooldown", player);
-                }
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(), "See", blockType, "cooldown", "return",
-                        new Throwable().getStackTrace()[0]);
-                return;
-            }
-            // Creative mode disable.
-            if (seeMap.getCreative().equals("false")) {
-                if (player.getGameMode().equals(GameMode.CREATIVE)) {
-                    CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(), "See", blockType, "creative", "return",
-                            new Throwable().getStackTrace()[0]);
-                    return;
-                }
-            }
-            // Has see permission.
-            if (CorePlusAPI.getPlayerManager().hasPerm(ConfigHandler.getPluginName(), player, "barrierplus.see." + blockType) ||
-                    CorePlusAPI.getPlayerManager().hasPerm(ConfigHandler.getPluginName(), player, "barrierplus.see.*")) {
-                addCDSee(player);
-                displayBlock(player, blockType, seeMap);
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(), "See", blockType, "final", "return",
-                        new Throwable().getStackTrace()[0]);
-            }
+        }
+        // Has see permission.
+        if (CorePlusAPI.getPlayerManager().hasPerm(player, "barrierplus.see." + blockType) ||
+                CorePlusAPI.getPlayerManager().hasPerm(player, "barrierplus.see.*")) {
+            addCDSee(player);
+            displayBlock(player, blockType, seeMap);
+            CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+                    "See", blockType, "final", "return",
+                    new Throwable().getStackTrace()[0]);
         }
     }
 
@@ -118,34 +129,39 @@ public class BlockClick implements Listener {
             // Cooldown
             if (onCooldownDestroy(player)) {
                 if (ConfigHandler.getConfigPath().isDestroyCDMsg()) {
-                    CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.cooldown", player);
+                    CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
+                            "Message.cooldown", player);
                 }
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(),
+                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
                         "Destroy", blockType, "cooldown", "return",
                         new Throwable().getStackTrace()[0]);
                 return;
             }
             // Location
-            if (!CorePlusAPI.getConditionManager().checkLocation(blockLoc, destroyMap.getLocList(), true)) {
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(),
+            if (!CorePlusAPI.getConditionManager().checkLocation(ConfigHandler.getPluginName(), blockLoc,
+                    destroyMap.getLocList(), true)) {
+                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
                         "Destroy", blockType, "location", "return",
                         new Throwable().getStackTrace()[0]);
                 return;
             }
             // Prevent Location
-            if (CorePlusAPI.getConditionManager().checkLocation(blockLoc, destroyMap.getPreventLocList(), false)) {
+            if (CorePlusAPI.getConditionManager().checkLocation(ConfigHandler.getPluginName(), blockLoc,
+                    destroyMap.getPreventLocList(), false)) {
                 String[] placeHolders = CorePlusAPI.getLangManager().newString();
                 placeHolders[9] = blockType; // %material%
-                CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), ConfigHandler.getConfigPath().getMsgBreakLocFail(), player, placeHolders);
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(),
+                CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
+                        ConfigHandler.getConfigPath().getMsgBreakLocFail(), player, placeHolders);
+                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
                         "Destroy", blockType, "prevent location", "return",
                         new Throwable().getStackTrace()[0]);
                 return;
             }
             // Destroy permission
-            if (!CorePlusAPI.getPlayerManager().hasPerm(ConfigHandler.getPluginName(), player, "barrierplus.destroy." + blockType)) {
-                CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.noPermission", player);
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(),
+            if (!CorePlusAPI.getPlayerManager().hasPerm(player, "barrierplus.destroy." + blockType)) {
+                CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
+                        "Message.noPermission", player);
+                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
                         "Destroy", blockType, "permission", "return",
                         new Throwable().getStackTrace()[0]);
                 return;
@@ -154,8 +170,9 @@ public class BlockClick implements Listener {
             if (!CorePlusAPI.getConditionManager().checkFlag(player, blockLoc, "destroy", true, true)) {
                 String[] placeHolders = CorePlusAPI.getLangManager().newString();
                 placeHolders[13] = "destroy"; // %flag%
-                CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), "Message.noFlagPerm", player, placeHolders);
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(),
+                CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
+                        "Message.noFlagPerm", player, placeHolders);
+                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
                         "Destroy", blockType, "residence", "return", "destroy",
                         new Throwable().getStackTrace()[0]);
                 return;
@@ -164,17 +181,17 @@ public class BlockClick implements Listener {
             if (destroyMap.isMenuDrop()) {
                 try {
                     player.getWorld().dropItem(blockLoc, new ItemStack(Material.getMaterial(blockType)));
-                    CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(),
+                    CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
                             "Destroy", blockType, "Drop", "return",
                             new Throwable().getStackTrace()[0]);
                 } catch (Exception ex) {
-                    CorePlusAPI.getLangManager().sendDebugTrace(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(), ex);
+                    CorePlusAPI.getLangManager().sendDebugTrace(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(), ex);
                 }
             }
             // Destroy the block.
             addCDDestroy(player);
             blockLoc.getBlock().setType(Material.AIR);
-            CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(),
+            CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
                     "Destroy", blockType, "final", "return",
                     new Throwable().getStackTrace()[0]);
         }

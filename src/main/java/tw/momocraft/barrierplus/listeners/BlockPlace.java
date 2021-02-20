@@ -24,25 +24,26 @@ public class BlockPlace implements Listener {
         Player player = e.getPlayer();
         // Prevent Location
         Location loc = block.getLocation();
-        if (CorePlusAPI.getConditionManager().checkLocation(loc, preventLocList, true)) {
-            CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(),
+        if (CorePlusAPI.getConditionManager().checkLocation(ConfigHandler.getPluginName(), loc, preventLocList, true)) {
+            CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
                     "Place", blockType, "Location", "return",
                     new Throwable().getStackTrace()[0]);
             return;
         }
         // Permissions
-        if (!CorePlusAPI.getPlayerManager().hasPerm(ConfigHandler.getPluginName(), player, "barrierplus.place." + blockType) &&
-                !CorePlusAPI.getPlayerManager().hasPerm(ConfigHandler.getPluginName(), player, "barrierplus.place.*")) {
-            CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(),
+        if (!CorePlusAPI.getPlayerManager().hasPerm(player, "barrierplus.place." + blockType) &&
+                !CorePlusAPI.getPlayerManager().hasPerm(player, "barrierplus.place.*")) {
+            CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
                     "Place", blockType, "permission", "return",
                     new Throwable().getStackTrace()[0]);
             return;
         }
         String[] placeHolders = CorePlusAPI.getLangManager().newString();
         placeHolders[9] = blockType;
-        CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPrefix(), ConfigHandler.getConfigPath().getMsgPlaceLocFail(), player, placeHolders);
+        CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
+                ConfigHandler.getConfigPath().getMsgPlaceLocFail(), player, placeHolders);
         e.setCancelled(true);
-        CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPlugin(),
+        CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
                 "Place", blockType, "permission", "fail",
                 new Throwable().getStackTrace()[0]);
     }

@@ -21,7 +21,7 @@ public class ConfigHandler {
         genConfigFile("config.yml");
         setConfigPath(new ConfigPath());
         if (!reload) {
-            CorePlusAPI.getUpdateManager().check(getPlugin(), Bukkit.getConsoleSender(),
+            CorePlusAPI.getUpdateManager().check(getPluginName(), getPluginPrefix(), Bukkit.getConsoleSender(),
                     BarrierPlus.getInstance().getDescription().getName(),
                     BarrierPlus.getInstance().getDescription().getVersion(), true);
         }
@@ -102,15 +102,15 @@ public class ConfigHandler {
         return configPath;
     }
 
-    public static void setConfigPath(ConfigPath configPath) {
-        ConfigHandler.configPath = configPath;
+    public static void setConfigPath(ConfigPath configPaths) {
+        configPath = configPaths;
     }
 
     public static String getPrefix() {
         return getConfig("config.yml").getString("Message.prefix");
     }
 
-    public static String getPlugin() {
+    public static String getPluginPrefix() {
         return "[" + BarrierPlus.getInstance().getDescription().getName() + "] ";
     }
 
