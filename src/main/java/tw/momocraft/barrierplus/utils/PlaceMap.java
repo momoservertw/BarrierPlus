@@ -2,10 +2,9 @@ package tw.momocraft.barrierplus.utils;
 
 import java.util.List;
 
-public class SeeMap {
-    private String groupName;
-    private String particle;
+public class PlaceMap {
 
+    private String groupName;
     private List<String> conditions;
     private List<String> commands;
     private List<String> failedCommands;
@@ -16,14 +15,6 @@ public class SeeMap {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
-    }
-
-    public String getParticle() {
-        return particle;
-    }
-
-    public void setParticle(String particle) {
-        this.particle = particle;
     }
 
     public List<String> getConditions() {

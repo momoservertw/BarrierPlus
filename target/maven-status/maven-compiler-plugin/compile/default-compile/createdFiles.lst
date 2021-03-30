@@ -1,6 +1,6 @@
-tw\momocraft\barrierplus\handlers\RegisterHandler.class
 tw\momocraft\barrierplus\utils\ConfigPath.class
 tw\momocraft\barrierplus\Commands.class
+tw\momocraft\barrierplus\handlers\UtilsHandler.class
 tw\momocraft\barrierplus\listeners\EntityExplode.class
 tw\momocraft\barrierplus\TabComplete.class
 tw\momocraft\barrierplus\listeners\BlockClick.class
@@ -11,3 +11,4 @@ tw\momocraft\barrierplus\listeners\BlockPlace.class
 tw\momocraft\barrierplus\BarrierPlus.class
 tw\momocraft\barrierplus\listeners\BlockExplode.class
 tw\momocraft\barrierplus\handlers\ConfigHandler.class
+tw\momocraft\barrierplus\handlers\DependHandler.class

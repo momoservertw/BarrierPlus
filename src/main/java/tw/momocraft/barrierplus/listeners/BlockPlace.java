@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import tw.momocraft.barrierplus.handlers.ConfigHandler;
@@ -13,37 +14,36 @@ import java.util.List;
 
 public class BlockPlace implements Listener {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlaceBlock(BlockPlaceEvent e) {
-        if (!ConfigHandler.getConfigPath().isPlace()) {
+        if (!ConfigHandler.getConfigPath().isPlace())
             return;
-        }
         Block block = e.getBlockPlaced();
         String blockType = block.getType().name();
         List<String> preventLocList = ConfigHandler.getConfigPath().getPlaceProp().get(blockType);
         Player player = e.getPlayer();
         // Prevent Location
         Location loc = block.getLocation();
-        if (CorePlusAPI.getConditionManager().checkLocation(ConfigHandler.getPluginName(), loc, preventLocList, true)) {
-            CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+        if (CorePlusAPI.getCond().checkLocation(ConfigHandler.getPluginName(), loc, preventLocList, true)) {
+            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
                     "Place", blockType, "Location", "return",
                     new Throwable().getStackTrace()[0]);
             return;
         }
         // Permissions
-        if (!CorePlusAPI.getPlayerManager().hasPerm(player, "barrierplus.place." + blockType) &&
-                !CorePlusAPI.getPlayerManager().hasPerm(player, "barrierplus.place.*")) {
-            CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+        if (!CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.place." + blockType) &&
+                !CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.place.*")) {
+            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
                     "Place", blockType, "permission", "return",
                     new Throwable().getStackTrace()[0]);
             return;
         }
-        String[] placeHolders = CorePlusAPI.getLangManager().newString();
+        String[] placeHolders = CorePlusAPI.getMsg().newString();
         placeHolders[9] = blockType;
-        CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
+        CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
                 ConfigHandler.getConfigPath().getMsgPlaceLocFail(), player, placeHolders);
         e.setCancelled(true);
-        CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+        CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
                 "Place", blockType, "permission", "fail",
                 new Throwable().getStackTrace()[0]);
     }

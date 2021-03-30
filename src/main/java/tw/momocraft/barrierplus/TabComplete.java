@@ -18,15 +18,12 @@ public class TabComplete implements TabCompleter {
         final List<String> commands = new ArrayList<>();
         int length = args.length;
         if (length == 0) {
-            if (UtilsHandler.getPlayer().hasPerm(sender, "barrierplus.use")) {
+            if (UtilsHandler.getPlayer().hasPerm(sender, "barrierplus.use"))
                 commands.add("help");
-            }
-            if (UtilsHandler.getPlayer().hasPerm(sender, "barrierplus.command.reload")) {
+            if (UtilsHandler.getPlayer().hasPerm(sender, "barrierplus.command.reload"))
                 commands.add("reload");
-            }
-            if (UtilsHandler.getPlayer().hasPerm(sender, "barrierplus.command.version")) {
+            if (UtilsHandler.getPlayer().hasPerm(sender, "barrierplus.command.version"))
                 commands.add("version");
-            }
         }
         StringUtil.copyPartialMatches(args[(args.length - 1)], commands, completions);
         Collections.sort(completions);

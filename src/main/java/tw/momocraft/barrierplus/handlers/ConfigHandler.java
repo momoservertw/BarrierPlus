@@ -4,8 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import tw.momocraft.barrierplus.BarrierPlus;
-import tw.momocraft.barrierplus.utils.*;
-import tw.momocraft.coreplus.CorePlus;
+import tw.momocraft.barrierplus.utils.ConfigPath;
 import tw.momocraft.coreplus.api.CorePlusAPI;
 
 import java.io.File;
@@ -19,9 +18,10 @@ public class ConfigHandler {
 
     public static void generateData(boolean reload) {
         genConfigFile("config.yml");
+        UtilsHandler.setupFirst(reload);
         setConfigPath(new ConfigPath());
         if (!reload) {
-            CorePlusAPI.getUpdateManager().check(getPluginName(), getPluginPrefix(), Bukkit.getConsoleSender(),
+            CorePlusAPI.getUpdate().check(getPluginName(), getPluginPrefix(), Bukkit.getConsoleSender(),
                     BarrierPlus.getInstance().getDescription().getName(),
                     BarrierPlus.getInstance().getDescription().getVersion(), true);
         }
@@ -50,7 +50,7 @@ public class ConfigHandler {
             try {
                 BarrierPlus.getInstance().saveResource(fileName, false);
             } catch (Exception e) {
-                CorePlusAPI.getLangManager().sendErrorMsg(ConfigHandler.getPluginName(), "&cCannot save " + fileName + " to disk!");
+                CorePlusAPI.getMsg().sendErrorMsg(ConfigHandler.getPluginName(), "Cannot save " + fileName + " to disk!");
                 return;
             }
         }
@@ -91,7 +91,7 @@ public class ConfigHandler {
                     File configFile = new File(filePath, fileName);
                     configFile.delete();
                     getConfigData(filePath, fileName);
-                    CorePlusAPI.getLangManager().sendConsoleMsg(getPrefix(), "&4The file \"" + fileName + "\" is out of date, generating a new one!");
+                    CorePlusAPI.getMsg().sendConsoleMsg(getPrefix(), "&4The file \"" + fileName + "\" is out of date, generating a new one!");
                 }
             }
         }
@@ -115,7 +115,7 @@ public class ConfigHandler {
     }
 
     public static String getPluginName() {
-        return CorePlus.getInstance().getDescription().getName();
+        return BarrierPlus.getInstance().getDescription().getName();
     }
 
     public static boolean isDebugging() {

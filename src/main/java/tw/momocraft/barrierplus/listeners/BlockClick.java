@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -15,6 +16,7 @@ import tw.momocraft.barrierplus.utils.SeeMap;
 import tw.momocraft.coreplus.api.CorePlusAPI;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BlockClick implements Listener {
@@ -28,13 +30,12 @@ public class BlockClick implements Listener {
      * See: Hold menu & left-click (the bloc)
      * See: Hold same item & left-click (AIR or the Bloc)
      */
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onClickBlock(PlayerInteractEvent e) {
         boolean see = ConfigHandler.getConfigPath().isSee();
         boolean destroy = ConfigHandler.getConfigPath().isDestroy();
-        if (!see && !destroy) {
+        if (!see && !destroy)
             return;
-        }
         Player player = e.getPlayer();
         ItemStack itemStack = player.getInventory().getItemInMainHand();
         String itemType = itemStack.getType().name();
@@ -50,40 +51,35 @@ public class BlockClick implements Listener {
             }
             if (player.isSneaking()) {
                 // Holding menu.
-                if (!CorePlusAPI.getUtilsManager().isMenu(itemStack)) {
+                if (!CorePlusAPI.getCond().isMenu(itemStack))
                     return;
-                }
                 // Destroy - Break block by menu.
-                if (ConfigHandler.getConfigPath().isDestroy()) {
+                if (ConfigHandler.getConfigPath().isDestroy())
                     destroyBlock(player, block.getLocation(), blockType);
-                }
             } else {
                 // See - Display near blocks.
                 if (ConfigHandler.getConfigPath().isSee()) {
-                    if (!CorePlusAPI.getUtilsManager().isMenu(itemStack) &&
-                            !itemStack.getType().name().equals(blockType)) {
+                    if (!CorePlusAPI.getCond().isMenu(itemStack) &&
+                            !itemStack.getType().name().equals(blockType))
                         return;
-                    }
                     seeBlock(player, blockType);
                 }
             }
             // Left click air.
         } else if (action.equals("LEFT_CLICK_AIR")) {
-            if (ConfigHandler.getConfigPath().isSee()) {
+            if (ConfigHandler.getConfigPath().isSee())
                 seeBlock(player, itemType);
-            }
         }
     }
 
     private void seeBlock(Player player, String blockType) {
         SeeMap seeMap = ConfigHandler.getConfigPath().getSeeProp().get(blockType);
-        if (seeMap == null) {
+        if (seeMap == null)
             return;
-        }
         // Location.
-        if (!CorePlusAPI.getConditionManager().checkLocation(ConfigHandler.getPluginName(),
+        if (!CorePlusAPI.getCond().checkLocation(ConfigHandler.getPluginName(),
                 player.getLocation(), seeMap.getLocList(), true)) {
-            CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
                     "Destroy", blockType, "location", "return",
                     new Throwable().getStackTrace()[0]);
             return;
@@ -91,10 +87,10 @@ public class BlockClick implements Listener {
         // Player is on cooldown.
         if (onCooldownSee(player)) {
             if (ConfigHandler.getConfigPath().isSeeCDMsg()) {
-                CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
+                CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
                         "Message.cooldown", player);
             }
-            CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
                     "See", blockType, "cooldown", "return",
                     new Throwable().getStackTrace()[0]);
             return;
@@ -102,18 +98,18 @@ public class BlockClick implements Listener {
         // Creative mode disable.
         if (seeMap.getCreative().equals("false")) {
             if (player.getGameMode().equals(GameMode.CREATIVE)) {
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+                CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
                         "See", blockType, "creative", "return",
                         new Throwable().getStackTrace()[0]);
                 return;
             }
         }
         // Has see permission.
-        if (CorePlusAPI.getPlayerManager().hasPerm(player, "barrierplus.see." + blockType) ||
-                CorePlusAPI.getPlayerManager().hasPerm(player, "barrierplus.see.*")) {
+        if (CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.see." + blockType) ||
+                CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.see.*")) {
             addCDSee(player);
             displayBlock(player, blockType, seeMap);
-            CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
                     "See", blockType, "final", "return",
                     new Throwable().getStackTrace()[0]);
         }
@@ -121,80 +117,67 @@ public class BlockClick implements Listener {
 
     private void destroyBlock(Player player, Location blockLoc, String blockType) {
         DestroyMap destroyMap = ConfigHandler.getConfigPath().getDestroyProp().get(blockType);
-        if (destroyMap != null) {
-            // Enable
-            if (!destroyMap.isMenuBreak()) {
-                return;
+        if (destroyMap == null)
+            return;
+        // Enable
+        if (!destroyMap.isMenuBreak())
+            return;
+        // Cooldown
+        if (onCooldownDestroy(player)) {
+            if (ConfigHandler.getConfigPath().isDestroyCDMsg()) {
+                CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
+                        "Message.cooldown", player);
             }
-            // Cooldown
-            if (onCooldownDestroy(player)) {
-                if (ConfigHandler.getConfigPath().isDestroyCDMsg()) {
-                    CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
-                            "Message.cooldown", player);
-                }
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
-                        "Destroy", blockType, "cooldown", "return",
-                        new Throwable().getStackTrace()[0]);
-                return;
-            }
-            // Location
-            if (!CorePlusAPI.getConditionManager().checkLocation(ConfigHandler.getPluginName(), blockLoc,
-                    destroyMap.getLocList(), true)) {
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
-                        "Destroy", blockType, "location", "return",
-                        new Throwable().getStackTrace()[0]);
-                return;
-            }
-            // Prevent Location
-            if (CorePlusAPI.getConditionManager().checkLocation(ConfigHandler.getPluginName(), blockLoc,
-                    destroyMap.getPreventLocList(), false)) {
-                String[] placeHolders = CorePlusAPI.getLangManager().newString();
-                placeHolders[9] = blockType; // %material%
-                CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
-                        ConfigHandler.getConfigPath().getMsgBreakLocFail(), player, placeHolders);
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
-                        "Destroy", blockType, "prevent location", "return",
-                        new Throwable().getStackTrace()[0]);
-                return;
-            }
-            // Destroy permission
-            if (!CorePlusAPI.getPlayerManager().hasPerm(player, "barrierplus.destroy." + blockType)) {
-                CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
-                        "Message.noPermission", player);
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
-                        "Destroy", blockType, "permission", "return",
-                        new Throwable().getStackTrace()[0]);
-                return;
-            }
-            // Residence flag
-            if (!CorePlusAPI.getConditionManager().checkFlag(player, blockLoc, "destroy", true, true)) {
-                String[] placeHolders = CorePlusAPI.getLangManager().newString();
-                placeHolders[13] = "destroy"; // %flag%
-                CorePlusAPI.getLangManager().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
-                        "Message.noFlagPerm", player, placeHolders);
-                CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
-                        "Destroy", blockType, "residence", "return", "destroy",
-                        new Throwable().getStackTrace()[0]);
-                return;
-            }
-            // Menu Drop
-            if (destroyMap.isMenuDrop()) {
-                try {
-                    player.getWorld().dropItem(blockLoc, new ItemStack(Material.getMaterial(blockType)));
-                    CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
-                            "Destroy", blockType, "Drop", "return",
-                            new Throwable().getStackTrace()[0]);
-                } catch (Exception ex) {
-                    CorePlusAPI.getLangManager().sendDebugTrace(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(), ex);
-                }
-            }
-            // Destroy the block.
-            addCDDestroy(player);
-            blockLoc.getBlock().setType(Material.AIR);
-            CorePlusAPI.getLangManager().sendFeatureMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
-                    "Destroy", blockType, "final", "return",
+            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+                    "Destroy", blockType, "cooldown", "return",
                     new Throwable().getStackTrace()[0]);
+            return;
         }
+        // Checking the "Conditions".
+        List<String> conditionList = CorePlusAPI.getMsg().transHolder(player, block, destroyMap.getConditions());
+        if (!CorePlusAPI.getCond().checkCondition(ConfigHandler.getPluginName(), conditionList)) {
+            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginName(),
+                    "Destroy", playerName, "Condition", "none", blockType,
+                    new Throwable().getStackTrace()[0]);
+            return;
+        }
+        // Destroy permission
+        if (!CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.destroy." + blockType)) {
+            CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
+                    "Message.noPermission", player);
+            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+                    "Destroy", blockType, "permission", "return",
+                    new Throwable().getStackTrace()[0]);
+            return;
+        }
+        // Residence flag
+        if (!CorePlusAPI.getCond().checkFlag(player, blockLoc, "destroy", false, true)) {
+            String[] placeHolders = CorePlusAPI.getMsg().newString();
+            placeHolders[13] = "destroy"; // %flag%
+            CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
+                    "Message.noFlagPerm", player, placeHolders);
+            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+                    "Destroy", blockType, "residence", "return", "destroy",
+                    new Throwable().getStackTrace()[0]);
+            return;
+        }
+        // Menu Drop
+        if (destroyMap.isMenuDrop()) {
+            try {
+                player.getWorld().dropItem(blockLoc, new ItemStack(Material.getMaterial(blockType)));
+                CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+                        "Destroy", blockType, "Drop", "return",
+                        new Throwable().getStackTrace()[0]);
+            } catch (Exception ex) {
+                CorePlusAPI.getMsg().sendDebugTrace(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(), ex);
+            }
+        }
+        // Destroy the block.
+        addCDDestroy(player);
+        blockLoc.getBlock().setType(Material.AIR);
+        CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+                "Destroy", blockType, "final", "return",
+                new Throwable().getStackTrace()[0]);
     }
 
     /**
@@ -212,7 +195,7 @@ public class BlockClick implements Listener {
                 for (int z = -range; z <= range; z++) {
                     loc = playerLoc.clone().add(x, y, z);
                     if (loc.getBlock().getType().name().equals(block)) {
-                        CorePlusAPI.getCommandManager().dispatchParticleCustomCmd(ConfigHandler.getPrefix(), loc, seeMap.getParticle());
+                        CorePlusAPI.getCmd().dispatchParticleGroup(ConfigHandler.getPrefix(), loc, seeMap.getParticle());
                     }
                 }
             }
@@ -221,14 +204,12 @@ public class BlockClick implements Listener {
 
     private boolean onCooldownSee(Player player) {
         int cdTick = ConfigHandler.getConfigPath().getSeeCDInterval();
-        if (cdTick == 0) {
+        if (cdTick == 0)
             return false;
-        }
         int cdMillis = cdTick * 50;
         long playersCDList = 0L;
-        if (cdSeeMap.containsKey(player.getWorld().getName() + "." + player.getName())) {
+        if (cdSeeMap.containsKey(player.getWorld().getName() + "." + player.getName()))
             playersCDList = cdSeeMap.get(player.getWorld().getName() + "." + player.getName());
-        }
         return System.currentTimeMillis() - playersCDList < cdMillis;
     }
 
@@ -238,14 +219,12 @@ public class BlockClick implements Listener {
 
     private boolean onCooldownDestroy(Player player) {
         int cdTick = ConfigHandler.getConfigPath().getDestroyCD();
-        if (cdTick == 0) {
+        if (cdTick == 0)
             return false;
-        }
         int cdMillis = cdTick * 50;
         long playersCDList = 0L;
-        if (cdDestroyMap.containsKey(player.getWorld().getName() + "." + player.getName())) {
+        if (cdDestroyMap.containsKey(player.getWorld().getName() + "." + player.getName()))
             playersCDList = cdDestroyMap.get(player.getWorld().getName() + "." + player.getName());
-        }
         return System.currentTimeMillis() - playersCDList < cdMillis;
     }
 
