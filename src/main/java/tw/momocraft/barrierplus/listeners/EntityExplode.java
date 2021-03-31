@@ -34,15 +34,15 @@ public class EntityExplode implements Listener {
             if (destroyMap == null)
                 continue;
             // Location
-            if (!CorePlusAPI.getCond().checkLocation(ConfigHandler.getPluginName(), blockLoc, destroyMap.getLocList(), true)) {
-                CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+            if (!CorePlusAPI.getCond().checkLocation(ConfigHandler.getPlugin(), blockLoc, destroyMap.getLocList(), true)) {
+                CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
                         "Destroy", blockType, "location", "continue", "Explode",
                         new Throwable().getStackTrace()[0]);
                 continue;
             }
             // Prevent Location
-            if (CorePlusAPI.getCond().checkLocation(ConfigHandler.getPluginName(), blockLoc, destroyMap.getPreventLocList(), true)) {
-                CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+            if (CorePlusAPI.getCond().checkLocation(ConfigHandler.getPlugin(), blockLoc, destroyMap.getPreventLocList(), true)) {
+                CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
                         "Destroy", blockType, "prevent location", "bypass", "Explode",
                         new Throwable().getStackTrace()[0]);
                 i.remove();
@@ -50,7 +50,7 @@ public class EntityExplode implements Listener {
             }
             // Residence flag
             if (!CorePlusAPI.getCond().checkFlag(null, blockLoc, "destroy", false, true)) {
-                CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+                CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
                         "Destroy", blockType, "residence", "continue", "Explode",
                         new Throwable().getStackTrace()[0]);
                 continue;
@@ -58,7 +58,7 @@ public class EntityExplode implements Listener {
             // Explode break
             if (!destroyMap.isExplodeBreak()) {
                 i.remove();
-                CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+                CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
                         "Destroy", blockType, "destroy", "bypass", "Explode",
                         new Throwable().getStackTrace()[0]);
                 continue;
@@ -66,7 +66,7 @@ public class EntityExplode implements Listener {
             // Explode drop
             if (!destroyMap.isExplodeDrop()) {
                 block.setType(Material.AIR);
-                CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+                CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
                         "Destroy", blockType, "drop", "bypass", "Explode",
                         new Throwable().getStackTrace()[0]);
             }

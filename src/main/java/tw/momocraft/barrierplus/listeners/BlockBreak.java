@@ -27,11 +27,11 @@ public class BlockBreak implements Listener {
         DestroyMap destroyMap = ConfigHandler.getConfigPath().getDestroyProp().get(blockType);
         if (destroyMap == null)
             return;
-        Location blockLoc = e.getBlock().getLocation();
+        Location loc = block.getLocation();
         // Checking the "Conditions".
         List<String> conditionList = CorePlusAPI.getMsg().transHolder(player, block, destroyMap.getConditions());
-        if (!CorePlusAPI.getCond().checkCondition(ConfigHandler.getPluginName(), conditionList)) {
-            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginName(),
+        if (!CorePlusAPI.getCond().checkCondition(ConfigHandler.getPlugin(), conditionList)) {
+            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPlugin(),
                     "Destroy", playerName, "Condition", "none", blockType,
                     new Throwable().getStackTrace()[0]);
             return;
@@ -39,34 +39,33 @@ public class BlockBreak implements Listener {
         // Cancel vanilla break event.
         if (!destroyMap.isVanillaBreak()) {
             if (ConfigHandler.getConfigPath().isDestroyHelp())
-                CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
+                CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), ConfigHandler.getPrefix(),
                         ConfigHandler.getConfigPath().getMsgBreakHelp(), player);
-            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
-                    "Destroy", playerName, "Vanilla Break", "cancel", blockType,
+            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
+                    "Destroy", playerName, "Destroy", "cancel", blockType,
                     new Throwable().getStackTrace()[0]);
             e.setCancelled(true);
             return;
         }
-        // Has destroy permission.
+        // Permission.
         if (!CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.destroy." + blockType.toLowerCase()) &&
                 !CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.destroy.*")) {
-            CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
+            CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), ConfigHandler.getPrefix(),
                     "Message.noPermission", player);
             CorePlusAPI.getCmd().sendCmd(ConfigHandler.getPrefix(),player, block, destroyMap.getFailedCommands());
-            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
-                    "Destroy", playerName, "block permission", "cancel", blockType,
+            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
+                    "Destroy", playerName, "Permission", "cancel", blockType,
                     new Throwable().getStackTrace()[0]);
-            e.setCancelled(true);
             return;
         }
-        // Residence flag.
-        if (!CorePlusAPI.getCond().checkFlag(player, blockLoc, "destroy", false, true)) {
+        // Residence-Flag.
+        if (!CorePlusAPI.getCond().checkFlag(player, loc, "destroy", false, true)) {
             String[] placeHolders = CorePlusAPI.getMsg().newString();
             placeHolders[13] = "destroy"; // %flag%
-            CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
+            CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), ConfigHandler.getPrefix(),
                     "Message.noFlagPerm", player, placeHolders);
-            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
-                    "Destroy", playerName, "residence", "return", blockType,
+            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
+                    "Destroy", playerName, "Residence-Flag", "cancel", blockType,
                     new Throwable().getStackTrace()[0]);
             e.setCancelled(true);
             return;
@@ -74,13 +73,13 @@ public class BlockBreak implements Listener {
         // Vanilla Drop
         if (destroyMap.isVanillaDrop()) {
             block.setType(Material.AIR);
-            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
                     "Destroy", playerName, "vanillaDrop", "cancel", blockType,
                     new Throwable().getStackTrace()[0]);
             return;
         }
         CorePlusAPI.getCmd().sendCmd(ConfigHandler.getPrefix(),player, block, destroyMap.getCommands());
-        CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebugging(), ConfigHandler.getPluginPrefix(),
+        CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
                 "Destroy", playerName, "none", "cancel", blockType,
                 new Throwable().getStackTrace()[0]);
     }

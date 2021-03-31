@@ -21,7 +21,7 @@ public class ConfigHandler {
         UtilsHandler.setupFirst(reload);
         setConfigPath(new ConfigPath());
         if (!reload) {
-            CorePlusAPI.getUpdate().check(getPluginName(), getPluginPrefix(), Bukkit.getConsoleSender(),
+            CorePlusAPI.getUpdate().check(getPlugin(), getPluginPrefix(), Bukkit.getConsoleSender(),
                     BarrierPlus.getInstance().getDescription().getName(),
                     BarrierPlus.getInstance().getDescription().getVersion(), true);
         }
@@ -50,7 +50,7 @@ public class ConfigHandler {
             try {
                 BarrierPlus.getInstance().saveResource(fileName, false);
             } catch (Exception e) {
-                CorePlusAPI.getMsg().sendErrorMsg(ConfigHandler.getPluginName(), "Cannot save " + fileName + " to disk!");
+                CorePlusAPI.getMsg().sendErrorMsg(ConfigHandler.getPlugin(), "Cannot save " + fileName + " to disk!");
                 return;
             }
         }
@@ -114,11 +114,11 @@ public class ConfigHandler {
         return "[" + BarrierPlus.getInstance().getDescription().getName() + "] ";
     }
 
-    public static String getPluginName() {
+    public static String getPlugin() {
         return BarrierPlus.getInstance().getDescription().getName();
     }
 
-    public static boolean isDebugging() {
+    public static boolean isDebug() {
         return ConfigHandler.getConfig("config.yml").getBoolean("Debugging");
     }
 }

@@ -13,16 +13,16 @@ public class Commands implements CommandExecutor {
         if (length == 0) {
             if (CorePlusAPI.getPlayer().hasPerm(sender, "regionplus.use")) {
                 CorePlusAPI.getMsg().sendMsg("", sender, "");
-                CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPluginName(), "",
+                CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), "",
                         ConfigHandler.getConfigPath().getMsgTitle(), sender);
                 CorePlusAPI.getMsg().sendMsg("", sender,
                         "&f " + BarrierPlus.getInstance().getDescription().getName()
                                 + " &ev" + BarrierPlus.getInstance().getDescription().getVersion() + "  &8by Momocraft");
-                CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPluginName(), "",
+                CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), "",
                         ConfigHandler.getConfigPath().getMsgHelp(), sender);
                 CorePlusAPI.getMsg().sendMsg(ConfigHandler.getPrefix(), sender, "");
             } else {
-                CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
+                CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), ConfigHandler.getPrefix(),
                         "Message.noPermission", sender);
             }
             return true;
@@ -31,32 +31,32 @@ public class Commands implements CommandExecutor {
             case "help":
                 if (CorePlusAPI.getPlayer().hasPerm(sender, "regionplus.use")) {
                     CorePlusAPI.getMsg().sendMsg("", sender, "");
-                    CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPluginName(), "",
+                    CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), "",
                             ConfigHandler.getConfigPath().getMsgTitle(), sender);
                     CorePlusAPI.getMsg().sendMsg("", sender,
                             "&f " + BarrierPlus.getInstance().getDescription().getName()
                                     + " &ev" + BarrierPlus.getInstance().getDescription().getVersion() + "  &8by Momocraft");
-                    CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPluginName(), "",
+                    CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), "",
                             ConfigHandler.getConfigPath().getMsgHelp(), sender);
                     if (CorePlusAPI.getPlayer().hasPerm(sender, "regionplus.command.reload"))
-                        CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPluginName(), "",
+                        CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), "",
                                 ConfigHandler.getConfigPath().getMsgReload(), sender);
                     if (CorePlusAPI.getPlayer().hasPerm(sender, "regionplus.command.version"))
-                        CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPluginName(), "",
+                        CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), "",
                                 ConfigHandler.getConfigPath().getMsgVersion(), sender);
                     CorePlusAPI.getMsg().sendMsg(ConfigHandler.getPrefix(), sender, "");
                 } else {
-                    CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
+                    CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), ConfigHandler.getPrefix(),
                             "Message.noPermission", sender);
                 }
                 return true;
             case "reload":
                 if (CorePlusAPI.getPlayer().hasPerm(sender, "regionplus.command.reload")) {
                     ConfigHandler.generateData(true);
-                    CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
+                    CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), ConfigHandler.getPrefix(),
                             "Message.configReload", sender);
                 } else {
-                    CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
+                    CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), ConfigHandler.getPrefix(),
                             "Message.noPermission", sender);
                 }
                 return true;
@@ -65,15 +65,15 @@ public class Commands implements CommandExecutor {
                     CorePlusAPI.getMsg().sendMsg("", sender,
                             "&f " + BarrierPlus.getInstance().getDescription().getName()
                                     + " &ev" + BarrierPlus.getInstance().getDescription().getVersion() + "  &8by Momocraft");
-                    CorePlusAPI.getUpdate().check(ConfigHandler.getPluginName(), "", sender,
+                    CorePlusAPI.getUpdate().check(ConfigHandler.getPlugin(), "", sender,
                             BarrierPlus.getInstance().getName(), BarrierPlus.getInstance().getDescription().getVersion(), true);
                 } else {
-                    CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
+                    CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), ConfigHandler.getPrefix(),
                             "Message.noPermission", sender);
                 }
                 return true;
         }
-        CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPluginName(), ConfigHandler.getPrefix(),
+        CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), ConfigHandler.getPrefix(),
                 "Message.unknownCommand", sender);
         return true;
     }
