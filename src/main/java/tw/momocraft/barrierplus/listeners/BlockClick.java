@@ -37,7 +37,6 @@ public class BlockClick implements Listener {
             return;
         Player player = e.getPlayer();
         ItemStack itemStack = player.getInventory().getItemInMainHand();
-        String itemType = itemStack.getType().name();
         Block block = e.getClickedBlock();
         // Left click a block.
         String action = e.getAction().name();
@@ -81,17 +80,17 @@ public class BlockClick implements Listener {
         List<String> conditionList = CorePlusAPI.getMsg().transHolder(player, block, seeMap.getConditions());
         if (!CorePlusAPI.getCond().checkCondition(ConfigHandler.getPlugin(), conditionList)) {
             CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPlugin(),
-                    "Destroy", playerName, "Condition", "none", blockType,
+                    "Destroy", playerName, "Conditions", "none", blockType,
                     new Throwable().getStackTrace()[0]);
             return;
         }
         // Player is on cooldown.
         if (onSeeCD(player)) {
             if (ConfigHandler.getConfigPath().isSeeCDMsg())
-                CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), ConfigHandler.getPrefix(),
+                CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPrefix(),
                         "Message.cooldown", player);
             CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
-                    "See", playerName, "cooldown", "return", blockType,
+                    "See", playerName, "Cooldown", "none", blockType,
                     new Throwable().getStackTrace()[0]);
             return;
         }
@@ -101,7 +100,7 @@ public class BlockClick implements Listener {
             addSeeCD(player);
             displayBlock(player, blockType, seeMap);
             CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
-                    "See", playerName, "final", "return", blockType,
+                    "See", playerName, "Final", "Succeed", blockType,
                     new Throwable().getStackTrace()[0]);
         }
     }
@@ -118,7 +117,7 @@ public class BlockClick implements Listener {
         // Cooldown
         if (onDestroyCD(player)) {
             if (ConfigHandler.getConfigPath().isDestroyCDMsg())
-                CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), ConfigHandler.getPrefix(),
+                CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPrefix(),
                         "Message.cooldown", player);
             CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
                     "Destroy", playerName, "cooldown", "return", blockType,
@@ -135,10 +134,10 @@ public class BlockClick implements Listener {
         }
         // Destroy permission
         if (!CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.destroy." + blockType)) {
-            CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), ConfigHandler.getPrefix(),
+            CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPrefix(),
                     "Message.noPermission", player);
             CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
-                    "Destroy", playerName, "permission", "return", blockType,
+                    "Destroy", playerName, "permission", "cancel", blockType,
                     new Throwable().getStackTrace()[0]);
             return;
         }
@@ -146,10 +145,10 @@ public class BlockClick implements Listener {
         if (!CorePlusAPI.getCond().checkFlag(player, blockLoc, "destroy", false, true)) {
             String[] placeHolders = CorePlusAPI.getMsg().newString();
             placeHolders[13] = "destroy"; // %flag%
-            CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), ConfigHandler.getPrefix(),
+            CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPrefix(),
                     "Message.noFlagPerm", player, placeHolders);
             CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
-                    "Destroy", playerName, "residence: destroy=false", "return", blockType,
+                    "Destroy", playerName, "Residence-Flag: destroy", "none", blockType,
                     new Throwable().getStackTrace()[0]);
             return;
         }
@@ -158,7 +157,7 @@ public class BlockClick implements Listener {
             try {
                 player.getWorld().dropItem(blockLoc, new ItemStack(Material.getMaterial(blockType)));
                 CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
-                        "Destroy", playerName, "Drop", "return", blockType,
+                        "Destroy", playerName, "Drop", "succeed", blockType,
                         new Throwable().getStackTrace()[0]);
             } catch (Exception ex) {
                 CorePlusAPI.getMsg().sendDebugTrace(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(), ex);
@@ -168,7 +167,7 @@ public class BlockClick implements Listener {
         addDestroyCD(player);
         blockLoc.getBlock().setType(Material.AIR);
         CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
-                "Destroy", playerName, "none", "return", blockType,
+                "Destroy", playerName, "Final", "succeed", blockType,
                 new Throwable().getStackTrace()[0]);
     }
 

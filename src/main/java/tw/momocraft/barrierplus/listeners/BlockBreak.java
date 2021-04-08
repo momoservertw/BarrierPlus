@@ -39,7 +39,7 @@ public class BlockBreak implements Listener {
         // Cancel vanilla break event.
         if (!destroyMap.isVanillaBreak()) {
             if (ConfigHandler.getConfigPath().isDestroyHelp())
-                CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), ConfigHandler.getPrefix(),
+                CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPrefix(),
                         ConfigHandler.getConfigPath().getMsgBreakHelp(), player);
             CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
                     "Destroy", playerName, "Destroy", "cancel", blockType,
@@ -50,7 +50,7 @@ public class BlockBreak implements Listener {
         // Permission.
         if (!CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.destroy." + blockType.toLowerCase()) &&
                 !CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.destroy.*")) {
-            CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), ConfigHandler.getPrefix(),
+            CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPrefix(),
                     "Message.noPermission", player);
             CorePlusAPI.getCmd().sendCmd(ConfigHandler.getPrefix(),player, block, destroyMap.getFailedCommands());
             CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
@@ -62,7 +62,7 @@ public class BlockBreak implements Listener {
         if (!CorePlusAPI.getCond().checkFlag(player, loc, "destroy", false, true)) {
             String[] placeHolders = CorePlusAPI.getMsg().newString();
             placeHolders[13] = "destroy"; // %flag%
-            CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), ConfigHandler.getPrefix(),
+            CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPrefix(),
                     "Message.noFlagPerm", player, placeHolders);
             CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
                     "Destroy", playerName, "Residence-Flag", "cancel", blockType,

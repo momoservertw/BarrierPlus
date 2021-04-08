@@ -21,6 +21,9 @@ See:
       Particle: "Barrier"
       Types:
         - BARRIER
+      Conditions:
+        - "%player_gamemode%!=CREATIVE"
+      Commands: []
     Structure_void:
       Enable: true
       Particle: "Crit_Magic"
@@ -38,15 +41,15 @@ Place:
       Types:
         - BARRIER
         - STRUCTURE_VOID
+      Conditions: []
       Commands: []
     Bedrock:
       Enable: true
       Types:
         - BEDROCK
-      Prevent:
-        Location:
-          - Bedrock_World
-          - Bedrock_Nether
+      Conditions:
+        - "%block_location%Bedrock_World%=false"
+        - "%block_location%Bedrock_Nether%=false"
 
 # Control blocks destroy conditions. The creative blocks can be broken by the menu.
 # Permission: barrierplus.destroy.MATERIAL or barrierplus.destroy.*
@@ -70,20 +73,21 @@ Destroy:
         Break: false
         Drop: false
   Groups:
-    Barrier:
+    Creative:
       Enable: true
-      Commands: []
       Types:
         - BARRIER
         - STRUCTURE_VOID
+      Commands: []
+      Condtions: []
     Bedrock:
       Enable: true
       Types:
         - BEDROCK
-      Prevent:
-        Location:
-          - Bedrock_World
-          - Bedrock_Nether
+      Conditions:
+        - "%block_location%Bedrock_World%=false"
+        - "%block_location%Bedrock_Nether%=false"
+      Commands: []
 
 Message:
   prefix: "&7[&dBarrierPlus&7]&r "
@@ -92,6 +96,6 @@ Message:
     help: "&a/brp help &8- &7This help menu."
     reload: "&a/brp reload &8- &7Reloads config file."
     version: "&f/brp version &8- &7Checks the plugin version and updates."
-  breakHelp: "&7Holding menu and '&eleft-click + shift&7' to break this block."
+  breakHelp: "%prefix% &7Holding menu and '&eleft-click + shift&7' to break this block."
   placeLocFail: "%prefix% &7You cannot place the %block% in this position."
   breakLocFail: "%prefix% &7You cannot break the %block% in this position."

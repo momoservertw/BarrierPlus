@@ -3,6 +3,7 @@ package tw.momocraft.barrierplus.listeners;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -12,6 +13,7 @@ import tw.momocraft.barrierplus.utils.DestroyMap;
 import tw.momocraft.coreplus.api.CorePlusAPI;
 
 import java.util.Iterator;
+import java.util.List;
 
 public class EntityExplode implements Listener {
 
@@ -25,49 +27,44 @@ public class EntityExplode implements Listener {
         Block block;
         String blockType;
         Location blockLoc;
-        Iterator<Block> i = e.blockList().iterator();
-        while (i.hasNext()) {
-            block = i.next();
+        Iterator<Block> iterator = e.blockList().iterator();
+        Entity trigger;
+        while (iterator.hasNext()) {
+            block = iterator.next();
             blockLoc = block.getLocation();
             blockType = block.getType().name();
             DestroyMap destroyMap = ConfigHandler.getConfigPath().getDestroyProp().get(blockType);
             if (destroyMap == null)
                 continue;
-            // Location
-            if (!CorePlusAPI.getCond().checkLocation(ConfigHandler.getPlugin(), blockLoc, destroyMap.getLocList(), true)) {
-                CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
-                        "Destroy", blockType, "location", "continue", "Explode",
+            // Conditions
+            trigger = e.getEntity();
+            List<String> conditionList = CorePlusAPI.getMsg().transHolder(null, block, trigger, destroyMap.getConditions());
+            if (!CorePlusAPI.getCond().checkCondition(ConfigHandler.getPlugin(), conditionList)) {
+                CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPlugin(),
+                        "Destroy-Explode", blockType, "Condition", "none",
                         new Throwable().getStackTrace()[0]);
-                continue;
+                return;
             }
-            // Prevent Location
-            if (CorePlusAPI.getCond().checkLocation(ConfigHandler.getPlugin(), blockLoc, destroyMap.getPreventLocList(), true)) {
-                CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
-                        "Destroy", blockType, "prevent location", "bypass", "Explode",
-                        new Throwable().getStackTrace()[0]);
-                i.remove();
-                continue;
-            }
-            // Residence flag
+            // Residence-Flag
             if (!CorePlusAPI.getCond().checkFlag(null, blockLoc, "destroy", false, true)) {
                 CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
-                        "Destroy", blockType, "residence", "continue", "Explode",
+                        "Destroy-Explode", blockType, "Residence-Flag", "bypass",
                         new Throwable().getStackTrace()[0]);
                 continue;
             }
-            // Explode break
+            // Explode Break
             if (!destroyMap.isExplodeBreak()) {
-                i.remove();
+                iterator.remove();
                 CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
-                        "Destroy", blockType, "destroy", "bypass", "Explode",
+                        "Destroy-Explode", blockType, "Destroy", "bypass",
                         new Throwable().getStackTrace()[0]);
                 continue;
             }
-            // Explode drop
+            // Explode Drop
             if (!destroyMap.isExplodeDrop()) {
                 block.setType(Material.AIR);
                 CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
-                        "Destroy", blockType, "drop", "bypass", "Explode",
+                        "Destroy-Explode", blockType, "Drop", "bypass",
                         new Throwable().getStackTrace()[0]);
             }
         }

@@ -17,7 +17,7 @@ public class TabComplete implements TabCompleter {
         final List<String> completions = new ArrayList<>();
         final List<String> commands = new ArrayList<>();
         int length = args.length;
-        if (length == 0) {
+        if (length == 1) {
             if (UtilsHandler.getPlayer().hasPerm(sender, "barrierplus.use"))
                 commands.add("help");
             if (UtilsHandler.getPlayer().hasPerm(sender, "barrierplus.command.reload"))

@@ -43,7 +43,7 @@ public class BlockPlace implements Listener {
         }
         String[] placeHolders = CorePlusAPI.getMsg().newString();
         placeHolders[9] = blockType;
-        CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPlugin(), ConfigHandler.getPrefix(),
+        CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPrefix(),
                 ConfigHandler.getConfigPath().getMsgPlaceLocFail(), player, placeHolders);
         e.setCancelled(true);
         CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),

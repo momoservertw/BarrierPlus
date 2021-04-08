@@ -14,6 +14,7 @@ public class DestroyMap {
     private List<String> conditions;
     private List<String> commands;
     private List<String> failedCommands;
+    private List<String> locationList;
 
     public String getGroupName() {
         return groupName;
@@ -93,5 +94,13 @@ public class DestroyMap {
 
     public void setFailedCommands(List<String> failedCommands) {
         this.failedCommands = failedCommands;
+    }
+
+    public List<String> getLocationList() {
+        return locationList;
+    }
+
+    public void setLocationList(List<String> locationList) {
+        this.locationList = locationList;
     }
 }

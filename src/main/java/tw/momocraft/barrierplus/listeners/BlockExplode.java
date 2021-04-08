@@ -27,6 +27,7 @@ public class BlockExplode implements Listener {
         String blockType;
         Location blockLoc;
         Iterator<Block> iterator = e.blockList().iterator();
+        Block trigger;
         while (iterator.hasNext()) {
             block = iterator.next();
             blockLoc = block.getLocation();
@@ -35,7 +36,8 @@ public class BlockExplode implements Listener {
             if (destroyMap == null)
                 continue;
             // Conditions
-            List<String> conditionList = CorePlusAPI.getMsg().transHolder(null, block, destroyMap.getConditions());
+            trigger = e.getBlock();
+            List<String> conditionList = CorePlusAPI.getMsg().transHolder(null, block, trigger, destroyMap.getConditions());
             if (!CorePlusAPI.getCond().checkCondition(ConfigHandler.getPlugin(), conditionList)) {
                 CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPlugin(),
                         "Destroy-Explode", blockType, "Condition", "none",
