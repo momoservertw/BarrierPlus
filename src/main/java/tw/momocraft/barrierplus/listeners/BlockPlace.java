@@ -26,9 +26,11 @@ public class BlockPlace implements Listener {
         Player player = e.getPlayer();
         String playerName = player.getName();
         // Conditions
-        List<String> conditionList = CorePlusAPI.getMsg().transHolder(player, block, placeMap.getConditions());
-        if (!CorePlusAPI.getCond().checkCondition(ConfigHandler.getPlugin(), conditionList)) {
-            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPlugin(),
+        List<String> conditionList = placeMap.getConditions();
+        conditionList = CorePlusAPI.getMsg().transHolder(ConfigHandler.getPluginName(), player, conditionList);
+        conditionList = CorePlusAPI.getMsg().transHolder(ConfigHandler.getPluginName(), block, conditionList);
+        if (!CorePlusAPI.getCond().checkCondition(ConfigHandler.getPluginName(), conditionList)) {
+            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginName(),
                     "Place", playerName, "Condition", "none", blockType,
                     new Throwable().getStackTrace()[0]);
             return;

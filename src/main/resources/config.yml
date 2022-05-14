@@ -88,14 +88,3 @@ Destroy:
         - "%block_location%Bedrock_World%=false"
         - "%block_location%Bedrock_Nether%=false"
       Commands: []
-
-Message:
-  prefix: "&7[&dBarrierPlus&7]&r "
-  Commands:
-    title: "&8▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩ &d&lBarrierPlus &8▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩"
-    help: "&a/brp help &8- &7This help menu."
-    reload: "&a/brp reload &8- &7Reloads config file."
-    version: "&f/brp version &8- &7Checks the plugin version and updates."
-  breakHelp: "%prefix% &7Holding menu and '&eleft-click + shift&7' to break this block."
-  placeLocFail: "%prefix% &7You cannot place the %block% in this position."
-  breakLocFail: "%prefix% &7You cannot break the %block% in this position."

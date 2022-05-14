@@ -58,7 +58,7 @@ public class Commands implements CommandExecutor {
                     CorePlusAPI.getMsg().sendMsg("", sender,
                             "&f " + BarrierPlus.getInstance().getDescription().getName()
                                     + " &ev" + BarrierPlus.getInstance().getDescription().getVersion() + "  &8by Momocraft");
-                    CorePlusAPI.getUpdate().check(ConfigHandler.getPlugin(), "", sender,
+                    CorePlusAPI.getUpdate().check(ConfigHandler.getPluginName(), "", sender,
                             BarrierPlus.getInstance().getName(), BarrierPlus.getInstance().getDescription().getVersion(), true);
                 } else {
                     CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPrefix(),

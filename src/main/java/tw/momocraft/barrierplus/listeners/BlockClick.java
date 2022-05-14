@@ -77,9 +77,11 @@ public class BlockClick implements Listener {
             return;
         String playerName = player.getName();
         // Checking the "Conditions".
-        List<String> conditionList = CorePlusAPI.getMsg().transHolder(player, block, seeMap.getConditions());
-        if (!CorePlusAPI.getCond().checkCondition(ConfigHandler.getPlugin(), conditionList)) {
-            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPlugin(),
+        List<String> conditionList = seeMap.getConditions();
+        conditionList = CorePlusAPI.getMsg().transHolder(ConfigHandler.getPluginName(), player, conditionList);
+        conditionList = CorePlusAPI.getMsg().transHolder(ConfigHandler.getPluginName(), block, conditionList);
+        if (!CorePlusAPI.getCond().checkCondition(ConfigHandler.getPluginName(), conditionList)) {
+            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginName(),
                     "Destroy", playerName, "Conditions", "none", blockType,
                     new Throwable().getStackTrace()[0]);
             return;
@@ -125,9 +127,11 @@ public class BlockClick implements Listener {
             return;
         }
         // Checking the "Conditions".
-        List<String> conditionList = CorePlusAPI.getMsg().transHolder(player, block, destroyMap.getConditions());
-        if (!CorePlusAPI.getCond().checkCondition(ConfigHandler.getPlugin(), conditionList)) {
-            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPlugin(),
+        List<String> conditionList = destroyMap.getConditions();
+        conditionList = CorePlusAPI.getMsg().transHolder(ConfigHandler.getPluginName(), player, conditionList);
+        conditionList = CorePlusAPI.getMsg().transHolder(ConfigHandler.getPluginName(), block, conditionList);
+        if (!CorePlusAPI.getCond().checkCondition(ConfigHandler.getPluginName(), conditionList)) {
+            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginName(),
                     "Destroy", playerName, "Condition", "none", blockType,
                     new Throwable().getStackTrace()[0]);
             return;

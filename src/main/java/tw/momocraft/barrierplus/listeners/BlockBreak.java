@@ -29,9 +29,11 @@ public class BlockBreak implements Listener {
             return;
         Location loc = block.getLocation();
         // Checking the "Conditions".
-        List<String> conditionList = CorePlusAPI.getMsg().transHolder(player, block, destroyMap.getConditions());
-        if (!CorePlusAPI.getCond().checkCondition(ConfigHandler.getPlugin(), conditionList)) {
-            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPlugin(),
+        List<String> conditionList = destroyMap.getConditions();
+        conditionList = CorePlusAPI.getMsg().transHolder(ConfigHandler.getPluginName(), player, conditionList);
+        conditionList = CorePlusAPI.getMsg().transHolder(ConfigHandler.getPluginName(), block, conditionList);
+        if (!CorePlusAPI.getCond().checkCondition(ConfigHandler.getPluginName(), conditionList)) {
+            CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginName(),
                     "Destroy", playerName, "Condition", "none", blockType,
                     new Throwable().getStackTrace()[0]);
             return;
@@ -52,7 +54,10 @@ public class BlockBreak implements Listener {
                 !CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.destroy.*")) {
             CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPrefix(),
                     "Message.noPermission", player);
-            CorePlusAPI.getCmd().sendCmd(ConfigHandler.getPrefix(),player, block, destroyMap.getFailedCommands());
+            List<String> failedCommands = destroyMap.getFailedCommands();
+            failedCommands = CorePlusAPI.getMsg().transHolder(ConfigHandler.getPluginName(), player, failedCommands);
+            failedCommands = CorePlusAPI.getMsg().transHolder(ConfigHandler.getPluginName(), block, failedCommands);
+            CorePlusAPI.getCmd().sendCmd(ConfigHandler.getPluginName(), player, failedCommands);
             CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
                     "Destroy", playerName, "Permission", "cancel", blockType,
                     new Throwable().getStackTrace()[0]);
@@ -78,7 +83,10 @@ public class BlockBreak implements Listener {
                     new Throwable().getStackTrace()[0]);
             return;
         }
-        CorePlusAPI.getCmd().sendCmd(ConfigHandler.getPrefix(),player, block, destroyMap.getCommands());
+        List<String> commands = destroyMap.getCommands();
+        commands = CorePlusAPI.getMsg().transHolder(ConfigHandler.getPluginName(), player, commands);
+        commands = CorePlusAPI.getMsg().transHolder(ConfigHandler.getPluginName(), block, commands);
+        CorePlusAPI.getCmd().sendCmd(ConfigHandler.getPluginName(), player, commands);
         CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
                 "Destroy", playerName, "none", "cancel", blockType,
                 new Throwable().getStackTrace()[0]);
