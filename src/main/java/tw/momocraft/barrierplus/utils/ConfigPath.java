@@ -66,17 +66,6 @@ public class ConfigPath {
         List<String> list = new ArrayList<>(BarrierPlus.getInstance().getDescription().getDepend());
         list.addAll(BarrierPlus.getInstance().getDescription().getSoftDepend());
         CorePlusAPI.getMsg().sendHookMsg(ConfigHandler.getPluginPrefix(), "plugins", list);
-
-        /*
-        list = Arrays.asList((
-                "climb" + ","
-                        + "crawl" + ","
-                        + "mobkick" + ","
-                        + "wallkick"
-        ).split(","));
-        CorePlusAPI.getMsg().sendHookMsg(ConfigHandler.getPluginPrefix(), "Residence flags", list);
-
-         */
     }
 
     //  ============================================== //
@@ -107,7 +96,6 @@ public class ConfigPath {
             return;
         ConfigurationSection groupConfig;
         SeeMap seeMap;
-        String creative;
         for (String group : buyConfig.getKeys(false)) {
             groupConfig = ConfigHandler.getConfig("config.yml").getConfigurationSection("See.Groups." + group);
             if (groupConfig == null)
@@ -115,13 +103,11 @@ public class ConfigPath {
             if (!ConfigHandler.getConfig("config.yml").getBoolean("See.Groups." + group + ".Enable", true))
                 continue;
             seeMap = new SeeMap();
-            creative = ConfigHandler.getConfig("config.yml").getString("See.Groups." + group + ".Creative");
-            if (creative == null)
-                creative = "true";
+            seeMap.setCreative(ConfigHandler.getConfig("config.yml").getBoolean("See.Groups." + group + ".Creative", true));
             seeMap.setParticle(ConfigHandler.getConfig("config.yml").getString("See.Groups." + group + ".Particle"));
             seeMap.setCommands(ConfigHandler.getConfig("config.yml").getStringList("See.Groups." + group + ".Commands"));
             seeMap.setFailedCommands(ConfigHandler.getConfig("config.yml").getStringList("See.Groups." + group + ".Failed-Commands"));
-            seeMap.setConditions(ConfigHandler.getConfig("config.yml").getStringList("See.Groups." + group + ".Condition"));
+            seeMap.setConditions(ConfigHandler.getConfig("config.yml").getStringList("See.Groups." + group + ".Conditions"));
             for (String type : ConfigHandler.getConfig("config.yml").getStringList("See.Groups." + group + ".Types"))
                 seeProp.put(type, seeMap);
         }

@@ -36,7 +36,6 @@ public class BlockClick implements Listener {
         if (!see && !destroy)
             return;
         Player player = e.getPlayer();
-        ItemStack itemStack = player.getInventory().getItemInMainHand();
         Block block = e.getClickedBlock();
         // Left click a block.
         String action = e.getAction().name();
@@ -47,6 +46,7 @@ public class BlockClick implements Listener {
             } catch (Exception ex) {
                 return;
             }
+            ItemStack itemStack = player.getInventory().getItemInMainHand();
             if (player.isSneaking()) {
                 // Holding menu.
                 if (!CorePlusAPI.getCond().isMenu(itemStack))
@@ -75,11 +75,11 @@ public class BlockClick implements Listener {
         SeeMap seeMap = ConfigHandler.getConfigPath().getSeeProp().get(blockType);
         if (seeMap == null)
             return;
-        String playerName = player.getName();
         // Checking the "Conditions".
         List<String> conditionList = seeMap.getConditions();
         conditionList = CorePlusAPI.getMsg().transHolder(ConfigHandler.getPluginName(), player, conditionList);
         conditionList = CorePlusAPI.getMsg().transHolder(ConfigHandler.getPluginName(), block, conditionList);
+        String playerName = player.getName();
         if (!CorePlusAPI.getCond().checkCondition(ConfigHandler.getPluginName(), conditionList)) {
             CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginName(),
                     "Destroy", playerName, "Conditions", "none", blockType,
@@ -87,7 +87,7 @@ public class BlockClick implements Listener {
             return;
         }
         // Player is on cooldown.
-        if (onSeeCD(player)) {
+        if (onSeeCD(playerName)) {
             if (ConfigHandler.getConfigPath().isSeeCDMsg())
                 CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPrefix(),
                         "Message.cooldown", player);
@@ -97,9 +97,9 @@ public class BlockClick implements Listener {
             return;
         }
         // Has see permission.
-        if (CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.see." + blockType) ||
-                CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.see.*")) {
-            addSeeCD(player);
+        if (CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.see.*") ||
+                CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.see." + blockType)) {
+            addSeeCD(playerName);
             displayBlock(player, blockType, seeMap);
             CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginPrefix(),
                     "See", playerName, "Final", "Succeed", blockType,
@@ -112,12 +112,11 @@ public class BlockClick implements Listener {
         DestroyMap destroyMap = ConfigHandler.getConfigPath().getDestroyProp().get(blockType);
         if (destroyMap == null)
             return;
-        // Enable
         if (!destroyMap.isMenuBreak())
             return;
         String playerName = player.getName();
         // Cooldown
-        if (onDestroyCD(player)) {
+        if (onDestroyCD(playerName)) {
             if (ConfigHandler.getConfigPath().isDestroyCDMsg())
                 CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPrefix(),
                         "Message.cooldown", player);
@@ -179,40 +178,38 @@ public class BlockClick implements Listener {
         int range = ConfigHandler.getConfigPath().getSeeDistance();
         Location playerLoc = player.getLocation();
         Location loc;
-        for (int x = -range; x <= range; x++) {
-            for (int y = -range; y <= range; y++) {
+        for (int x = -range; x <= range; x++)
+            for (int y = -range; y <= range; y++)
                 for (int z = -range; z <= range; z++) {
                     loc = playerLoc.clone().add(x, y, z);
                     if (loc.getBlock().getType().equals(block))
                         CorePlusAPI.getCmd().dispatchParticleGroup(ConfigHandler.getPrefix(), loc, seeMap.getParticle());
                 }
-            }
-        }
     }
 
-    private boolean onSeeCD(Player player) {
+    private boolean onSeeCD(String playerName) {
         int cdTick = ConfigHandler.getConfigPath().getSeeCDInterval();
         if (cdTick == 0)
             return false;
         int cdMillis = cdTick * 50;
         long playersCDList = 0L;
-        if (seeCDMap.containsKey(player.getWorld().getName() + "." + player.getName()))
-            playersCDList = seeCDMap.get(player.getWorld().getName() + "." + player.getName());
+        if (seeCDMap.containsKey(playerName))
+            playersCDList = seeCDMap.get(playerName);
         return System.currentTimeMillis() - playersCDList < cdMillis;
     }
 
-    private void addSeeCD(Player player) {
-        seeCDMap.put(player.getWorld().getName() + "." + player.getName(), System.currentTimeMillis());
+    private void addSeeCD(String playerName) {
+        seeCDMap.put(playerName, System.currentTimeMillis());
     }
 
-    private boolean onDestroyCD(Player player) {
+    private boolean onDestroyCD(String playerName) {
         int cdTick = ConfigHandler.getConfigPath().getDestroyCD();
         if (cdTick == 0)
             return false;
         int cdMillis = cdTick * 50;
         long playersCDList = 0L;
-        if (destroyCDMap.containsKey(player.getWorld().getName() + "." + player.getName()))
-            playersCDList = destroyCDMap.get(player.getWorld().getName() + "." + player.getName());
+        if (destroyCDMap.containsKey(playerName))
+            playersCDList = destroyCDMap.get(playerName);
         return System.currentTimeMillis() - playersCDList < cdMillis;
     }
 

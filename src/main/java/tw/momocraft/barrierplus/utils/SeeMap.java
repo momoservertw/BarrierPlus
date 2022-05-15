@@ -5,6 +5,7 @@ import java.util.List;
 public class SeeMap {
     private String groupName;
     private String particle;
+    private boolean creative;
 
     private List<String> conditions;
     private List<String> commands;
@@ -24,6 +25,14 @@ public class SeeMap {
 
     public void setParticle(String particle) {
         this.particle = particle;
+    }
+
+    public boolean isCreative() {
+        return creative;
+    }
+
+    public void setCreative(boolean creative) {
+        this.creative = creative;
     }
 
     public List<String> getConditions() {

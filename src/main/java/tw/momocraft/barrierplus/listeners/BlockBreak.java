@@ -20,15 +20,14 @@ public class BlockBreak implements Listener {
     public void onBreakBlock(BlockBreakEvent e) {
         if (!ConfigHandler.getConfigPath().isDestroy())
             return;
-        Player player = e.getPlayer();
-        String playerName = player.getName();
         Block block = e.getBlock();
         String blockType = block.getBlockData().getMaterial().name();
         DestroyMap destroyMap = ConfigHandler.getConfigPath().getDestroyProp().get(blockType);
         if (destroyMap == null)
             return;
-        Location loc = block.getLocation();
         // Checking the "Conditions".
+        Player player = e.getPlayer();
+        String playerName = player.getName();
         List<String> conditionList = destroyMap.getConditions();
         conditionList = CorePlusAPI.getMsg().transHolder(ConfigHandler.getPluginName(), player, conditionList);
         conditionList = CorePlusAPI.getMsg().transHolder(ConfigHandler.getPluginName(), block, conditionList);
@@ -64,6 +63,7 @@ public class BlockBreak implements Listener {
             return;
         }
         // Residence-Flag.
+        Location loc = block.getLocation();
         if (!CorePlusAPI.getCond().checkFlag(player, loc, "destroy", false, true)) {
             String[] placeHolders = CorePlusAPI.getMsg().newString();
             placeHolders[13] = "destroy"; // %flag%
