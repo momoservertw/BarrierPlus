@@ -83,3 +83,15 @@ permissions:
   barrierplus.destroy.bedrock:
     description: Allows to destroy bedrocks.
     default: op
+  barrierplus.bypass.*:
+    description: Bypass all limit.
+    default: op
+    children:
+      barrierplus.bypass.place.*: true
+      barrierplus.bypass.destroy.*: true
+  barrierplus.bypass.place.*:
+    description: Bypass all limit of place features.
+    default: op
+  barrierplus.bypass.destroy.*:
+    description: Bypass all limit of destroy features.
+    default: op

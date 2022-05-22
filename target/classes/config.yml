@@ -3,6 +3,8 @@
 #  Wiki: https://github.com/momoservertw/BarrierPlus/wiki
 # ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 Config-Version: 7
+Debugging: false
+Check-Updates: true
 
 # Display near creative blocks like barriers.
 # Permission: barrierplus.see.GROUP or barrierplus.see.*
@@ -16,19 +18,25 @@ See:
       Message: false
   Groups:
     Barrier:
-      Enable: true
+      Enable: false
       Creative: false
       Particle: "Barrier"
       Types:
         - BARRIER
       Conditions:
         - "%player_gamemode%!=CREATIVE"
-      Commands: []
     Structure_void:
-      Enable: true
+      Enable: false
       Particle: "Crit_Magic"
       Types:
         - STRUCTURE_VOID
+    Example:
+      Enable: false
+      Creative: true
+      Particle: ""
+      Types: []
+      Location: []
+      Conditions: []
 
 # These creative blocks will need permission to place.
 # Permission: barrierplus.place.MATERIAL or barrierplus.place.*
@@ -37,19 +45,16 @@ Place:
   Enable: false
   Groups:
     Creative:
-      Enable: true
+      Enable: false
       Types:
         - BARRIER
         - STRUCTURE_VOID
-      Conditions: []
-      Commands: []
-    Bedrock:
-      Enable: true
-      Types:
         - BEDROCK
-      Conditions:
-        - "%block_location%Bedrock_World%=false"
-        - "%block_location%Bedrock_Nether%=false"
+    Example:
+      Enable: false
+      Types: []
+      Location: []
+      Conditions: []
 
 # Control blocks destroy conditions. The creative blocks can be broken by the menu.
 # Permission: barrierplus.destroy.MATERIAL or barrierplus.destroy.*
@@ -74,17 +79,28 @@ Destroy:
         Drop: false
   Groups:
     Creative:
-      Enable: true
+      Enable: false
       Types:
         - BARRIER
         - STRUCTURE_VOID
-      Commands: []
-      Condtions: []
     Bedrock:
-      Enable: true
+      Enable: false
       Types:
         - BEDROCK
-      Conditions:
-        - "%block_location%Bedrock_World%=false"
-        - "%block_location%Bedrock_Nether%=false"
-      Commands: []
+      Location:
+        - "Bedrock_World"
+        - "Bedrock_Nether"
+    Example:
+      Enable: false
+      Types: []
+      Menu:
+        Break: true
+        Drop: true
+      Vanilla:
+        Break: false
+        Drop: false
+      Explode:
+        Break: false
+        Drop: false
+      Location: []
+      Conditions: []

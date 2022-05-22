@@ -26,13 +26,11 @@ public class DependHandler {
     }
 
     private void registerEvents() {
-        BarrierPlus.getInstance().getCommand("HotkeyPlus").setExecutor(new Commands());
-        BarrierPlus.getInstance().getCommand("HotkeyPlus").setTabCompleter(new TabComplete());
+        BarrierPlus.getInstance().getCommand("BarrierPlus").setExecutor(new Commands());
+        BarrierPlus.getInstance().getCommand("BarrierPlus").setTabCompleter(new TabComplete());
 
-        BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockBreak(), BarrierPlus.getInstance());
-        BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockClick(), BarrierPlus.getInstance());
-        BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockExplode(), BarrierPlus.getInstance());
-        BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new BlockPlace(), BarrierPlus.getInstance());
-        BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new EntityExplode(), BarrierPlus.getInstance());
+        BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new See(), BarrierPlus.getInstance());
+        BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new Place(), BarrierPlus.getInstance());
+        BarrierPlus.getInstance().getServer().getPluginManager().registerEvents(new Destroy(), BarrierPlus.getInstance());
     }
 }

@@ -5,9 +5,8 @@ import java.util.List;
 public class PlaceMap {
 
     private String groupName;
+    private List<String> locationList;
     private List<String> conditions;
-    private List<String> commands;
-    private List<String> failedCommands;
 
     public String getGroupName() {
         return groupName;
@@ -17,27 +16,19 @@ public class PlaceMap {
         this.groupName = groupName;
     }
 
+    public List<String> getLocationList() {
+        return locationList;
+    }
+
+    public void setLocationList(List<String> locationList) {
+        this.locationList = locationList;
+    }
+
     public List<String> getConditions() {
         return conditions;
     }
 
     public void setConditions(List<String> conditions) {
         this.conditions = conditions;
-    }
-
-    public List<String> getCommands() {
-        return commands;
-    }
-
-    public void setCommands(List<String> commands) {
-        this.commands = commands;
-    }
-
-    public List<String> getFailedCommands() {
-        return failedCommands;
-    }
-
-    public void setFailedCommands(List<String> failedCommands) {
-        this.failedCommands = failedCommands;
     }
 }

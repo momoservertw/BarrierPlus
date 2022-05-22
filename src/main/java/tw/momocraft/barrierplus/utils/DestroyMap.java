@@ -11,10 +11,8 @@ public class DestroyMap {
     private boolean vanillaDrop;
     private boolean explodeBreak;
     private boolean explodeDrop;
-    private List<String> conditions;
-    private List<String> commands;
-    private List<String> failedCommands;
     private List<String> locationList;
+    private List<String> conditions;
 
     public String getGroupName() {
         return groupName;
@@ -78,22 +76,6 @@ public class DestroyMap {
 
     public void setConditions(List<String> conditions) {
         this.conditions = conditions;
-    }
-
-    public List<String> getCommands() {
-        return commands;
-    }
-
-    public void setCommands(List<String> commands) {
-        this.commands = commands;
-    }
-
-    public List<String> getFailedCommands() {
-        return failedCommands;
-    }
-
-    public void setFailedCommands(List<String> failedCommands) {
-        this.failedCommands = failedCommands;
     }
 
     public List<String> getLocationList() {
