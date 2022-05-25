@@ -17,17 +17,17 @@ See:
       Interval: 60
       Message: false
   Groups:
-    Barrier:
-      Enable: false
+    barrier:
+      Enable: true
       Creative: false
-      Particle: "Barrier"
+      Particle: "barrier"
       Types:
         - BARRIER
       Conditions:
         - "%player_gamemode%!=CREATIVE"
-    Structure_void:
-      Enable: false
-      Particle: "Crit_Magic"
+    structure_void:
+      Enable: true
+      Particle: "crit_magic"
       Types:
         - STRUCTURE_VOID
     Example:
@@ -44,11 +44,17 @@ See:
 Place:
   Enable: false
   Groups:
-    Creative:
-      Enable: false
+    barrier:
+      Enable: true
       Types:
         - BARRIER
+    structure_void:
+      Enable: true
+      Types:
         - STRUCTURE_VOID
+    bedrock:
+      Enable: true
+      Types:
         - BEDROCK
     Example:
       Enable: false
@@ -78,18 +84,21 @@ Destroy:
         Break: false
         Drop: false
   Groups:
-    Creative:
-      Enable: false
+    barrier:
+      Enable: true
       Types:
         - BARRIER
+    structure_void:
+      Enable: true
+      Types:
         - STRUCTURE_VOID
-    Bedrock:
-      Enable: false
+    bedrock:
+      Enable: true
       Types:
         - BEDROCK
       Location:
-        - "Bedrock_World"
-        - "Bedrock_Nether"
+        - "WorldNoBedrock"
+        - "NetherNoBedrock"
     Example:
       Enable: false
       Types: []

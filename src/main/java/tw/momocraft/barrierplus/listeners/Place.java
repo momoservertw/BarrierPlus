@@ -98,7 +98,7 @@ public class Place implements Listener {
     }
 
     private boolean checkPermission(String blockType, Player player) {
-        return !CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.place." + blockType.toLowerCase()) &&
-                !CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.place.*");
+        return CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.place.*") ||
+                CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.place.*" + blockType.toLowerCase());
     }
 }

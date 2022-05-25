@@ -25,6 +25,7 @@ public class ConfigPath {
 
     private String msgBreakHelp;
     private String msgPlaceLocFail;
+    private String msgDestroyLocFail;
 
     //  ============================================== //
     //         See Variables                           //
@@ -79,6 +80,7 @@ public class ConfigPath {
 
         msgBreakHelp = ConfigHandler.getConfig("config.yml").getString("Message.breakHelp");
         msgPlaceLocFail = ConfigHandler.getConfig("config.yml").getString("Message.placeLocFail");
+        msgDestroyLocFail = ConfigHandler.getConfig("config.yml").getString("Message.destroyLocFail");
     }
 
     //  ============================================== //
@@ -149,7 +151,6 @@ public class ConfigPath {
     //  ============================================== //
     private void setDestroy() {
         destroy = ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Enable");
-        destroyHelp = ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Settings.Help-Message");
         destroyCD = ConfigHandler.getConfig("config.yml").getInt("Destroy.Settings.Menu-Break.Cooldown.Interval");
         destroyCDMsg = ConfigHandler.getConfig("config.yml").getBoolean("Destroy.Settings.Menu-Break.Cooldown.Message");
         String menuBreak = ConfigHandler.getConfig("config.yml").getString("Destroy.Settings.Default.Menu.Break");
@@ -219,6 +220,10 @@ public class ConfigPath {
 
     public String getMsgPlaceLocFail() {
         return msgPlaceLocFail;
+    }
+
+    public String getMsgDestroyLocFail() {
+        return msgDestroyLocFail;
     }
 
     //  ============================================== //

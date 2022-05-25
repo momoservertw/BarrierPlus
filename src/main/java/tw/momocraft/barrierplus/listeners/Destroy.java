@@ -247,8 +247,12 @@ public class Destroy implements Listener {
         Location blockLoc = block.getLocation();
         if (!CorePlusAPI.getCond().checkLocation(ConfigHandler.getPluginName(),
                 blockLoc, destroyMap.getLocationList(), true)) {
+            String[] placeHolders = CorePlusAPI.getMsg().newString();
+            placeHolders[9] = blockType;
+            CorePlusAPI.getMsg().sendLangMsg(ConfigHandler.getPrefix(),
+                    ConfigHandler.getConfigPath().getMsgDestroyLocFail(), player, placeHolders);
             CorePlusAPI.getMsg().sendDetailMsg(ConfigHandler.isDebug(), ConfigHandler.getPluginName(),
-                    "Destroy-Explode", blockType, "Location", "bypass",
+                    "Destroy", blockType, "Location", "bypass",
                     new Throwable().getStackTrace()[0]);
             return;
         }
@@ -353,7 +357,7 @@ public class Destroy implements Listener {
     }
 
     private boolean checkPermission(String blockType, Player player) {
-        return !CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.destroy." + blockType.toLowerCase()) &&
-                !CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.destroy.*");
+        return CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.destroy.*") ||
+                CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.destroy.*" + blockType.toLowerCase());
     }
 }

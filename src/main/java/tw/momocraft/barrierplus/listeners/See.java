@@ -154,7 +154,7 @@ public class See implements Listener {
     }
 
     private boolean checkPermission(String blockType, Player player) {
-        return !CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.see." + blockType.toLowerCase()) &&
-                !CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.see.*");
+        return CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.see.*") ||
+                CorePlusAPI.getPlayer().hasPerm(player, "barrierplus.see." + blockType.toLowerCase());
     }
 }
